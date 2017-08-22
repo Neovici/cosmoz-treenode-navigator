@@ -116,6 +116,10 @@
 			*/
 			searchMinLength: {
 				type: Number
+			},
+
+			highlightedNodePath: {
+				type: String
 			}
 		},
 		_enableReset: function (value, noReset) {
