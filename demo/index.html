@@ -1,9 +1,10 @@
 <!doctype html>
 <html>
 <head>
-	<title>cosmoz-treenode-navigator demo</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+	<title>cosmoz-treenode-navigator demo</title>
+
 	<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
 	<link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
@@ -55,7 +56,7 @@
 			The tree data structure is based on the one in the demo above, but showing only files accessible to a specific user.
 		</p>
 		<demo-snippet>
-			<<template>
+			<template>
 				<dom-bind id="demo2">
 					<template is="dom-bind">
 						<iron-ajax url="data/johnFiles.json"
