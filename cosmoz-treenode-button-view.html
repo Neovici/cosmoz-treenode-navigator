@@ -15,33 +15,33 @@ Navigator through object with treelike datastructure.
 @demo demo/index.html
 -->
 <dom-module id="cosmoz-treenode-button-view">
-	<style is="custom-style" include="iron-flex iron-flex-alignment">
-
-		.pathToNode {
-			max-width: 320px;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-			direction: rtl;
-			text-align:left;
-		}
-
-		paper-dialog .buttons {
-			@apply --cosmoz-treenode-button-view-dialog-container;
-		}
-
-		#dialogTree {
-			min-width: 250px !important;
-			width: 450px;
-		}
-
-		/* FIXME: https://github.com/PolymerElements/iron-flex-layout/issues/86	*/
-		[hidden] {
-			display: none;
-		}
-
-	</style>
 	<template>
+		<style is="custom-style" include="iron-flex iron-flex-alignment">
+
+			.pathToNode {
+				max-width: 320px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				direction: rtl;
+				text-align:left;
+			}
+
+			paper-dialog .buttons {
+				@apply --cosmoz-treenode-button-view-dialog-container;
+			}
+
+			#dialogTree {
+				min-width: 250px !important;
+				width: 450px;
+			}
+
+			/* FIXME: https://github.com/PolymerElements/iron-flex-layout/issues/86	*/
+			[hidden] {
+				display: none;
+			}
+
+		</style>
 		<div class="horizontal layout">
 			<paper-button class="flex" raised on-tap="openDialogTree">
 				<div class="pathToNode">[[ _getButtonLabel(nodesOnNodePath, buttonTextPlaceholder) ]]</div>
