@@ -53,6 +53,14 @@
 				notify: true
 			},
 			/*
+			 * The (by serachProperty) resolved path of the selected node
+			 */
+			resolvedNodePath: {
+				type: String,
+				computed: '_computeResolvedNodePath(nodesOnNodePath, tree)',
+				notify: true
+			},
+			/*
 			 * The path of the selected node
 			 * This is the node which was highlighted and after the user tapped the select button
 			 */
@@ -143,6 +151,16 @@
 				return this._normalizeNodes(results);
 			}
 			return renderedLevel;
+		},
+		/**
+		 * Returns the (by searchProperty) resolved path
+		 * e.g: a / b / c
+		 * @param {Array} nodesOnNodePath - The nodes on the path
+		 * @param {Tree} tree - The main tree
+		 * @returns {String} - The path
+		 */
+		_computeResolvedNodePath(nodesOnNodePath, tree) {
+			return nodesOnNodePath.map(part => part[tree.searchProperty]).join(' / ');
 		},
 		/**
 		 * Returns a node array with the children of a node on the given path
