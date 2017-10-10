@@ -19,7 +19,8 @@
 		"iron-list": "PolymerElements/iron-list#1 - 2",
 		"cosmoz-i18next": "Neovici/cosmoz-i18next#master",
 		"cosmoz-dialog": "Neovici/cosmoz-dialog#master",
-		"cosmoz-tree": "Neovici/cosmoz-tree#master"
+		"cosmoz-tree": "Neovici/cosmoz-tree#master",
+		"iron-collapse": "PolymerElements/iron-collapse#^2.0.0"
 	},
 	"devDependencies": {
 		"iron-ajax": "PolymerElements/iron-ajax#1 - 2",
