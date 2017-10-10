@@ -19,7 +19,8 @@
 		"iron-list": "PolymerElements/iron-list#1 - 2",
 		"cosmoz-i18next": "Neovici/cosmoz-i18next#master",
 		"cosmoz-dialog": "Neovici/cosmoz-dialog#master",
-		"cosmoz-tree": "Neovici/cosmoz-tree#master"
+		"cosmoz-tree": "Neovici/cosmoz-tree#master",
+		"iron-collapse": "PolymerElements/iron-collapse#^2.0.0"
 	},
 	"devDependencies": {
 		"iron-ajax": "PolymerElements/iron-ajax#1 - 2",
@@ -27,7 +28,7 @@
 		"iron-demo-helpers": "PolymerElements/iron-demo-helpers#1 - 2",
 		"iron-test-helpers": "PolymerElements/iron-test-helpers#1 - 2",
 		"web-component-tester": "^6.0.0",
-		"webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
+		"webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.6"
 	},
 	"variants": {
 		"1.x": {
@@ -57,6 +58,6 @@
 		}
 	},
 	"resolutions": {
-		"webcomponentsjs": "^1.0.0"
+		"webcomponentsjs": "^1.0.6"
 	}
 }

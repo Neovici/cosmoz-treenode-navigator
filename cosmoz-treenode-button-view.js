@@ -59,6 +59,12 @@
 				type: Array
 			},
 			/*
+			 * The (by serachProperty) resolved path of the selected node
+			 */
+			resolvedNodePath: {
+				type: String
+			},
+			/*
 			 * Text displayed when local search has finished
 			 * to suggest a search on the entire tree
 			 */
@@ -92,11 +98,35 @@
 			}
 			return !!nodePath;
 		},
-		_getButtonLabel: function (pathParts, placeholder) {
-			if (!Array.isArray(pathParts) || pathParts.length === 0) {
-				return placeholder;
+
+		_openCollapse() {
+			if (!this.resolvedNodePath) {
+				return;
 			}
-			return pathParts.map(part => part[this.tree.searchProperty]).join(' / ');
+			this.$.collapse.opened = true;
+			this.$.collapseIcon.icon = 'icons:arrow-drop-up';
+		},
+
+		_closeCollapse() {
+			this.$.collapse.opened = false;
+			this.$.collapseIcon.icon = 'icons:arrow-drop-down';
+		},
+
+		_handleButtonTrack(e) {
+			if (e.detail.state !== 'end') {
+				return;
+			}
+			if (e.detail.dy > 10) {
+				// swipe down
+				this._openCollapse();
+			}
+			if (e.detail.dy < -10) {
+				// swipe up
+				this._closeCollapse();
+			}
+		},
+		_getButtonLabelName(selectedNode, placeholder) {
+			return selectedNode && this.tree ? selectedNode[this.tree.searchProperty] : placeholder;
 		},
 		openDialogTree: function () {
 			this.$.dialogTree.open();

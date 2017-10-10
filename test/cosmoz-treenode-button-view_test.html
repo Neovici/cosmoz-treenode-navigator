@@ -58,7 +58,7 @@
 
 			test('button renders selected path', function () {
 				treeButton.nodePath = '1.2.3';
-				var buttonLabel = treeButton.$$('.pathToNode').textContent;
+				var buttonLabel = treeButton.$$('.path').textContent;
 				assert.equal(buttonLabel, '1 / 2 / 3');
 			});
 

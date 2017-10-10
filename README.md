@@ -32,6 +32,8 @@ It needs an object structure which looks for example like this in JSON:
 }
 ```
 
-The property names "name" and "children" are configurable in the component through the setting of "childProperty" and "comparisonProperty". 
+The property names "name" and "children" are configurable in the component through the setting of "searchProperty" and "comparisonProperty".
+
+Swipe down on the "Click to select a node" button to show the path. Alternatively hover over the left arrow on the button.
 
 
