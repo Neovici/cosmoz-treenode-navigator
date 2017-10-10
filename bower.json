@@ -28,7 +28,7 @@
 		"iron-demo-helpers": "PolymerElements/iron-demo-helpers#1 - 2",
 		"iron-test-helpers": "PolymerElements/iron-test-helpers#1 - 2",
 		"web-component-tester": "^6.0.0",
-		"webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
+		"webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.6"
 	},
 	"variants": {
 		"1.x": {
@@ -58,6 +58,6 @@
 		}
 	},
 	"resolutions": {
-		"webcomponentsjs": "^1.0.0"
+		"webcomponentsjs": "^1.0.6"
 	}
 }
