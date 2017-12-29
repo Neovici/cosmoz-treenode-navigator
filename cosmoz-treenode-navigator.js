@@ -188,19 +188,23 @@
 		 * @param {Array} nodes - The input nodes
 		 * @return {Array} - The normalized nodes
 		 */
-		_normalizeNodes: function (nodes) {
+		_normalizeNodes(nodes) {
 			if (!Array.isArray(nodes)){
 				return [];
 			}
-			return nodes.map(function (node) {
-				var path = node.pathLocator || node.path;
-				return {
-					name: node[this.tree.searchProperty],
-					path: path,
-					sectionName: this.tree.getPathString(path, this.tree.searchProperty),
-					children: node[this.tree.childProperty]
-				};
-			}, this);
+			return nodes
+				.map(node => {
+					if (!node) {
+						return node;
+					}
+					var path = node.pathLocator || node.path;
+					return {
+						name: node[this.tree.searchProperty],
+						path: path,
+						sectionName: this.tree.getPathString(path, this.tree.searchProperty),
+						children: node[this.tree.childProperty]
+					};
+				});
 		},
 		/**
 		 * Returns a node based on a given path locator.
