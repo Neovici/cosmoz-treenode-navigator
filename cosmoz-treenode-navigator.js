@@ -138,7 +138,7 @@
 		 * @return {Array} - The found nodes
 		 */
 		_computeDataPlane: function (searching, searchString, renderedLevel, tree) {
-			if (searching) {
+			if (searching && tree) {
 				var results = tree.searchNodes(searchString, renderedLevel, false);
 				return this._normalizeNodes(results);
 			}
