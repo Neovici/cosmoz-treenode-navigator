@@ -20,7 +20,7 @@
 			 */
 			selectedNode: {
 				type: Object,
-				value: function (){
+				value: function () {
 					return {};
 				},
 				notify: true
