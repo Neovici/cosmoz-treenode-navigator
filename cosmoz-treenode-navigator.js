@@ -139,7 +139,7 @@
 		 */
 		_computeDataPlane(searching, searchString, renderedLevel, tree) {
 			if (searching && tree) {
-				var results = tree.searchNodes(searchString, renderedLevel, false);
+				const results = tree.searchNodes(searchString, renderedLevel, false);
 				return this._normalizeNodes(results);
 			}
 			return renderedLevel;
@@ -155,10 +155,10 @@
 			if (!tree) {
 				return;
 			}
-			var node = tree.getNodeByPathLocator(pathLocator),
+			const node = tree.getNodeByPathLocator(pathLocator),
 				children = tree.getChildren(node),
 				level = children || node,
-				sortFunc = function (a, b) {
+				sortFunc = (a, b) => {
 					// First sort based on "folder" status (containing children)
 					if (this.hasChildren(a)) {
 						if (!this.hasChildren(b)) {
@@ -168,7 +168,7 @@
 						return 1;
 					}
 					// Then sort on searchProperty
-					var val1 = a[this.tree.searchProperty],
+					const val1 = a[this.tree.searchProperty],
 						val2 = b[this.tree.searchProperty];
 
 					if (val1 > val2) {
@@ -178,7 +178,7 @@
 						return -1;
 					}
 					return 0;
-				}.bind(this);
+				};
 
 			return this._normalizeNodes(level).sort(sortFunc);
 		},
@@ -192,19 +192,18 @@
 			if (!Array.isArray(nodes)) {
 				return [];
 			}
-			return nodes
-				.map(node => {
-					if (!node) {
-						return node;
-					}
-					var path = node.pathLocator || node.path;
-					return {
-						name: node[this.tree.searchProperty],
-						path: path,
-						sectionName: this.tree.getPathString(path, this.tree.searchProperty),
-						children: node[this.tree.childProperty]
-					};
-				});
+			return nodes.map(node => {
+				if (!node) {
+					return node;
+				}
+				const path = node.pathLocator || node.path;
+				return {
+					name: node[this.tree.searchProperty],
+					path: path,
+					sectionName: this.tree.getPathString(path, this.tree.searchProperty),
+					children: node[this.tree.childProperty]
+				};
+			});
 		},
 		/**
 		 * Returns a node based on a given path locator.
@@ -336,7 +335,7 @@
 			if (index === 0) {
 				return true;
 			}
-			var prevItem = dataPlane[index - 1];
+			const prevItem = dataPlane[index - 1];
 			if (prevItem.sectionName === node) {
 				return false;
 			}
@@ -351,7 +350,7 @@
 		_clickOnEnterOrSpace(e) {
 			if (e.keyCode === 13 || e.keyCode === 32) {
 				// enter or space pressed!
-				var fnName = 'click',
+				const fnName = 'click',
 					target = e.currentTarget,
 					fn = new Function('target', 'fnName', 'return target.' + fnName + '()');
 				fn(target, fnName);
