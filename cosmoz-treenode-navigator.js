@@ -6,6 +6,7 @@
 		behaviors: [
 			Cosmoz.TranslatableBehavior
 		],
+
 		is: 'cosmoz-treenode-navigator',
 
 		properties: {
@@ -22,27 +23,6 @@
 				type: Array,
 				notify: true,
 				computed: '_computeDataPlane(_search, searchValue, _renderedLevel, tree)'
-			},
-			/*
-			 * Nodes (children) to be displayed when opening a node
-			 */
-			_renderedLevel: {
-				type: Array,
-				computed: '_renderLevel(_openNodePath, tree)'
-			},
-			/*
-			 * The path of the opened node
-			 */
-			_openNodePath: {
-				type: String,
-				value: ''
-			},
-			/*
-			 * The nodes on the path of the opened node
-			 */
-			_nodesOnOpenNodePath: {
-				type: Array,
-				computed: '_getTreePathParts(_openNodePath, tree)'
 			},
 			/*
 			 * The selected node
@@ -93,13 +73,6 @@
 				value: ''
 			},
 			/*
-			 * Whether a search should be executed
-			 */
-			_search: {
-				type: Boolean,
-				computed: '_computeSearching(searchValue, searchMinLength)'
-			},
-			/*
 			 * Placeholder for search field.
 			 */
 			searchPlaceholder: {
@@ -120,6 +93,37 @@
 			searchMinLength: {
 				type: Number,
 				value: 1
+			},
+
+			/** PRIVATE */
+
+			/*
+			 * Nodes (children) to be displayed when opening a node
+			 */
+			_renderedLevel: {
+				type: Array,
+				computed: '_renderLevel(_openNodePath, tree)'
+			},
+			/*
+			 * The path of the opened node
+			 */
+			_openNodePath: {
+				type: String,
+				value: ''
+			},
+			/*
+			 * The nodes on the path of the opened node
+			 */
+			_nodesOnOpenNodePath: {
+				type: Array,
+				computed: '_getTreePathParts(_openNodePath, tree)'
+			},
+			/*
+			 * Whether a search should be executed
+			 */
+			_search: {
+				type: Boolean,
+				computed: '_computeSearching(searchValue, searchMinLength)'
 			}
 		},
 		/**

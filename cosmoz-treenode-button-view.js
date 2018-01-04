@@ -1,4 +1,4 @@
-(function () {
+(() => {
 	'use strict';
 
 	Polymer({
@@ -117,4 +117,4 @@
 			}.bind(this), 50); // 5 was enough during test
 		}
 	});
-}());
+})();
