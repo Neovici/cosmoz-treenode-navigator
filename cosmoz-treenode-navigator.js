@@ -1,4 +1,4 @@
-(function () {
+(() => {
 	'use strict';
 
 	Polymer({
@@ -126,7 +126,7 @@
 		 * Focusses the search input.
 		 * @return {undefined}
 		 */
-		focus: function () {
+		focus() {
 			this.$.searchInput.inputElement.focus();
 		},
 		/**
@@ -137,7 +137,7 @@
 		 * @param {Tree} tree - The main tree
 		 * @return {Array} - The found nodes
 		 */
-		_computeDataPlane: function (searching, searchString, renderedLevel, tree) {
+		_computeDataPlane(searching, searchString, renderedLevel, tree) {
 			if (searching && tree) {
 				var results = tree.searchNodes(searchString, renderedLevel, false);
 				return this._normalizeNodes(results);
@@ -151,7 +151,7 @@
 		 * @param {Tree} tree - The main tree
 		 * @return {Array} - Nodes
 		 */
-		_renderLevel: function (pathLocator, tree) {
+		_renderLevel(pathLocator, tree) {
 			if (!tree) {
 				return;
 			}
@@ -213,7 +213,7 @@
 		 * @param {Tree} tree - The main tree
 		 * @return {Object} - The found node
 		 */
-		_getNode: function (pathLocator, tree) {
+		_getNode(pathLocator, tree) {
 			if (!tree || !pathLocator) {
 				return null;
 			}
@@ -225,7 +225,7 @@
 		 * @param {Tree} tree - The main tree
 		 * @return {Array} - The found nodes or empty array
 		 */
-		_getTreePathParts: function (pathLocator, tree) {
+		_getTreePathParts(pathLocator, tree) {
 			if (!tree || !pathLocator) {
 				return [];
 			}
@@ -236,7 +236,7 @@
 		 * @param {Event} e - The trigger event
 		 * @return {undefined}
 		 */
-		_clearSearch: function (e) {
+		_clearSearch(e) {
 			e.preventDefault();
 			e.stopPropagation();
 			this.searchValue = '';
@@ -246,7 +246,7 @@
 		 * @param {Object} node - The node
 		 * @return {String} - The name
 		 */
-		_getNodeName: function (node) {
+		_getNodeName(node) {
 			return node[this.tree.searchProperty];
 		},
 		/**
@@ -254,7 +254,7 @@
 		 * @param {Object} node - The highlighted node
 		 * @return {undefined}
 		 */
-		_highlightedNodeChanged: function (node) {
+		_highlightedNodeChanged(node) {
 			if (!node) {
 				this.highlightedNodePath = '';
 				return;
@@ -266,7 +266,7 @@
 		 * @param {Object} node - The node
 		 * @return {Boolean} - True if node has children
 		 */
-		hasChildren: function (node) {
+		hasChildren(node) {
 			return this.tree.hasChildren(node);
 		},
 		/**
@@ -275,7 +275,7 @@
 		 * @param {Event} e.currentTarget.dataset.path - The path locator attribute
 		 * @return {undefined}
 		 */
-		openNode: function (e) {
+		openNode(e) {
 			this._openNodePath = e.currentTarget.dataset.path;
 			this.searchValue = '';
 			e.currentTarget.parentElement.blur();
@@ -289,7 +289,7 @@
 		 * @param {String} path - The path of the newly selected node
 		 * @return {undefined}
 		 */
-		_nodePathChanged: function (path) {
+		_nodePathChanged(path) {
 			if (!path) {
 				this.highlightedNodePath = '';
 				return;
@@ -302,14 +302,14 @@
 		 * @param {String} openNodeLevelPath - The open node level
 		 * @return {Boolean} - The visibility of the button
 		 */
-		_showGlobalSearchBtn: function (searching, openNodeLevelPath) {
+		_showGlobalSearchBtn(searching, openNodeLevelPath) {
 			return searching && openNodeLevelPath !== '';
 		},
 		/**
 		 * Triggers a global search
 		 * @return {undefined}
 		 */
-		tryGlobalSearch: function () {
+		tryGlobalSearch() {
 			this._openNodePath = '';
 		},
 		/**
@@ -318,7 +318,7 @@
 		 * @param {Number} searchMinLength - The minimum length of value to be valid
 		 * @return {Boolean} - If a search should be triggered
 		 */
-		_computeSearching: function (value, searchMinLength) {
+		_computeSearching(value, searchMinLength) {
 			return value && value.length >= searchMinLength && value !== '';
 		},
 		/**
@@ -329,7 +329,7 @@
 		 * @param {Object} node - The node
 		 * @return {Boolean} - If the path should be visible
 		 */
-		_renderSection: function (searching, index, dataPlane, node) {
+		_renderSection(searching, index, dataPlane, node) {
 			if (!searching || index >= dataPlane.length || !node || !node.sectionName) {
 				return false;
 			}
@@ -348,7 +348,7 @@
 		 * @param {Event} e - The event
 		 * @return {undefined}
 		 */
-		_clickOnEnterOrSpace: function (e) {
+		_clickOnEnterOrSpace(e) {
 			if (e.keyCode === 13 || e.keyCode === 32) {
 				// enter or space pressed!
 				var fnName = 'click',
@@ -363,7 +363,7 @@
 		 * @param {Boolean} selected - If the row is currently selected
 		 * @return {String} - The CSS classes
 		 */
-		_computeRowClass: function (classes, selected) {
+		_computeRowClass(classes, selected) {
 			return selected ? classes + ' selected' : classes;
 		},
 
@@ -376,4 +376,4 @@
 			}
 		}
 	});
-}());
+})();
