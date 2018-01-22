@@ -223,7 +223,7 @@
 			let nodes;
 
 			if (!node) {
-				nodes = tree.getPathNodes(pathLocator).filter(n => n);
+				nodes = tree.getPathNodes(pathLocator).filter(n => n != null);
 			}
 			return nodes && nodes.length > 0 ? nodes.pop() : node;
 		},
