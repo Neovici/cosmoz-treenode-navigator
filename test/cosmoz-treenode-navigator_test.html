@@ -59,6 +59,13 @@
 
 			test('instantiating the element', function () {
 				assert.equal(navigator.is, 'cosmoz-treenode-navigator');
+				assert.equal(navigator.dataPlane[0].name, "Root");
+				assert.equal(navigator.dataPlane.length, navigator.tree._roots.length);
+			});
+
+			test('dataPlane initialised with tree', function () {
+				assert.equal(navigator.dataPlane[0].name, "Root");
+				assert.equal(navigator.dataPlane.length, navigator.tree._roots.length);
 			});
 
 		});
