@@ -24,38 +24,22 @@
 	<test-fixture id="basic">
 		<template>
 			<cosmoz-treenode-navigator style="display:block;width:200px"></cosmoz-treenode-navigator>
-			<iron-ajax auto
-				url="data/basicTree.json"
-				handle-as="json"
-				last-response="{{ basicTree }}">
-			</iron-ajax>
 		</template>
 	</test-fixture>
 
 	<script type="module">
 		import { DefaultTree } from '@neovici/cosmoz-tree/cosmoz-default-tree';
+		import basicTree from './data/basicTree.js';
 		import { flush } from '@polymer/polymer/lib/utils/flush';
-		/* eslint-disable-next-line max-lines-per-function */
+
 		suite('cosmoz-treenode-navigator', () => {
-			let basicFixture,
-				basicTree,
-				navigator;
+			let navigator;
 
 			setup(done => {
-				basicFixture = fixture('basic');
-				const ajax = basicFixture.find(n => {
-					return n.is === 'iron-ajax';
-				});
-				navigator = basicFixture.find(n => {
-					return n.tagName === 'COSMOZ-TREENODE-NAVIGATOR';
-				});
-
-				ajax.addEventListener('response', () => {
-					basicTree = new DefaultTree(ajax.lastResponse);
-					navigator.tree = basicTree;
-					flush();
-					done();
-				});
+				navigator = fixture('basic');
+				navigator.tree = new DefaultTree(basicTree);
+				flush();
+				done();
 			});
 
 			test('instantiating the element', () => {
