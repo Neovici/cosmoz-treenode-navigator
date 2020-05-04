@@ -60,7 +60,7 @@
 		"@polymer/paper-button": "^3.0.0",
 		"@polymer/paper-icon-button": "^3.0.0",
 		"@polymer/paper-input": "^3.2.1",
-		"@polymer/polymer": "^3.3.1",
+		"@polymer/polymer": "^3.4.1",
 		"@webcomponents/shadycss": "^1.9.6"
 	},
 	"devDependencies": {
@@ -87,6 +87,6 @@
 		"polymer-cli": "^1.9.1",
 		"semantic-release": "^16.0.4",
 		"wct-istanbul": "^0.14.3",
-		"wct-mocha": "^1.0.1"
+		"wct-mocha": "^1.1.0"
 	}
 }
