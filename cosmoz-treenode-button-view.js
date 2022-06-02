@@ -44,6 +44,8 @@ class CosmozTreenodeButtonView extends translatable(PolymerElement) {
 				flex-wrap: wrap;
 				max-width: 90%;
 				padding: 20px;
+				overflow-y: auto;
+				max-height: 30vh;
 			}
 			.chip {
 				border-radius: 500px;
