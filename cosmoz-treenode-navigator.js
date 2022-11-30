@@ -249,7 +249,7 @@ const TreenodeNavigator = (host) => {
 					</svg>
 				</span>
 				${guard([tree, openNodePath], () =>
-					((openNodePath && tree.getPathNodes(openNodePath)) || []).map(
+					((openNodePath && tree?.getPathNodes(openNodePath)) || []).map(
 						(node) => html`
 							<span class="slash">/</span>
 							<span class="pointer" tabindex="0" @click=${() => openNode(node)}
