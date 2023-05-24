@@ -21,25 +21,28 @@ export default css`
 	.icon {
 		display: inline-block;
 		position: relative;
-		padding: 8px;
+		padding: 8px 4px;
 		outline: none;
 		user-select: none;
 		cursor: pointer;
 		z-index: 0;
 		line-height: 1;
-		width: 40px;
+		width: 25px;
 		height: 40px;
 		box-sizing: border-box;
 	}
-
+	svg {
+		padding: 3px;
+	}
 	.path {
 		display: flex;
 		align-items: center;
 		flex-wrap: wrap;
+		padding: 2px;
 	}
 
 	.slash {
-		margin: 0 2px;
+		margin: 0 2px 0 5px;
 	}
 
 	.pointer {
@@ -76,19 +79,7 @@ export default css`
 	}
 	.name {
 		flex: auto;
-	}
-	.icon {
-		box-sizing: border-box;
-		cursor: pointer;
-		display: inline-block;
-		height: 40px;
-		line-height: 1;
-		outline: none;
-		padding: 8px;
-		position: relative;
-		user-select: none;
-		width: 40px;
-		z-index: 0;
+		padding: 8px 0;
 	}
 
 	.node.selected {
