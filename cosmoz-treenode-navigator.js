@@ -209,26 +209,23 @@ const TreenodeNavigator = (host) => {
 			@click=${() => setHighlightedNode(node)}
 			@dblclick=${(e) => onNodeDblClicked(e, host)}
 		>
-			<div class="name">${node[tree.searchProperty]}</div>
 			${when(
 				tree.hasChildren(node),
 				() => html`
 					<span class="icon" @click=${() => openNode(node)}>
 						<svg
-							viewBox="0 0 24 24"
-							preserveAspectRatio="xMidYMid meet"
-							focusable="false"
-							style="pointer-events: none; display: block; width: 100%; height: 100%;"
+							width="7"
+							height="16"
+							viewBox="0 0 7 16"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
 						>
-							<g>
-								<path
-									d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-								></path>
-							</g>
+							<path d="M1 1L6 8L1 15" stroke="#101010" stroke-width="1.5" />
 						</svg>
 					</span>
 				`
 			)}
+			<div class="name">${node[tree.searchProperty]}</div>
 		</div>
 	</div>`;
 
@@ -240,12 +237,51 @@ const TreenodeNavigator = (host) => {
 			<h3 class="path">
 				<span class="icon" @click=${() => openNode()}>
 					<svg
-						viewBox="0 0 24 24"
-						preserveAspectRatio="xMidYMid meet"
-						focusable="false"
-						style="pointer-events: none; display: block; width: 100%; height: 100%;"
+						width="20"
+						height="18"
+						viewBox="0 0 20 18"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
 					>
-						<g><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></g>
+						<path
+							d="M17 4H2"
+							stroke="#0B0B0B"
+							stroke-width="1.5"
+							stroke-linecap="round"
+						/>
+						<path
+							d="M17 15H12C10.8954 15 10 14.1046 10 13V4"
+							stroke="#0B0B0B"
+							stroke-width="1.5"
+							stroke-linecap="round"
+						/>
+						<circle
+							cx="4"
+							cy="4"
+							r="3.25"
+							fill="white"
+							stroke="black"
+							stroke-width="1.5"
+							stroke-linecap="round"
+						/>
+						<circle
+							cx="17"
+							cy="4"
+							r="2.25"
+							fill="white"
+							stroke="black"
+							stroke-width="1.5"
+							stroke-linecap="round"
+						/>
+						<circle
+							cx="17"
+							cy="15"
+							r="2.25"
+							fill="white"
+							stroke="black"
+							stroke-width="1.5"
+							stroke-linecap="round"
+						/>
 					</svg>
 				</span>
 				${guard([tree, openNodePath], () =>
@@ -260,6 +296,7 @@ const TreenodeNavigator = (host) => {
 				)}
 			</h3>
 			<cosmoz-input
+				type="search"
 				tabindex="0"
 				.value=${searchValue}
 				.placeholder=${searchPlaceholder}
