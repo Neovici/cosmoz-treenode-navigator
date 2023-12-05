@@ -14,7 +14,7 @@ import { translatable } from '@neovici/cosmoz-i18next';
 
 import './cosmoz-treenode-navigator';
 import { getNode, getTreePathParts } from './helpers';
-
+import { infoIcon } from './demo/tour/info-icon';
 /**
 	`cosmoz-treenode-navigator`
 	Navigator through object with treelike datastructure.
@@ -98,6 +98,21 @@ class CosmozTreenodeButtonView extends translatable(PolymerElement) {
 				>
 					<div class="pathToNode">&lrm;<span>[[ buttonText ]]</span></div>
 				</paper-button>
+				<span
+					><svg
+						viewBox="0 0 24 24"
+						preserveAspectRatio="xMidYMid meet"
+						focusable="false"
+						width="14"
+						style="cursor: pointer"
+					>
+						<path
+							d="M10.8 8.4h2.4V6h-2.4M12 21.6c-5.292 0-9.6-4.308-9.6-9.6S6.708 2.4 12 2.4s9.6 4.308 9.6 9.6-4.308 9.6-9.6 9.6zM12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24Zm-1.2 18h2.4v-7.2h-2.4z"
+							style="stroke-width:1.71429"
+							fill="currentColor"
+						/>
+					</svg>
+				</span>
 				<paper-icon-button
 					part="clear"
 					icon="clear"
@@ -409,6 +424,10 @@ class CosmozTreenodeButtonView extends translatable(PolymerElement) {
 	 */
 	_selectNodeAndCloseDialog() {
 		this.selectNode();
+	}
+
+	_showInfoIcon() {
+		return infoIcon;
 	}
 	/**
 	 * Determine if selected nodes container should be visible or not.
