@@ -330,10 +330,13 @@ class CosmozTreenodeButtonView extends translatable(PolymerElement) {
 		if (!Array.isArray(pathParts) || pathParts.length === 0) {
 			return placeholder;
 		}
-		return pathParts
+		let labels = pathParts
 			.filter((n) => n)
-			.map((part) => part[this.tree.searchProperty])
-			.join(' / ');
+			.map((part) => part[this.tree.searchProperty]);
+
+		return pathParts.length === 1
+			? labels[0]
+			: '.../' + labels[pathParts.length - 1];
 	}
 	/**
 	 * Get text from a node to set on a node chip.
