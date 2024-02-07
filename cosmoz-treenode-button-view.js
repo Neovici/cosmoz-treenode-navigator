@@ -11,7 +11,6 @@ import { html } from '@polymer/polymer/lib/utils/html-tag';
 import '@neovici/cosmoz-dialog';
 import { Tree } from '@neovici/cosmoz-tree';
 import { translatable } from '@neovici/cosmoz-i18next';
-
 import './cosmoz-treenode-navigator';
 import { getNode, getTreePathParts } from './helpers';
 /**
@@ -342,7 +341,7 @@ class CosmozTreenodeButtonView extends translatable(PolymerElement) {
 		const labels = pathParts
 			.filter((n) => n)
 			.map((part) => part[this.tree.searchProperty]);
-
+		console.log(labels);
 		return labels.join('/');
 	}
 	/**
