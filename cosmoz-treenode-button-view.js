@@ -55,140 +55,6 @@ const _getButtonLabel = (pathParts, placeholder) => {
 };
 
 /**
- * Navigator through object with treelike datastructure.
- */
-export const CosmozTreenodeButtonView = ({
-	multiSelection = false,
-	tree,
-	/*
-	 * Currently selected node object
-	 */
-	selectedNode = {},
-	/**
-	 * Selected nodes
-	 */
-	selectedNodes = [],
-	/**
-	 * If true, reset button gets hidden
-	 */
-	noReset = false,
-	/**
-	 * If true opened
-	 */
-	opened = false,
-	/*
-	 * Placeholder for the search field
-	 */
-	searchPlaceholder,
-	/*
-	 * Placeholder for button text
-	 */
-	buttonTextPlaceholder = getButtonTextPlaceholder(),
-	buttonText = _getButtonLabel(nodesOnNodePath, buttonTextPlaceholder),
-
-	/*
-	 * The path of the selected node
-	 */
-	nodePath,
-	/*
-	 * The nodes on the path of the selected node
-	 */
-	nodesOnNodePath,
-	/*
-	 * Text displayed when local search has finished
-	 * to suggest a search on the entire tree
-	 */
-	searchGlobalPlaceholder = 'Click to search again but globally.',
-	/*
-	 * Settable text for dialog title.
-	 */
-	dialogText = 'Search or navigate to chosen destination',
-	/*
-	 * Minimum length before an search
-	 * starts.
-	 */
-	searchMinLength = 1,
-	/*
-	 * Path string of highlighted (focused) node
-	 */
-	highlightedNodePath,
-}) => {
-	return html`
-		${css}
-		<div class="actions">
-			<paper-button
-				part="button"
-				class="open"
-				raised
-				on-click="openDialogTree"
-				title="[[ buttonText ]]"
-			>
-				<div class="pathToNode">&lrm;<span>[[ buttonText ]]</span></div>
-			</paper-button>
-			<paper-icon-button
-				part="clear"
-				icon="clear"
-				on-click="reset"
-				hidden$="[[ !_enableReset(nodePath, noReset) ]]"
-			></paper-icon-button>
-		</div>
-		<template
-			is="dom-if"
-			if="[[ _showSelectedNodes(multiSelection, selectedNodes.length) ]]"
-		>
-			<div id="chips" class="row">
-				<template is="dom-repeat" items="[[ selectedNodes ]]">
-					<div class="chip">
-						<span>[[ _getChipText(item, tree) ]]</span
-						><iron-icon icon="clear" on-click="_clearItemSelection"></iron-icon>
-					</div>
-				</template>
-			</div>
-		</template>
-
-		<cosmoz-dialog
-			id="dialogTree"
-			class="treeDialog"
-			on-iron-overlay-opened="onOpened"
-			on-iron-overlay-closed="onClosed"
-			modal
-			prerender
-		>
-			<template>
-				<h2>[[ dialogText ]]</h2>
-				<cosmoz-treenode-navigator
-					id="treeNavigator"
-					class="no-padding"
-					tree="[[ tree ]]"
-					selected-node="{{ selectedNode }}"
-					on-data-plane-changed="refit"
-					highlighted-node-path="{{ highlightedNodePath }}"
-					search-placeholder="[[ searchPlaceholder ]]"
-					search-global-placeholder="[[ searchGlobalPlaceholder ]]"
-					search-min-length="[[ searchMinLength ]]"
-					node-path="{{ nodePath }}"
-					nodes-on-node-path="{{ nodesOnNodePath }}"
-					on-node-dblclicked="_selectNodeAndCloseDialog"
-					on-select-node="selectNode"
-					opened="[[ opened ]]"
-				>
-					<slot></slot>
-				</cosmoz-treenode-navigator>
-				<div class="buttons">
-					<paper-button
-						disabled="[[!highlightedNodePath]]"
-						autofocus
-						on-click="selectNode"
-						>[[ _('Select', t) ]]</paper-button
-					>
-					<paper-button dialog-dismiss>[[ _('Cancel', t) ]]</paper-button>
-				</div>
-			</template>
-		</cosmoz-dialog>
-	`;
-};
-
-/**
  * Event handler for node chip removal button, removes a node chip.
  * @param {object} event Polymer event object.
  * @returns {void}
@@ -336,6 +202,141 @@ const onOpened = () => {
 
 const onClosed = () => {
 	this.opened = false;
+};
+
+/**
+ * Navigator through object with treelike datastructure.
+ */
+export const CosmozTreenodeButtonView = ({
+	multiSelection = false,
+	tree,
+	/*
+	 * Currently selected node object
+	 */
+	selectedNode = {},
+	/**
+	 * Selected nodes
+	 */
+	selectedNodes = [],
+	/**
+	 * If true, reset button gets hidden
+	 */
+	noReset = false,
+	/**
+	 * If true opened
+	 */
+	opened = false,
+	/*
+	 * Placeholder for the search field
+	 */
+	searchPlaceholder,
+	/*
+	 * Placeholder for button text
+	 */
+	buttonTextPlaceholder = getButtonTextPlaceholder(),
+	buttonText = _getButtonLabel(nodesOnNodePath, buttonTextPlaceholder),
+
+	/*
+	 * The path of the selected node
+	 */
+	nodePath,
+	/*
+	 * The nodes on the path of the selected node
+	 */
+	nodesOnNodePath,
+	/*
+	 * Text displayed when local search has finished
+	 * to suggest a search on the entire tree
+	 */
+	searchGlobalPlaceholder = 'Click to search again but globally.',
+	/*
+	 * Settable text for dialog title.
+	 */
+	dialogText = 'Search or navigate to chosen destination',
+	/*
+	 * Minimum length before an search
+	 * starts.
+	 */
+	searchMinLength = 1,
+	/*
+	 * Path string of highlighted (focused) node
+	 */
+	highlightedNodePath,
+}) => {
+	return html`
+		${css}
+		<div class="actions">
+			<paper-button
+				part="button"
+				class="open"
+				raised
+				@click=${openDialogTree}
+				title=${buttonText}
+			>
+				<div class="pathToNode">&lrm;<span>${buttonText}</span></div>
+			</paper-button>
+			<paper-icon-button
+				part="clear"
+				icon="clear"
+				@click="reset"
+				hidden$=${_enableReset(nodePath, noReset)}
+			></paper-icon-button>
+		</div>
+		${_showSelectedNodes(multiSelection, selectedNodes.length)
+			? html`<div id="chips" class="row">
+					${selectedNodes.map(
+						(item) =>
+							html`<div class="chip">
+								<span>${_getChipText(item, tree)}</span
+								><iron-icon
+									icon="clear"
+									@click=${_clearItemSelection}
+								></iron-icon>
+							</div>`,
+					)}
+				</div>`
+			: html``}
+
+		<cosmoz-dialog
+			id="dialogTree"
+			class="treeDialog"
+			on-iron-overlay-opened=${onOpened}
+			on-iron-overlay-closed=${onClosed}
+			modal
+			prerender
+		>
+			<template>
+				<h2>${dialogText}</h2>
+				<cosmoz-treenode-navigator
+					id="treeNavigator"
+					class="no-padding"
+					tree=${tree}
+					selected-node=${selectedNode}
+					on-data-plane-changed=${'refit'}
+					highlighted-node-path=${highlightedNodePath}
+					search-placeholder="${searchPlaceholder}"
+					search-global-placeholder=${searchGlobalPlaceholder}
+					search-min-length=${searchMinLength}
+					node-path=${nodePath}
+					nodes-on-node-path=${nodesOnNodePath}
+					on-node-dblclicked=${_selectNodeAndCloseDialog}
+					on-select-node=${selectNode}
+					opened=${opened}
+				>
+					<slot></slot>
+				</cosmoz-treenode-navigator>
+				<div class="buttons">
+					<paper-button
+						disabled=${!highlightedNodePath}
+						autofocus
+						@click=${selectNode}
+						>${_('Select', t)}</paper-button
+					>
+					<paper-button dialog-dismiss>${_('Cancel', t)}</paper-button>
+				</div>
+			</template>
+		</cosmoz-dialog>
+	`;
 };
 
 customElements.define(
