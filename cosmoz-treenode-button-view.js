@@ -2,6 +2,12 @@
 import { html, nothing } from 'lit-html';
 import { component, useState } from '@pionjs/pion';
 import { css } from './cosmoz-treenode-button-view.styles';
+import { t } from 'i18next';
+//import { notifyProperty } from '@neovici/cosmoz-utils/hooks/use-notify-property';
+
+import '@polymer/paper-icon-button/paper-icon-button';
+import '@polymer/paper-button/paper-button';
+import '@polymer/iron-icons/iron-icons';
 
 import '@neovici/cosmoz-dialog';
 import { Tree } from '@neovici/cosmoz-tree';
@@ -35,7 +41,7 @@ export interface CosmozTreenodeButtonView {
  * @returns {string} Text label.
  */
 const getButtonTextPlaceholder = (multiSelection) => {
-	return multiSelection ? this._('Select a node') : this._('No selection made');
+	return multiSelection ? t('Select a node') : t('No selection made');
 };
 
 /**
@@ -58,7 +64,13 @@ const _getButtonLabel = (pathParts, placeholder) => {
  * Navigator through object with treelike datastructure.
  */
 export const CosmozTreenodeButtonView = ({
+	/**
+	 * Allow multiple selections
+	 */
 	multiSelection = false,
+	/**
+	 * The required tree object
+	 */
 	tree,
 	/**
 	 * If true, reset button gets hidden
@@ -72,6 +84,10 @@ export const CosmozTreenodeButtonView = ({
 	 * Placeholder for the search field
 	 */
 	searchPlaceholder,
+	/*
+	 * The nodes on the path of the selected node
+	 */
+	nodesOnNodePath = [],
 	/*
 	 * Placeholder for button text
 	 */
@@ -100,10 +116,6 @@ export const CosmozTreenodeButtonView = ({
 	 * Currently selected node object
 	 */
 	const [selectedNode, setSelectedNode] = useState({});
-	/*
-	 * The nodes on the path of the selected node
-	 */
-	const [nodesOnNodePath, setNodesOnNodePath] = useState([]);
 	/**
 	 * Selected nodes
 	 */
@@ -119,8 +131,8 @@ export const CosmozTreenodeButtonView = ({
 	 * @returns {void}
 	 */
 	const _clearItemSelection = (event) => {
-		const item = event.model.item,
-			selectedIndex = this.selectedNodes.indexOf(item);
+		const item = event.model.item;
+		const selectedIndex = this.selectedNodes.indexOf(item);
 
 		// This will remove from the DOM the source element of the processed event ...
 		this.splice('selectedNodes', selectedIndex, 1);
@@ -145,6 +157,7 @@ export const CosmozTreenodeButtonView = ({
 		if (noReset) {
 			return false;
 		}
+
 		return !!nodePath;
 	};
 
@@ -183,7 +196,7 @@ export const CosmozTreenodeButtonView = ({
 	const reset = () => {
 		setNodePath('');
 		setSelectedNode({});
-		setNodesOnNodePath([]);
+		setNodesOnNodePath([]); // TODO: update this line
 		setSelectedNodes([]);
 		setHighlightedNodePath('');
 	};
@@ -277,9 +290,9 @@ export const CosmozTreenodeButtonView = ({
 			</paper-button>
 			<paper-icon-button
 				part="clear"
-				icon="clear"
+				.icon="clear"
 				@click="reset"
-				hidden$=${_enableReset(nodePath, noReset)}
+				?hidden=${_enableReset(nodePath, noReset)}
 			></paper-icon-button>
 		</div>
 		${_showSelectedNodes(multiSelection, selectedNodes.length)
@@ -300,8 +313,8 @@ export const CosmozTreenodeButtonView = ({
 		<cosmoz-dialog
 			id="dialogTree"
 			class="treeDialog"
-			on-iron-overlay-opened=${onOpened}
-			on-iron-overlay-closed=${onClosed}
+			@iron-overlay-opened=${onOpened}
+			@iron-overlay-closed=${onClosed}
 			modal
 			prerender
 		>
@@ -312,15 +325,15 @@ export const CosmozTreenodeButtonView = ({
 					class="no-padding"
 					tree=${tree}
 					selected-node=${selectedNode}
-					on-data-plane-changed=${'refit'}
+					@data-plane-changed=${refit}
 					highlighted-node-path=${highlightedNodePath}
 					search-placeholder="${searchPlaceholder}"
 					search-global-placeholder=${searchGlobalPlaceholder}
 					search-min-length=${searchMinLength}
 					node-path=${nodePath}
 					nodes-on-node-path=${nodesOnNodePath}
-					on-node-dblclicked=${_selectNodeAndCloseDialog}
-					on-select-node=${selectNode}
+					@node-dblclicked=${_selectNodeAndCloseDialog}
+					@select-node=${selectNode}
 					opened=${opened}
 				>
 					<slot></slot>
