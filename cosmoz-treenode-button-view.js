@@ -1,9 +1,10 @@
 /* eslint-disable max-statements */
 import { html, nothing } from 'lit-html';
-import { component, useState } from '@pionjs/pion';
+import { component, useState, useEffect } from '@pionjs/pion';
 import { css } from './cosmoz-treenode-button-view.styles';
 import { t } from 'i18next';
-//import { notifyProperty } from '@neovici/cosmoz-utils/hooks/use-notify-property';
+import { notifyProperty } from '@neovici/cosmoz-utils/hooks/use-notify-property';
+import { useHost } from '@neovici/cosmoz-utils/hooks/use-host';
 
 import '@polymer/paper-icon-button/paper-icon-button';
 import '@polymer/paper-button/paper-button';
@@ -50,13 +51,13 @@ const getButtonTextPlaceholder = (multiSelection) => {
  * @param {string} placeholder Replacement placeholder if no nodes are available.
  * @returns {string} Button label.
  */
-const _getButtonLabel = (pathParts, placeholder) => {
+const _getButtonLabel = (pathParts, placeholder, searchProperty) => {
 	if (!Array.isArray(pathParts) || pathParts.length === 0) {
 		return placeholder;
 	}
 	return pathParts
 		.filter((n) => n)
-		.map((part) => part[this.tree.searchProperty])
+		.map((part) => part[searchProperty])
 		.join(' / ');
 };
 
@@ -92,7 +93,7 @@ export const CosmozTreenodeButtonView = ({
 	 * Placeholder for button text
 	 */
 	buttonTextPlaceholder = getButtonTextPlaceholder(),
-	buttonText = _getButtonLabel(nodesOnNodePath, buttonTextPlaceholder),
+	buttonText: _buttonText,
 	/*
 	 * Text displayed when local search has finished
 	 * to suggest a search on the entire tree
@@ -107,15 +108,18 @@ export const CosmozTreenodeButtonView = ({
 	 * starts.
 	 */
 	searchMinLength = 1,
+	...props
 }) => {
 	/*
 	 * The path of the selected node
 	 */
-	const [nodePath, setNodePath] = useState('');
+	const [nodePath, setNodePath] = useState(props.nodePath);
+
 	/*
 	 * Currently selected node object
 	 */
-	const [selectedNode, setSelectedNode] = useState({});
+	const [selectedNode, setSelectedNode] = useState(props.selectedNode);
+
 	/**
 	 * Selected nodes
 	 */
@@ -125,6 +129,24 @@ export const CosmozTreenodeButtonView = ({
 	 */
 	const [highlightedNodePath, setHighlightedNodePath] = useState('');
 
+	const buttonText =
+		_buttonText ??
+		_getButtonLabel(
+			nodesOnNodePath,
+			buttonTextPlaceholder,
+			tree.searchProperty,
+		);
+
+	const host = useHost();
+
+	useEffect(() => {
+		notifyProperty(host, 'nodePath', nodePath);
+	}, [nodePath]);
+
+	useEffect(() => {
+		notifyProperty(host, 'selectedNode', selectedNode);
+	}, [selectedNode]);
+
 	/**
 	 * Event handler for node chip removal button, removes a node chip.
 	 * @param {object} event Polymer event object.
@@ -132,16 +154,19 @@ export const CosmozTreenodeButtonView = ({
 	 */
 	const _clearItemSelection = (event) => {
 		const item = event.model.item;
-		const selectedIndex = this.selectedNodes.indexOf(item);
+		const selectedIndex = selectedNodes.indexOf(item);
 
 		// This will remove from the DOM the source element of the processed event ...
-		this.splice('selectedNodes', selectedIndex, 1);
+		const newSelectedNodes = selectedNodes.concat([]);
+		newSelectedNodes.splice(selectedIndex, 1);
 		// ... so we must prevent further propagation of this event, because its source is now invalid.
 		// (This has caused troubles in app-drawer-layout click event handler).
 
-		if (!this.selectedNodes.length) {
-			this.reset();
+		if (!newSelectedNodes.length) {
+			reset();
 		}
+
+		setSelectedNodes(newSelectedNodes);
 
 		event.preventDefault();
 		event.stopPropagation();
@@ -175,7 +200,7 @@ export const CosmozTreenodeButtonView = ({
 	 * @returns {void}
 	 */
 	const openDialogTree = () => {
-		this.$.dialogTree.open();
+		host.shadowRoot.querySelector('#dialogTree')?.open();
 	};
 
 	/**
@@ -183,8 +208,9 @@ export const CosmozTreenodeButtonView = ({
 	 * @returns {void}
 	 */
 	const focusSearch = () => {
-		this.$.dialogTree.paperDialog
-			.querySelector('#treeNavigator')
+		host.shadowRoot
+			.querySelector('#dialogTree')
+			?.paperDialog.querySelector('#treeNavigator')
 			.shadowRoot.querySelector('cosmoz-input')
 			.focus();
 	};
@@ -345,7 +371,7 @@ export const CosmozTreenodeButtonView = ({
 						@click=${selectNode}
 						>${_('Select', t)}</paper-button
 					>
-					<paper-button dialog-dismiss>${_('Cancel', t)}</paper-button>
+					<paper-button dialog-dismiss>${t('Cancel')}</paper-button>
 				</div>
 			</template>
 		</cosmoz-dialog>
