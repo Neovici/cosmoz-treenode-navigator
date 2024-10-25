@@ -11,8 +11,10 @@ import { html } from '@polymer/polymer/lib/utils/html-tag';
 import '@neovici/cosmoz-dialog';
 import { Tree } from '@neovici/cosmoz-tree';
 import { translatable } from '@neovici/cosmoz-i18next';
+
 import './cosmoz-treenode-navigator';
 import { getNode, getTreePathParts } from './helpers';
+
 /**
 	`cosmoz-treenode-navigator`
 	Navigator through object with treelike datastructure.
@@ -95,15 +97,13 @@ class CosmozTreenodeButtonView extends translatable(PolymerElement) {
 					title="[[ buttonText ]]"
 				>
 					<div class="pathToNode">
-						&lrm;<span
-							><cosmoz-treenode
-								key-property="pathLocator"
-								key-value="[[ nodePath ]]"
-								owner-tree="[[ cz.state.tree ]]"
-								show-max-nodes="1"
-							></cosmoz-treenode
-							>[[ buttonText ]]</span
-						>
+						<cosmoz-treenode
+							key-property="pathLocator"
+							key-value="[[ nodePath ]]"
+							owner-tree="[[ tree ]]"
+							fallback="Select a node"
+							show-max-nodes="1"
+						></cosmoz-treenode>
 					</div>
 				</paper-button>
 				<paper-icon-button
@@ -338,11 +338,10 @@ class CosmozTreenodeButtonView extends translatable(PolymerElement) {
 		if (!Array.isArray(pathParts) || pathParts.length === 0) {
 			return placeholder;
 		}
-		const labels = pathParts
+		return pathParts
 			.filter((n) => n)
-			.map((part) => part[this.tree.searchProperty]);
-		console.log(labels);
-		return labels.join('/');
+			.map((part) => part[this.tree.searchProperty])
+			.join(' / ');
 	}
 	/**
 	 * Get text from a node to set on a node chip.

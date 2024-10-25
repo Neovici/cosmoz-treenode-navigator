@@ -64,14 +64,14 @@ const TreenodeNavigator = (host) => {
 		[searchValue, setSearchValue] = useState(''),
 		search = useMemo(
 			() => (searchValue?.length > searchMinLength && searchValue) || undefined,
-			[searchValue, searchMinLength]
+			[searchValue, searchMinLength],
 		),
 		/**
 		 * The currently displayed node list
 		 */
 		dataPlane = useMemo(
 			() => computeDataPlane(tree, search, openNodePath),
-			[tree, search, openNodePath]
+			[tree, search, openNodePath],
 		),
 		/**
 		 * Opens a node (renderLevel) based on a given path
@@ -84,7 +84,7 @@ const TreenodeNavigator = (host) => {
 				setSearchValue('');
 				setHighlightedNode();
 			},
-			[tree]
+			[tree],
 		),
 		listRef = useRef();
 
@@ -105,7 +105,7 @@ const TreenodeNavigator = (host) => {
 		notifyProperty(
 			host,
 			'highlightedNodePath',
-			highlightedNode?.pathLocator || ''
+			highlightedNode?.pathLocator || '',
 		);
 	}, [highlightedNode]);
 
@@ -206,7 +206,7 @@ const TreenodeNavigator = (host) => {
 								<div class="section">
 									${tree.getPathString(parentPath, tree.searchProperty)}
 								</div>
-							`
+							`,
 						))(getParentPath(tree, node))}
 					<div
 						class=${computeRowClass('node', node, highlightedNode)}
@@ -231,10 +231,10 @@ const TreenodeNavigator = (host) => {
 										</g>
 									</svg>
 								</span>
-							`
+							`,
 						)}
 					</div>
-			  </div>`
+				</div>`
 			: nothing;
 
 	return html`
@@ -260,8 +260,8 @@ const TreenodeNavigator = (host) => {
 							<span class="pointer" tabindex="0" @click=${() => openNode(node)}
 								>${node[tree.searchProperty]}</span
 							>
-						`
-					)
+						`,
+					),
 				)}
 			</h3>
 			<cosmoz-input
@@ -281,7 +281,7 @@ const TreenodeNavigator = (host) => {
 						renderItem,
 						scroller: true,
 					})}
-				</div>`
+				</div>`,
 		)}
 		${when(
 			search && openNodePath,
@@ -289,12 +289,12 @@ const TreenodeNavigator = (host) => {
 				<button class="btn-ghost" @click=${() => setOpenNodePath('')}>
 					${searchGlobalPlaceholder}
 				</button>
-			`
+			`,
 		)}
 	`;
 };
 
 customElements.define(
 	'cosmoz-treenode-navigator',
-	component(TreenodeNavigator)
+	component(TreenodeNavigator),
 );
