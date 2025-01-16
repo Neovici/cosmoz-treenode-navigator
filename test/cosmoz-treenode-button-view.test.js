@@ -14,18 +14,18 @@ suite('rtl', () => {
 		);
 	});
 
-	// test('button renders selected path', (done) => {
-	// 	treeButton.nodePath = '1.2.3';
-	// 	// Button view label depends on a binding in a cosmoz-treenode-navigator
-	// 	// stamped asynchronously, so we need to wait a bit.
-	// 	setTimeout(() => {
-	// 		const buttonLabel = treeButton.shadowRoot
-	// 			.querySelector('div > paper-button > div > cosmoz-treenode')
-	// 			.shadowRoot.querySelector('span').textContent;
-	// 		assert.isTrue(buttonLabel.endsWith('1 / 2 / 3'));
-	// 		done();
-	// 	}, 500);
-	// });
+	test('button renders selected path', (done) => {
+		treeButton.nodePath = '1.2.3';
+
+		// Button view label depends on a binding in a cosmoz-treenode-navigator
+		// stamped asynchronously, so we need to wait a bit.
+		setTimeout(() => {
+			const buttonLabel =
+				treeButton.shadowRoot.querySelector('.pathToNode').textContent;
+			assert.isTrue(buttonLabel.endsWith('1 / 2 / 3'));
+			done();
+		}, 500);
+	});
 
 	/*
 			// commented out because test is unstable
