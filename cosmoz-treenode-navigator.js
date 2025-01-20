@@ -23,6 +23,9 @@ import {
 	onNodeDblClicked,
 } from './helpers';
 import styles from './cosmoz-treenode-navigator.styles';
+import '@neovici/cosmoz-treenode';
+
+customElements.get('cosmoz-treenode');
 
 const TreenodeNavigator = (host) => {
 	const {
