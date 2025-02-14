@@ -116,4 +116,8 @@ export default css`
 		font-size: 14px;
 		font-family: inherit;
 	}
+
+	.path>.pointer:hover, .path>.pointer:has(~.pointer:hover) {
+        text-decoration: underline;
+    }
 `;
