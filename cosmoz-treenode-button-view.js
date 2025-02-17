@@ -96,7 +96,17 @@ class CosmozTreenodeButtonView extends translatable(PolymerElement) {
 					on-click="openDialogTree"
 					title="[[ buttonText ]]"
 				>
-					<div class="pathToNode">&lrm;<span>[[ buttonText ]]</span></div>
+					<div class="pathToNode">
+						<span>
+							<cosmoz-treenode
+								key-property="pathLocator"
+								key-value="[[ nodePath ]]"
+								owner-tree="[[ tree ]]"
+								fallback="Select a node"
+								show-max-nodes="1"
+							></cosmoz-treenode
+						></span>
+					</div>
 				</paper-button>
 				<paper-icon-button
 					part="clear"
@@ -380,20 +390,20 @@ class CosmozTreenodeButtonView extends translatable(PolymerElement) {
 
 		this.selectedNode = getNode(
 			this.highlightedNodePath || this.nodePath,
-			this.tree
+			this.tree,
 		);
 		if (this.highlightedNodePath) {
 			this.nodePath = this.highlightedNodePath;
 		}
 		this.nodesOnNodePath = getTreePathParts(
 			this.highlightedNodePath || this.nodePath,
-			this.tree
+			this.tree,
 		);
 
 		if (this.multiSelection) {
 			if (
 				!this.selectedNodes.some(
-					(node) => node.pathLocator === this.highlightedNodePath
+					(node) => node.pathLocator === this.highlightedNodePath,
 				)
 			) {
 				this.push('selectedNodes', this.selectedNode);
@@ -430,7 +440,7 @@ class CosmozTreenodeButtonView extends translatable(PolymerElement) {
 			timeOut.after(50), // 5 was enough during test
 			() => {
 				this.$.dialogTree.fit();
-			}
+			},
 		);
 	}
 
