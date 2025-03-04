@@ -10,7 +10,7 @@ export default css`
 	}
 
 	.header {
-		margin: 0 16px;
+		margin: 0 8px;
 	}
 
 	.header a {
@@ -36,6 +36,7 @@ export default css`
 		display: flex;
 		align-items: center;
 		flex-wrap: wrap;
+		margin: 0;
 	}
 
 	.slash {
@@ -74,9 +75,11 @@ export default css`
 		padding: 6px 12px;
 		cursor: pointer;
 	}
+
 	.name {
 		flex: auto;
 	}
+
 	.icon {
 		box-sizing: border-box;
 		cursor: pointer;
@@ -117,7 +120,8 @@ export default css`
 		font-family: inherit;
 	}
 
-	.path>.pointer:hover, .path>.pointer:has(~.pointer:hover) {
-        text-decoration: underline;
-    }
+	.path > .pointer:hover,
+	.path > .pointer:has(~ .pointer:hover) {
+		text-decoration: underline;
+	}
 `;

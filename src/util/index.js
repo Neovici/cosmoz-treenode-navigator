@@ -1,7 +1,8 @@
 export const //
 	getParentPath = (tree, node) => {
-		const path = node.pathLocator || node.path,
-			pathLocatorSeparator = tree.pathLocatorSeparator;
+		const path = node.pathLocator || node.path;
+		const { pathLocatorSeparator } = tree;
+
 		return path.includes(pathLocatorSeparator)
 			? path.substring(0, path.lastIndexOf(pathLocatorSeparator))
 			: path;
@@ -19,7 +20,7 @@ export const //
 		}
 		const node = tree.getNodeByPathLocator(pathLocator),
 			children = tree.getChildren(node),
-			searchProperty = tree.searchProperty,
+			{ searchProperty } = tree,
 			sortFunc = (a, b) => {
 				// First sort based on "folder" status (containing children)
 				if (tree.hasChildren(a)) {
@@ -72,10 +73,10 @@ export const //
 				(node.id && node.id === highlightedNode.id) ||
 				node.pathLocator === highlightedNode.pathLocator;
 		}
-		return selected ? classes + ' selected' : classes;
+		return selected ? `${classes} selected` : classes;
 	},
 	/**
-	 * Selects the doubled clicked node and dispatches an node-dblclicked event.
+	 * Selects the doubled clicked node and dispatches a node-dblclicked event.
 	 * @param {Event} event The triggering event
 	 * @param {object} host Host
 	 * @return {undefined}
@@ -86,7 +87,7 @@ export const //
 				detail: {
 					model: event.model,
 				},
-			})
+			}),
 		);
 	},
 	/**

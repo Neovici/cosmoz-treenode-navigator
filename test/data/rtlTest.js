@@ -12,11 +12,10 @@ export default {
 					3: {
 						id: '3a7654f1-e3e6-49c7-b6a8-a4fb00f31245',
 						name: '3',
-						pathLocator: '1.2.3'
-					}
-				}
-			}
-		}
-	}
+						pathLocator: '1.2.3',
+					},
+				},
+			},
+		},
+	},
 };
-

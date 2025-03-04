@@ -8,8 +8,8 @@ engines:
     config:
       sanitize_batch: false
       extensions:
-       - .js
-       - .html
+        - .js
+        - .html
 
   duplication:
     enabled: true
@@ -20,9 +20,9 @@ engines:
   fixme:
     enabled: true
     exclude_paths:
-      - "analysis.json"
+      - 'analysis.json'
 
 ratings:
   paths:
-  - "**.js"
-  - "**.html"
+    - '**.js'
+    - '**.html'

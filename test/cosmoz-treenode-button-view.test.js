@@ -1,22 +1,28 @@
 import { assert, fixture, html } from '@open-wc/testing';
 import { DefaultTree } from '@neovici/cosmoz-tree/cosmoz-default-tree';
 import rtlData from './data/rtlTest.js';
-import '../cosmoz-treenode-button-view';
+import '../demo/cosmoz-treenode-button-view';
 
 suite('rtl', () => {
 	let treeButton;
 
 	suiteSetup(async () => {
-		treeButton = await fixture(html`<cosmoz-treenode-button-view .tree=${ new DefaultTree(rtlData) }>`);
+		treeButton = await fixture(
+			html`<cosmoz-treenode-button-view
+				.tree=${new DefaultTree(rtlData)}
+			></cosmoz-treenode-button-view>`,
+		);
 	});
 
-	test('button renders selected path', done => {
+	test('button renders selected path', (done) => {
 		treeButton.nodePath = '1.2.3';
 
 		// Button view label depends on a binding in a cosmoz-treenode-navigator
 		// stamped asynchronously, so we need to wait a bit.
 		setTimeout(() => {
-			const buttonLabel = treeButton.shadowRoot.querySelector('.pathToNode').textContent;
+			const buttonLabel = treeButton.shadowRoot
+				.querySelector('.actions__node-select')
+				.textContent.trim();
 			assert.isTrue(buttonLabel.endsWith('1 / 2 / 3'));
 			done();
 		}, 500);

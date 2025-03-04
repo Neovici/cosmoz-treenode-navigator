@@ -10,14 +10,14 @@ export default {
 					3: {
 						name: 'System',
 						pathLocator: '1.2.3',
-						children: {}
+						children: {},
 					},
 					4: {
 						name: 'Microsoft.NET',
 						pathLocator: '1.2.4',
-						children: {}
-					}
-				}
+						children: {},
+					},
+				},
 			},
 			5: {
 				name: 'Program Files',
@@ -25,13 +25,13 @@ export default {
 				children: {
 					6: {
 						name: 'Microsoft VS Code',
-						pathLocator: '1.5.6'
+						pathLocator: '1.5.6',
 					},
 					7: {
 						name: 'Git',
-						pathLocator: '1.5.7'
-					}
-				}
+						pathLocator: '1.5.7',
+					},
+				},
 			},
 			100: {
 				name: 'Users',
@@ -43,17 +43,17 @@ export default {
 						children: {
 							201: {
 								name: 'Documents',
-								pathLocator: '1.100.200.201'
+								pathLocator: '1.100.200.201',
 							},
 							202: {
 								name: 'Music',
-								pathLocator: '1.100.200.202'
+								pathLocator: '1.100.200.202',
 							},
 							203: {
 								name: 'Pictures',
-								pathLocator: '1.100.200.203'
-							}
-						}
+								pathLocator: '1.100.200.203',
+							},
+						},
 					},
 					300: {
 						name: 'John',
@@ -61,17 +61,17 @@ export default {
 						children: {
 							301: {
 								name: 'Documents',
-								pathLocator: '1.100.300.301'
+								pathLocator: '1.100.300.301',
 							},
 							302: {
 								name: 'Music',
-								pathLocator: '1.100.300.302'
+								pathLocator: '1.100.300.302',
 							},
 							303: {
 								name: 'Pictures',
-								pathLocator: '1.100.300.303'
-							}
-						}
+								pathLocator: '1.100.300.303',
+							},
+						},
 					},
 					400: {
 						name: 'Public',
@@ -79,21 +79,21 @@ export default {
 						children: {
 							401: {
 								name: 'Public Documents',
-								pathLocator: '1.100.400.401'
+								pathLocator: '1.100.400.401',
 							},
 							402: {
 								name: 'Public Music',
-								pathLocator: '1.100.400.402'
+								pathLocator: '1.100.400.402',
 							},
 							403: {
 								name: 'Public Pictures',
-								pathLocator: '1.100.400.403'
-							}
-						}
-					}
-				}
-			}
-		}
+								pathLocator: '1.100.400.403',
+							},
+						},
+					},
+				},
+			},
+		},
 	},
 	1000: {
 		name: 'D:',
@@ -105,14 +105,14 @@ export default {
 				children: {
 					1002: {
 						name: 'John',
-						pathLocator: '1000.1001.1002'
-					}
-				}
+						pathLocator: '1000.1001.1002',
+					},
+				},
 			},
 			1002: {
 				name: 'Backup',
-				pathLocator: '1000.1002'
-			}
-		}
-	}
+				pathLocator: '1000.1002',
+			},
+		},
+	},
 };
