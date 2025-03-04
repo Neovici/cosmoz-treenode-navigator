@@ -1,4 +1,4 @@
-export default {
+export const adminFilesTree = {
 	1: {
 		name: 'C:',
 		pathLocator: '1',
