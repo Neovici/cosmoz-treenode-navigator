@@ -8,7 +8,8 @@
 		"pionjs",
 		"haunted",
 		"lit-html",
-		"web-components"
+		"web-components",
+		"typescript"
 	],
 	"homepage": "https://github.com/neovici/cosmoz-treenode-navigator#readme",
 	"bugs": {
@@ -20,23 +21,29 @@
 	},
 	"license": "Apache-2.0",
 	"author": "",
-	"main": "cosmoz-treenode-navigator.js",
+	"main": "dist/src/cosmoz-treenode-navigator.js",
 	"directories": {
 		"test": "test"
 	},
 	"files": [
-		"cosmoz-*.js",
-		"helpers.js",
+		"dist/src/**/*.js",
+		"dist/src/**/*.d.ts",
+		"dist/src/**/*.js.map",
+		"dist/src/**/*.d.ts.map",
 		"test/data"
 	],
 	"scripts": {
-		"lint": "eslint --cache --ext .js .",
+		"lint": "eslint --cache --ext .js,.ts .",
 		"start": "wds",
 		"test": "wtr --coverage",
 		"test:watch": "wtr --watch",
 		"prepare": "husky install",
-		"prettier": "prettier --write \"**/*.{js,json,css,md}\"",
-		"prettier:check": "prettier --check \"**/*.{js,json,css,md}\""
+		"prettier": "prettier --write \"**/*.{js,ts,json,css,md}\"",
+		"prettier:check": "prettier --check \"**/*.{js,ts,json,css,md}\"",
+		"build": "tsc && npm run build:styles",
+		"build:watch": "tsc --watch",
+		"build:styles": "tsc -p tsconfig.styles.json",
+		"start:ts": "npm run build && wds"
 	},
 	"release": {
 		"plugins": [
@@ -93,13 +100,17 @@
 		"@polymer/test-fixture": "^4.0.2",
 		"@semantic-release/changelog": "^6.0.0",
 		"@semantic-release/git": "^10.0.0",
+		"@types/mocha": "^10.0.6",
+		"@types/chai": "^4.3.11",
 		"@typescript-eslint/eslint-plugin": "^8.26.0",
+		"@typescript-eslint/parser": "^8.26.0",
 		"@webcomponents/webcomponentsjs": "^2.0.0",
 		"eslint-config-prettier": "^10.1.1",
 		"eslint-plugin-html": "^8.1.2",
 		"eslint-plugin-import": "^2.31.0",
 		"husky": "^8.0.0",
 		"lit": "^3.2.1",
-		"semantic-release": "^22.0.0"
+		"semantic-release": "^22.0.0",
+		"typescript": "^5.4.2"
 	}
 }

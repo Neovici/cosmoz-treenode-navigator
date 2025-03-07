@@ -1,8 +1,7 @@
 export const //
 	getParentPath = (tree, node) => {
-		const path = node.pathLocator || node.path;
+		const path = node.pathLocator || node.path || '';
 		const { pathLocatorSeparator } = tree;
-
 		return path.includes(pathLocatorSeparator)
 			? path.substring(0, path.lastIndexOf(pathLocatorSeparator))
 			: path;
@@ -16,10 +15,10 @@ export const //
 	 */
 	renderLevel = (tree, pathLocator) => {
 		if (!tree) {
-			return;
+			return [];
 		}
 		const node = tree.getNodeByPathLocator(pathLocator),
-			children = tree.getChildren(node),
+			children = node ? tree.getChildren(node) : [],
 			{ searchProperty } = tree,
 			sortFunc = (a, b) => {
 				// First sort based on "folder" status (containing children)
@@ -33,7 +32,6 @@ export const //
 				// Then sort on searchProperty
 				const val1 = a[searchProperty],
 					val2 = b[searchProperty];
-
 				if (val1 > val2) {
 					return 1;
 				}
@@ -42,7 +40,7 @@ export const //
 				}
 				return 0;
 			};
-		return children.length > 0 ? children.sort(sortFunc) : node;
+		return children.length > 0 ? children.sort(sortFunc) : node || [];
 	},
 	/**
 	 * Returns the found nodes based on a search string and a given tree to be searched
@@ -55,8 +53,9 @@ export const //
 		if (!tree) {
 			return [];
 		}
-		const nodes = renderLevel(tree, pathLocator);
-		return search ? tree.searchNodes(search, nodes, false) : nodes;
+		const nodes = renderLevel(tree, pathLocator || '');
+		const nodeArray = Array.isArray(nodes) ? nodes : [nodes];
+		return search ? tree.searchNodes(search, nodeArray, false) : nodeArray;
 	},
 	/**
 	 * Returns the classes of a row based its selection state
@@ -114,12 +113,11 @@ export const //
 		if (!tree || !pathLocator) {
 			return null;
 		}
-
 		const node = tree.getNodeByPathLocator(pathLocator);
 		let nodes;
-
 		if (!node) {
 			nodes = tree.getPathNodes(pathLocator).filter((n) => n != null);
 		}
-		return nodes && nodes.length > 0 ? nodes.pop() : node;
+		return nodes && nodes.length > 0 ? nodes.pop() || null : node;
 	};
+//# sourceMappingURL=helpers.js.map

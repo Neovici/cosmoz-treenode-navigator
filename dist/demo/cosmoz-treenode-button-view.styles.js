@@ -1,5 +1,4 @@
 import { tagged as css } from '@neovici/cosmoz-utils';
-
 export default css`
 	:host {
 		display: block;

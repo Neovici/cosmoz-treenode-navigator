@@ -1,4 +1,10 @@
-export default {
+import { TreeNode } from '../../src/util/types';
+
+type TreeStructure = {
+  [key: string]: TreeNode;
+};
+
+const basicTree: TreeStructure = {
 	1: {
 		name: 'C:',
 		pathLocator: '1',
@@ -116,3 +122,5 @@ export default {
 		},
 	},
 };
+
+export default basicTree;
