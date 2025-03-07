@@ -1,10 +1,15 @@
 {
 	"name": "@neovici/cosmoz-treenode-navigator",
-	"version": "6.0.2",
-	"description": "A Polymer component that lets you navigate and search through hierarchically structured data-nodes and select one of them.",
+	"version": "6.1.0",
+	"type": "module",
+	"description": "A Pion component that lets you navigate and search through hierarchically structured data-nodes and select one of them.",
 	"keywords": [
-		"polymer",
-		"web-components"
+		"pion",
+		"pionjs",
+		"haunted",
+		"lit-html",
+		"web-components",
+		"typescript"
 	],
 	"homepage": "https://github.com/neovici/cosmoz-treenode-navigator#readme",
 	"bugs": {
@@ -16,21 +21,29 @@
 	},
 	"license": "Apache-2.0",
 	"author": "",
-	"main": "cosmoz-treenode-navigator.js",
+	"main": "dist/src/cosmoz-treenode-navigator.js",
 	"directories": {
 		"test": "test"
 	},
 	"files": [
-		"cosmoz-*.js",
-		"helpers.js",
+		"dist/src/**/*.js",
+		"dist/src/**/*.d.ts",
+		"dist/src/**/*.js.map",
+		"dist/src/**/*.d.ts.map",
 		"test/data"
 	],
 	"scripts": {
-		"lint": "eslint --cache --ext .js .",
+		"lint": "eslint --cache --ext .js,.ts .",
 		"start": "wds",
 		"test": "wtr --coverage",
 		"test:watch": "wtr --watch",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"prettier": "prettier --write \"**/*.{js,ts,json,css,md}\"",
+		"prettier:check": "prettier --check \"**/*.{js,ts,json,css,md}\"",
+		"build": "tsc && npm run build:styles",
+		"build:watch": "tsc --watch",
+		"build:styles": "tsc -p tsconfig.styles.json",
+		"start:ts": "npm run build && wds"
 	},
 	"release": {
 		"plugins": [
@@ -60,13 +73,13 @@
 	},
 	"dependencies": {
 		"@lit-labs/virtualizer": "^2.0.0",
-		"@neovici/cfg": "^1.33.0",
+		"@neovici/cfg": "^1.57.0",
 		"@neovici/cosmoz-dialog": "^3.0.0",
-		"@neovici/cosmoz-i18next": "^3.2.0",
+		"@neovici/cosmoz-i18next": "^3.4.0",
 		"@neovici/cosmoz-input": "^5.0.0",
-		"@neovici/cosmoz-tree": "^3.0.0",
-		"@neovici/cosmoz-utils": "^6.0.0",
-		"@pionjs/pion": "^2.0.0",
+		"@neovici/cosmoz-tree": "^3.6.1",
+		"@neovici/cosmoz-utils": "^6.8.1",
+		"@pionjs/pion": "^2.7.1",
 		"@polymer/iron-icons": "^3.0.0",
 		"@polymer/paper-button": "^3.0.0",
 		"@polymer/paper-icon-button": "^3.0.0",
@@ -77,6 +90,8 @@
 	"devDependencies": {
 		"@commitlint/cli": "^18.0.0",
 		"@commitlint/config-conventional": "^18.0.0",
+		"@eslint/eslintrc": "^3.3.0",
+		"@eslint/js": "^9.21.0",
 		"@open-wc/testing": "^4.0.0",
 		"@polymer/iron-ajax": "^3.0.0",
 		"@polymer/iron-component-page": "^4.0.0",
@@ -85,8 +100,17 @@
 		"@polymer/test-fixture": "^4.0.2",
 		"@semantic-release/changelog": "^6.0.0",
 		"@semantic-release/git": "^10.0.0",
+		"@types/mocha": "^10.0.6",
+		"@types/chai": "^4.3.11",
+		"@typescript-eslint/eslint-plugin": "^8.26.0",
+		"@typescript-eslint/parser": "^8.26.0",
 		"@webcomponents/webcomponentsjs": "^2.0.0",
+		"eslint-config-prettier": "^10.1.1",
+		"eslint-plugin-html": "^8.1.2",
+		"eslint-plugin-import": "^2.31.0",
 		"husky": "^8.0.0",
-		"semantic-release": "^22.0.0"
+		"lit": "^3.2.1",
+		"semantic-release": "^22.0.0",
+		"typescript": "^5.4.2"
 	}
 }

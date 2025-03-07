@@ -1,56 +1,64 @@
 <!doctype html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
-	<title>cosmoz-treenode-navigator demo</title>
-	<script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-	<script type="module">
-		import "@polymer/iron-demo-helpers/demo-pages-shared-styles.js";
-		import "@polymer/iron-demo-helpers/demo-snippet.js";
-		import "../cosmoz-treenode-navigator.js";
-		import "../cosmoz-treenode-button-view.js";
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes"
+		/>
+		<title>cosmoz-treenode-navigator demo</title>
+	</head>
 
-		const $documentContainer = document.createElement('template');
-		$documentContainer.innerHTML = `
-			<custom-style>
-				<style is="custom-style" include="demo-pages-shared-styles"></style>
-			</custom-style>`;
-		document.head.appendChild($documentContainer.content);
-	</script>
-</head>
+	<body>
+		<h1>Cosmoz-treenode-button-view rtl test</h1>
 
-<body>
-	<h1>Cosmoz-treenode-button-view rtl test</h1>
+		<div class="vertical-section-container">
+			<h2>
+				Demonstrate issue caused by using direction: rtl to render the button
+				label
+			</h2>
+			<p>Select node 1/2/3, and watch the button label</p>
+			<section id="demo1"></section>
+		</div>
 
-	<div class="vertical-section-container">
-		<h3>Demonstrate issue caused by using direction: rtl to render the button label</h3>
-		<p>Select node 1/2/3, and watch the button	label</p>
-		<demo-snippet>
-			<template>
-				<dom-bind id="demo1">
-					<template is="dom-bind">
-						<cosmoz-treenode-button-view id="navigator" button-text-placeholder="Click to select a node" node-path="{{ path1 }}" selected-node="{{ selectedNode1 }}" tree="[[ getTree(treeData1) ]]">
-						</cosmoz-treenode-button-view>
-					</template>
-				</dom-bind>
-			</template>
-		</demo-snippet>
-	</div>
-	<script type="module">
-		import { DefaultTree } from '@neovici/cosmoz-tree/cosmoz-default-tree';
-		import treeData1 from '../test/data/rtlTest';
-		const getTree = data => {
+		<script type="module">
+			import { render, html } from 'lit-html';
+			import { DefaultTree } from '@neovici/cosmoz-tree/cosmoz-default-tree';
+			import './cosmoz-treenode-button-view.js';
+
+			const getTree = (data) => {
 				if (data) {
 					return new DefaultTree(data);
 				}
-			},
-			initTemplate = id => {
-				let tpl = document.getElementById(id);
-				tpl = !tpl.set ? tpl.firstElementChild : tpl;
-				tpl.getTree = getTree;
-				tpl.treeData1 = treeData1;
 			};
-		initTemplate('demo1');
-	</script>
-</body></html>
+
+			// TODO have this as a single helper function
+			const initTemplate = ({ dataSource, domId, multiSelection = false }) => {
+				fetch(dataSource)
+					.then((response) => response.json())
+					.then((jsonForTree) => {
+						render(
+							html` <cosmoz-treenode-button-view
+								.tree=${getTree(jsonForTree)}
+								button-text-placeholder="Select a node"
+								search-placeholder="Search..."
+								search-global-placeholder="Click to search again but globally"
+								.searchMinLength=${3}
+								.multiSelection=${multiSelection}
+								dialog-text="Search or navigate to chosen destination"
+							></cosmoz-treenode-button-view>`,
+							document.body.querySelector(domId),
+						);
+					})
+					.catch((e) => {
+						// eslint-disable-next-line no-console
+						console.error(`Failed to fetch local JSON resource: ${e.message}`);
+					});
+			};
+
+			(function () {
+				initTemplate({ dataSource: './data/rtl.json', domId: '#demo1' });
+			})();
+		</script>
+	</body>
+</html>

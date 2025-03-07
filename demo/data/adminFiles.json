@@ -10,14 +10,12 @@
 					"3": {
 						"name": "System",
 						"pathLocator": "1.2.3",
-						"children": {
-						}
+						"children": {}
 					},
 					"4": {
 						"name": "Microsoft.NET",
 						"pathLocator": "1.2.4",
-						"children": {
-						}
+						"children": {}
 					}
 				}
 			},
