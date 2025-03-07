@@ -1,11 +1,12 @@
 import { assert, fixture, html } from '@open-wc/testing';
 import { DefaultTree } from '@neovici/cosmoz-tree/cosmoz-default-tree';
-import basicTree from './data/basicTree.js';
 import '../src/cosmoz-treenode-navigator';
-import { computeDataPlane } from '../src/util';
+import { computeDataPlane } from '../src/util/helpers';
+import { TreeNode }         from '../src/util/types';
+import basicTree                 from './data/basicTree';
 
 suite('cosmoz-treenode-navigator', () => {
-	let navigator;
+	let navigator: any;
 
 	setup(async () => {
 		navigator = await fixture(
@@ -22,9 +23,6 @@ suite('cosmoz-treenode-navigator', () => {
 	});
 
 	test('tree length and sort', () => {
-		// given a node navigator with some data
-
-		// when I enter the first node
 		navigator.openNodePath = '1000';
 
 		const dataPlane = computeDataPlane(
@@ -32,8 +30,6 @@ suite('cosmoz-treenode-navigator', () => {
 			navigator.searchValue,
 			navigator.openNodePath,
 		);
-		// then I can see the contents of the node
-		// and it is ordered folder-first, then alphabetically
 		assert.equal(dataPlane[0].name, 'Data');
 		assert.equal(dataPlane[1].name, 'Backup');
 		assert.equal(dataPlane.length, 2);
@@ -49,7 +45,7 @@ suite('cosmoz-treenode-navigator', () => {
 	});
 
 	test('should check if node has children', () => {
-		const node = {
+		const node: TreeNode = {
 			name: 'D:',
 			path: '1000',
 			children: {
@@ -63,7 +59,7 @@ suite('cosmoz-treenode-navigator', () => {
 			pathLocator: '1000',
 		};
 		assert.equal(navigator.tree.hasChildren(node), true);
-		const node2 = {
+		const node2: TreeNode = {
 			name: 'Git',
 			path: '1.5.7',
 			parentSectionName: 'C:/Program Files',
@@ -73,8 +69,6 @@ suite('cosmoz-treenode-navigator', () => {
 	});
 
 	test('match search string', () => {
-		// given a node navigator with some data
-		// when I search for 'John'
 		navigator.searchValue = 'John';
 
 		const dataPlane = computeDataPlane(
@@ -83,14 +77,11 @@ suite('cosmoz-treenode-navigator', () => {
 			'1000',
 		);
 
-		//then I can see only 1 item matching 'John'
 		assert.lengthOf(dataPlane, 1);
 		assert.equal(dataPlane[0].name, 'John');
 	});
 
 	test('not match search string', () => {
-		// given a node navigator with some data
-		// when I search for 'NONEXISTING'
 		navigator.searchValue = 'NONEXISTING';
 		const dataPlane = computeDataPlane(
 			navigator.tree,

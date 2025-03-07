@@ -1,10 +1,10 @@
 import { assert, fixture, html } from '@open-wc/testing';
 import { DefaultTree } from '@neovici/cosmoz-tree/cosmoz-default-tree';
-import rtlData from './data/rtlTest.js';
-import '../demo/cosmoz-treenode-button-view';
+import rtlData from './data/rtlTest';
+import '../src/demo/cosmoz-treenode-button-view';
 
 suite('rtl', () => {
-	let treeButton;
+	let treeButton: any;
 
 	suiteSetup(async () => {
 		treeButton = await fixture(
@@ -17,8 +17,6 @@ suite('rtl', () => {
 	test('button renders selected path', (done) => {
 		treeButton.nodePath = '1.2.3';
 
-		// Button view label depends on a binding in a cosmoz-treenode-navigator
-		// stamped asynchronously, so we need to wait a bit.
 		setTimeout(() => {
 			const buttonLabel = treeButton.shadowRoot
 				.querySelector('.actions__node-select')

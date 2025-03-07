@@ -20,23 +20,24 @@
 	},
 	"license": "Apache-2.0",
 	"author": "",
-	"main": "cosmoz-treenode-navigator.js",
+	"main": "dist/cosmoz-treenode-navigator.js",
+	"types": "dist/cosmoz-treenode-navigator.d.ts",
 	"directories": {
 		"test": "test"
 	},
 	"files": [
-		"cosmoz-*.js",
-		"helpers.js",
+		"dist",
 		"test/data"
 	],
 	"scripts": {
-		"lint": "eslint --cache --ext .js .",
+		"lint": "eslint --cache --ext .js,.ts .",
 		"start": "wds",
 		"test": "wtr --coverage",
 		"test:watch": "wtr --watch",
 		"prepare": "husky install",
-		"prettier": "prettier --write \"**/*.{js,json,css,md}\"",
-		"prettier:check": "prettier --check \"**/*.{js,json,css,md}\""
+		"prettier": "prettier --write \"**/*.{js,ts,json,css,md}\"",
+		"prettier:check": "prettier --check \"**/*.{js,ts,json,css,md}\"",
+		"build": "tsc"
 	},
 	"release": {
 		"plugins": [
@@ -93,6 +94,8 @@
 		"@polymer/test-fixture": "^4.0.2",
 		"@semantic-release/changelog": "^6.0.0",
 		"@semantic-release/git": "^10.0.0",
+		"@types/mocha": "^10.0.10",
+		"@types/node": "^22.13.10",
 		"@typescript-eslint/eslint-plugin": "^8.26.0",
 		"@webcomponents/webcomponentsjs": "^2.0.0",
 		"eslint-config-prettier": "^10.1.1",
@@ -100,6 +103,7 @@
 		"eslint-plugin-import": "^2.31.0",
 		"husky": "^8.0.0",
 		"lit": "^3.2.1",
-		"semantic-release": "^22.0.0"
+		"semantic-release": "^22.0.0",
+		"typescript": "^5.8.2"
 	}
 }

@@ -1,8 +1,7 @@
 export const //
 	getParentPath = (tree, node) => {
-		const path = node.pathLocator || node.path;
+		const path = node.pathLocator || node.path || '';
 		const { pathLocatorSeparator } = tree;
-
 		return path.includes(pathLocatorSeparator)
 			? path.substring(0, path.lastIndexOf(pathLocatorSeparator))
 			: path;
@@ -10,13 +9,13 @@ export const //
 	/**
 	 * Returns a node array with the children of a node on the given path
 	 * If the node doesn't have children, the node gets returned
-	 * @param {Tree} tree - The main tree
-	 * @param {String} pathLocator - The separated address parts of a node
-	 * @return {Array} - Nodes
+	 * @param tree - The main tree
+	 * @param pathLocator - The separated address parts of a node
+	 * @return - Nodes
 	 */
 	renderLevel = (tree, pathLocator) => {
 		if (!tree) {
-			return;
+			return undefined;
 		}
 		const node = tree.getNodeByPathLocator(pathLocator),
 			children = tree.getChildren(node),
@@ -33,7 +32,6 @@ export const //
 				// Then sort on searchProperty
 				const val1 = a[searchProperty],
 					val2 = b[searchProperty];
-
 				if (val1 > val2) {
 					return 1;
 				}
@@ -46,10 +44,10 @@ export const //
 	},
 	/**
 	 * Returns the found nodes based on a search string and a given tree to be searched
-	 * @param {Tree} tree - The main tree
-	 * @param {String|undefined} search - The search string
-	 * @param {String} pathLocator - The separated address parts of a node
-	 * @return {Array} - The found nodes
+	 * @param tree - The main tree
+	 * @param search - The search string
+	 * @param pathLocator - The separated address parts of a node
+	 * @return - The found nodes
 	 */
 	computeDataPlane = (tree, search, pathLocator) => {
 		if (!tree) {
@@ -60,10 +58,10 @@ export const //
 	},
 	/**
 	 * Returns the classes of a row based its selection state
-	 * @param {String} classes - The default classes
-	 * @param {object} node - Node to check
-	 * @param {object} highlightedNode - Currently highlighted node
-	 * @return {String} - The CSS classes
+	 * @param classes - The default classes
+	 * @param node - Node to check
+	 * @param highlightedNode - Currently highlighted node
+	 * @return - The CSS classes
 	 */
 	computeRowClass = (classes, node, highlightedNode) => {
 		let selected = false;
@@ -77,9 +75,9 @@ export const //
 	},
 	/**
 	 * Selects the doubled clicked node and dispatches a node-dblclicked event.
-	 * @param {Event} event The triggering event
-	 * @param {object} host Host
-	 * @return {undefined}
+	 * @param event The triggering event
+	 * @param host Host
+	 * @return undefined
 	 */
 	onNodeDblClicked = (event, host) => {
 		host.dispatchEvent(
@@ -92,9 +90,9 @@ export const //
 	},
 	/**
 	 * Returns the nodes on a path specified by a given path locator
-	 * @param {String} pathLocator - The separated address parts of a node
-	 * @param {Tree} tree - The main tree
-	 * @return {Array} - The found nodes or empty array
+	 * @param pathLocator - The separated address parts of a node
+	 * @param tree - The main tree
+	 * @return - The found nodes or empty array
 	 */
 	getTreePathParts = (pathLocator, tree) => {
 		if (!tree || !pathLocator) {
@@ -106,20 +104,19 @@ export const //
 	 * Returns a node based on a given path locator.
 	 * If pathLocator is empty or not defined, null gets returned.
 	 * If pathLocator is only partly valid, the last valid node gets returned.
-	 * @param {String} pathLocator - The separated address parts of a node
-	 * @param {Tree} tree - The main tree
-	 * @return {Object} - The found node
+	 * @param pathLocator - The separated address parts of a node
+	 * @param tree - The main tree
+	 * @return - The found node
 	 */
 	getNode = (pathLocator, tree) => {
 		if (!tree || !pathLocator) {
 			return null;
 		}
-
 		const node = tree.getNodeByPathLocator(pathLocator);
 		let nodes;
-
 		if (!node) {
 			nodes = tree.getPathNodes(pathLocator).filter((n) => n != null);
 		}
-		return nodes && nodes.length > 0 ? nodes.pop() : node;
+		return nodes && nodes.length > 0 ? nodes.pop() || null : node;
 	};
+//# sourceMappingURL=helpers.js.map

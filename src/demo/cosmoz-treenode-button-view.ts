@@ -11,11 +11,29 @@ import { ref } from 'lit/directives/ref.js';
 import { css } from './cosmoz-treenode-button-view.styles';
 
 import '@neovici/cosmoz-dialog';
-import '../src/cosmoz-treenode-navigator';
-import { useKeyDown } from '../src/hooks/useKeyDown';
-import { getNode, getTreePathParts } from '../src/util';
-import { when } from 'lit-html/directives/when.js';
-import { debounce$ } from '@neovici/cosmoz-utils/promise';
+import '../cosmoz-treenode-navigator';
+import { useKeyDown }                from '../hooks/useKeyDown';
+import { getNode, getTreePathParts } from '../util/helpers';
+import { when }                      from 'lit-html/directives/when.js';
+import { debounce$ }      from '@neovici/cosmoz-utils/promise';
+import { Tree, TreeNode } from '../util/types';
+
+type ButtonViewProps = {
+	tree: Tree;
+	multiSelection?: boolean;
+	dialogText?: string;
+	buttonTextPlaceholder?: string;
+	searchPlaceholder?: string;
+	noReset?: boolean;
+	searchGlobalPlaceholder?: string;
+	searchMinLength?: number;
+	nodePath?: string;
+};
+
+type ClearItemSelectionParams = {
+	item: TreeNode;
+	ev: Event;
+};
 
 const CosmozTreenodeButtonView = ({
 	tree,
@@ -27,16 +45,15 @@ const CosmozTreenodeButtonView = ({
 	searchGlobalPlaceholder,
 	searchMinLength,
 	nodePath,
-}) => {
-	const dialogRef = useRef(null);
+}: ButtonViewProps) => {
+	const dialogRef = useRef<HTMLDialogElement | null>(null);
 
-	const [highlightedNode, setHighlightedNode] = useProperty('highlightedNode');
+	const [highlightedNode, setHighlightedNode] = useProperty<TreeNode | null>('highlightedNode');
 	const [opened, setOpened] = useState(false);
-	const [nodesOnNodePath, setNodesOnNodePath] = useState([]);
-	const [selectedNodes, setSelectedNodes] = useState([]);
+	const [nodesOnNodePath, setNodesOnNodePath] = useState<TreeNode[]>([]);
+	const [selectedNodes, setSelectedNodes] = useState<TreeNode[]>([]);
 	const [buttonLabel, setButtonLabel] = useState(buttonTextPlaceholder);
 
-	// Handle nodePath changes
 	useEffect(() => {
 		if (nodePath && tree) {
 			setNodesOnNodePath(getTreePathParts(nodePath, tree));
@@ -46,7 +63,7 @@ const CosmozTreenodeButtonView = ({
 	const reset = () => {
 		setNodesOnNodePath([]);
 		setSelectedNodes([]);
-		setHighlightedNode('');
+		setHighlightedNode(null);
 	};
 
 	const enableReset = () => {
@@ -57,39 +74,46 @@ const CosmozTreenodeButtonView = ({
 		return !!highlightedNode;
 	};
 
-	const clearItemSelection = ({ item, ev }) => {
+	const clearItemSelection = ({ item, ev }: ClearItemSelectionParams) => {
 		setSelectedNodes(selectedNodes.filter((node) => node !== item));
 		ev.preventDefault();
 		ev.stopPropagation();
 	};
 
-	const getChipText = (node) => {
+	const getChipText = (node: TreeNode) => {
 		return node.name;
 	};
 
-	const showSelectedNodes = (multiSelection, selectedNodesLength) => {
+	const showSelectedNodes = (multiSelection: boolean, selectedNodesLength: number) => {
 		return multiSelection && selectedNodesLength > 0;
 	};
 
 	const refit = debounce$(() => {
-		dialogRef.current.fit();
+		if (dialogRef.current) {
+			// @ts-expect-error - fit is added by cosmoz-dialog
+			dialogRef.current.fit();
+		}
 	}, 50);
 
 	const onOpen = () => {
-		dialogRef.current.showModal();
+		if (dialogRef.current) {
+			dialogRef.current.showModal();
+		}
 		setOpened(true);
 	};
 
 	const onClose = () => {
 		setOpened(false);
-		dialogRef.current.close();
+		if (dialogRef.current) {
+			dialogRef.current.close();
+		}
 	};
 
 	useKeyDown('Escape', onClose);
 
 	useEffect(() => {
 		if (!Array.isArray(nodesOnNodePath) || nodesOnNodePath.length === 0) {
-			setButtonLabel(buttonTextPlaceholder);
+			setButtonLabel(buttonTextPlaceholder || '');
 			return;
 		}
 
@@ -102,6 +126,8 @@ const CosmozTreenodeButtonView = ({
 	}, [nodesOnNodePath]);
 
 	const selectNode = () => {
+		if (!highlightedNode) return;
+		
 		const path = highlightedNode.pathLocator;
 		const node = getNode(path, tree);
 
@@ -131,7 +157,7 @@ const CosmozTreenodeButtonView = ({
 			)}
 		</div>
 		${when(
-			showSelectedNodes,
+			showSelectedNodes(multiSelection, selectedNodes.length),
 			() => html`
 				<div id="chips" class="row">
 					${selectedNodes.map(
@@ -140,7 +166,7 @@ const CosmozTreenodeButtonView = ({
 								<span>${getChipText(item)}</span>
 								<button
 									class="chip__clear"
-									@click=${(ev) => clearItemSelection({ item, ev })}
+									@click=${(ev: Event) => clearItemSelection({ item, ev })}
 									type="button"
 								>
 									&times;
@@ -154,7 +180,7 @@ const CosmozTreenodeButtonView = ({
 		<dialog
 			class="tree-nav-dialog"
 			${ref((el) => {
-				dialogRef.current = el;
+				dialogRef.current = el as HTMLDialogElement;
 			})}
 		>
 			<header class="tree-nav-dialog__header">
@@ -197,13 +223,26 @@ const CosmozTreenodeButtonView = ({
 	`;
 };
 
+// Define the attribute names as a type
+type ObservedAttributes =
+  | 'button-text-placeholder'
+  | 'dialog-text'
+  | 'search-placeholder'
+  | 'search-global-placeholder'
+  | 'node-path'
+  | 'multi-selection'
+  | 'no-reset'
+  | 'search-min-length';
+
+// Cast the array to the correct type
 CosmozTreenodeButtonView.observedAttributes = [
 	'button-text-placeholder',
 	'dialog-text',
 	'search-placeholder',
 	'search-global-placeholder',
 	'node-path',
-];
+] as readonly ObservedAttributes[];
+
 customElements.define(
 	'cosmoz-treenode-button-view',
 	component(CosmozTreenodeButtonView),

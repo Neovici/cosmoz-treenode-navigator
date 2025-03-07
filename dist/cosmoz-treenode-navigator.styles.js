@@ -1,5 +1,4 @@
-import { tagged as css } from '@neovici/cosmoz-utils';
-
+import { css } from '@neovici/cosmoz-utils';
 export default css`
 	:host {
 		--cosmoz-treenode-navigator-select-node-icon-color: var(
@@ -125,3 +124,4 @@ export default css`
 		text-decoration: underline;
 	}
 `;
+//# sourceMappingURL=cosmoz-treenode-navigator.styles.js.map
