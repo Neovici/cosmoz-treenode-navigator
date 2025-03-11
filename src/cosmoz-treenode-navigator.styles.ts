@@ -10,7 +10,7 @@ export default css`
 	}
 
 	.header {
-		margin: 0 8px;
+		margin: 0 16px;
 	}
 
 	.header a {
@@ -72,7 +72,7 @@ export default css`
 		font-weight: 400;
 		height: 40px;
 		line-height: 24px;
-		padding: 6px 12px;
+		padding: 6px 12px 6px 16px;
 		cursor: pointer;
 	}
 

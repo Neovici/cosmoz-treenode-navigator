@@ -1,7 +1,7 @@
 import { assert, fixture, html } from '@open-wc/testing';
 import { DefaultTree } from '@neovici/cosmoz-tree/cosmoz-default-tree';
 import rtlData from './data/rtlTest';
-import '../src/demo/cosmoz-treenode-button-view';
+import '../src/cosmoz-treenode-button-view';
 
 suite('rtl', () => {
 	let treeButton: any;
@@ -16,14 +16,59 @@ suite('rtl', () => {
 
 	test('button renders selected path', (done) => {
 		treeButton.nodePath = '1.2.3';
-
 		setTimeout(() => {
 			const buttonLabel = treeButton.shadowRoot
-				.querySelector('.actions__node-select')
+				.querySelector('.actions__open-dialog')
 				.textContent.trim();
 			assert.isTrue(buttonLabel.endsWith('1 / 2 / 3'));
 			done();
 		}, 500);
+	});
+
+	test('opens dialog on button click', async () => {
+		const openButton = treeButton.shadowRoot.querySelector('.actions__open-dialog');
+		openButton.click();
+		
+		await new Promise(resolve => setTimeout(resolve, 100));
+		
+		const dialog = treeButton.shadowRoot.querySelector('dialog');
+		const isVisible = window.getComputedStyle(dialog).display !== 'none';
+		assert.isTrue(isVisible, 'Dialog should be visible');
+		
+		const cancelButton = dialog.querySelector('.tree-nav-dialog__footer-button[part="cancel-button"]');
+		cancelButton.click();
+		
+		await new Promise(resolve => setTimeout(resolve, 100));
+	});
+
+	test('closes dialog on cancel button click', async () => {
+		const openButton = treeButton.shadowRoot.querySelector('.actions__open-dialog');
+		openButton.click();
+		
+		await new Promise(resolve => setTimeout(resolve, 100));
+		
+		const dialog = treeButton.shadowRoot.querySelector('dialog');
+		const cancelButton = dialog.querySelector('.tree-nav-dialog__footer-button[part="cancel-button"]');
+		cancelButton.click();
+		
+		await new Promise(resolve => setTimeout(resolve, 100));
+		
+		assert.isFalse(!!dialog.open, 'Dialog should be closed');
+	});
+
+	test('sets button label from nodePath', async () => {
+		treeButton.nodePath = '1.2.3';
+		
+		await new Promise(resolve => setTimeout(resolve, 100));
+		
+		const buttonLabel = treeButton.shadowRoot
+			.querySelector('.actions__open-dialog')
+			.textContent.trim();
+		
+		assert.isTrue(buttonLabel.endsWith('1 / 2 / 3'), 'Button should display the path');
+		
+		treeButton.nodePath = '';
+		await new Promise(resolve => setTimeout(resolve, 100));
 	});
 
 	/*

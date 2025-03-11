@@ -22,7 +22,7 @@ import {
   getParentPath,
   onNodeDblClicked,
 }             from './util/helpers';
-import styles from './cosmoz-treenode-navigator.styles';
+import style from './cosmoz-treenode-navigator.styles';
 import { useHost } from '@neovici/cosmoz-utils/hooks/use-host';
 import { notifyProperty }                                  from '@neovici/cosmoz-utils/hooks/use-notify-property';
 import { NavigatorMeta, TreeNode, TreenodeNavigatorProps } from './util/types';
@@ -241,9 +241,6 @@ const TreenodeNavigator = ({
   };
 
   return html`
-    <style>
-      ${styles}
-    </style>
     <div class="header">
       <h3 class="path">
         <span class="icon" @click=${() => onNodeClick()}>
@@ -302,5 +299,7 @@ const TreenodeNavigator = ({
 
 customElements.define(
   'cosmoz-treenode-navigator',
-  component(TreenodeNavigator),
+  component(TreenodeNavigator, {
+    styleSheets: [style]
+  }),
 );

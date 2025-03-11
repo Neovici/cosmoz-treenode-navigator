@@ -32,7 +32,7 @@
 	"exclude": [
 		"node_modules",
 		"dist",
-		"src/demo/**/*",
+		"demo/**/*",
 		"src/util/types.ts",
 		"test/**/*"
 	]
