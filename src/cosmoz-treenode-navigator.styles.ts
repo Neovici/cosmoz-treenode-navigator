@@ -1,4 +1,4 @@
-import { tagged as css } from '@neovici/cosmoz-utils';
+import { css } from '@pionjs/pion';
 
 export default css`
 	:host {
@@ -36,6 +36,7 @@ export default css`
 		display: flex;
 		align-items: center;
 		flex-wrap: wrap;
+		margin: 0;
 	}
 
 	.slash {
@@ -71,12 +72,14 @@ export default css`
 		font-weight: 400;
 		height: 40px;
 		line-height: 24px;
-		padding: 6px 12px;
+		padding: 6px 12px 6px 16px;
 		cursor: pointer;
 	}
+
 	.name {
 		flex: auto;
 	}
+
 	.icon {
 		box-sizing: border-box;
 		cursor: pointer;
@@ -117,7 +120,8 @@ export default css`
 		font-family: inherit;
 	}
 
-	.path>.pointer:hover, .path>.pointer:has(~.pointer:hover) {
-        text-decoration: underline;
-    }
+	.path > .pointer:hover,
+	.path > .pointer:has(~ .pointer:hover) {
+		text-decoration: underline;
+	}
 `;
