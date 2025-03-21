@@ -1,4 +1,4 @@
-import{x as d}from"./lit-element-D-o1_RG-.js";import{c as Z,u as k,b as ee,d as R,e as oe,f as P,g as M,h as te,n as N,i as ne,l as ae,j as re,T as se,a as le}from"./tree-data-C9d7u8KF.js";import"./iframe-fj4Q5HIO.js";const ie=Z`
+import{x as h}from"./lit-element-D-o1_RG-.js";import{c as Y,u as B,b as Z,d as k,e as z,f as L,g as ee,n as M,h as te,l as oe,i as ne,T as re,a as ae}from"./tree-data-t3cwjFHA.js";import"./iframe-9Kt8lfrT.js";const se=Y`
 	h1,
 	h2 {
 		font-weight: 500;
@@ -74,31 +74,28 @@ import{x as d}from"./lit-element-D-o1_RG-.js";import{c as Z,u as k,b as ee,d as 
 		box-shadow: 0 2px 3px 0 rgb(0 0 0 / 30%);
 	}
 
-	.actions__open-dialog {
-		min-width: 180px;
+	.action-open {
+		flex: auto;
 	}
 
-	.actions__clear {
+	.path-text {
+		display: block;
+
+		overflow: hidden;
+		white-space: nowrap;
+
+		text-overflow: ellipsis;
+		direction: rtl;
+	}
+
+	.action-reset {
 		flex-basis: 100px;
 		flex-grow: 0;
 		flex-shrink: 0;
 	}
 
-	.actions__open-dialog + .actions__clear {
+	.action-open + .action-reset {
 		margin-left: 0;
-	}
-
-	.open {
-		flex: auto;
-	}
-
-	.pathToNode {
-		max-width: 320px;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		direction: rtl;
-		text-align: left;
 	}
 
 	/* Safari only css fix */
@@ -168,6 +165,7 @@ import{x as d}from"./lit-element-D-o1_RG-.js";import{c as Z,u as k,b as ee,d as 
 
 		padding: 0;
 		border-radius: 10px;
+		border: none;
 	}
 
 	.dialog::backdrop {
@@ -201,6 +199,7 @@ import{x as d}from"./lit-element-D-o1_RG-.js";import{c as Z,u as k,b as ee,d as 
 		border: 1px solid rgb(164, 171, 174);
 		font-size: 15px;
 		cursor: pointer;
+		user-select: none;
 	}
 
 	.dialog-footer-button:not(:disabled):active {
@@ -211,21 +210,22 @@ import{x as d}from"./lit-element-D-o1_RG-.js";import{c as Z,u as k,b as ee,d as 
 		color: #a8a8a8;
 		background-color: #f2f2f2;
 		cursor: default;
-		user-select: none;
 	}
-`,ce=(o,a)=>{const s=r=>{if(r.key===o&&a instanceof Function)return r.preventDefault(),a()};k(()=>(document.addEventListener("keydown",s),()=>{document.removeEventListener("keydown",s)}))},de=(o,a)=>{let s;const r=[];return(...m)=>new Promise((x,f)=>{clearTimeout(s),s=setTimeout(()=>{const g=[...r];r.length=0,Promise.resolve(o(...m)).then(l=>{g.forEach(({resolve:n})=>n(l))},l=>{g.forEach(({reject:n})=>n(l))})},a),r.push({resolve:x,reject:f})})},A=({tree:o,multiSelection:a=!1,dialogText:s,buttonTextPlaceholder:r,searchPlaceholder:m,noReset:x=!1,searchGlobalPlaceholder:f,searchMinLength:g,nodePath:l})=>{const n=R(null),w=R(null),[i,_]=oe("highlightedNode"),[I,L]=P(!1),[b,$]=P([]),[c,v]=P([]);k(()=>{l&&o&&$(M(l,o))},[l,o]),k(()=>{var e,t;n.current&&(w.current=(t=(e=n.current.querySelector("cosmoz-treenode-navigator"))==null?void 0:e.shadowRoot)==null?void 0:t.querySelector("cosmoz-input"))},[n.current]);const V=te(()=>!Array.isArray(b)||b.length===0?r||"":b.filter(e=>e).map(e=>e[o.searchProperty]).join(" / "),[b,o]),q=()=>{$([]),v([]),_(null)},K=!x&&!!i,H=({item:e,ev:t})=>{v(c.filter(S=>S!==e)),t.preventDefault(),t.stopPropagation()},J=e=>e.name,Q=(e,t)=>e&&t>0,U=de(()=>{var e,t;(t=(e=n.current)==null?void 0:e.fit)==null||t.call(e)},50),X=()=>{w.current&&w.current.focus()},Y=()=>{var e;(e=n.current)==null||e.showModal(),L(!0),setTimeout(X,0)},y=()=>{var e;L(!1),(e=n.current)==null||e.close()};ce("Escape",y);const T=()=>{if(!i)return;const e=i.pathLocator,t=re(e,o);$(M(e,o)),a&&t&&(c.some(S=>S.pathLocator===e)||v([...c,t])),y()};return d`
+`,le=(t,a)=>{const l=s=>{if(s.key===t&&a instanceof Function)return s.preventDefault(),a()};B(()=>(document.addEventListener("keydown",l),()=>{document.removeEventListener("keydown",l)}))},ie=(t,a)=>{let l;const s=[];return(...m)=>new Promise((x,f)=>{clearTimeout(l),l=setTimeout(()=>{const b=[...s];s.length=0,Promise.resolve(t(...m)).then(n=>{b.forEach(({resolve:i})=>i(n))},n=>{b.forEach(({reject:i})=>i(n))})},a),s.push({resolve:x,reject:f})})},W=({tree:t,multiSelection:a=!1,dialogText:l,buttonTextPlaceholder:s,searchPlaceholder:m,noReset:x=!1,searchGlobalPlaceholder:f,searchMinLength:b})=>{const n=k(null),i=k(null),[r,y]=z("highlightedNode"),[c,P]=z("nodesOnNodePath",[]),[A,S]=L(!1),[d,w]=L([]);B(()=>{var e,o;n.current&&(i.current=(o=(e=n.current.querySelector("cosmoz-treenode-navigator"))==null?void 0:e.shadowRoot)==null?void 0:o.querySelector("cosmoz-input"))},[n.current]);const I=ee(()=>!Array.isArray(c)||c.length===0?s||"":c.filter(e=>e).map(e=>e[t.searchProperty]).join(" / "),[c,t]),V=()=>{P([]),w([]),y(null)},j=!x&&!!r,q=({item:e,ev:o})=>{w(d.filter(X=>X!==e)),o.preventDefault(),o.stopPropagation()},K=e=>e.name,H=(e,o)=>e&&o>0,J=ie(()=>{var e,o;(o=(e=n.current)==null?void 0:e.fit)==null||o.call(e)},50),Q=()=>{i.current&&i.current.focus()},U=()=>{var e;(e=n.current)==null||e.showModal(),S(!0),setTimeout(Q,0)},v=()=>{var e;S(!1),(e=n.current)==null||e.close()};le("Escape",v);const T=()=>{r!=null&&r.pathLocator&&(P(ne(r.pathLocator,t)),a&&!d.some(e=>e.pathLocator===r.pathLocator)&&w([...d,r]),v())};return h`
 		<div class="actions" part="actions">
 			<button
-				class="actions__open-dialog"
+				class="action-open"
 				type="button"
-				@click=${Y}
+				@click=${U}
 				part="action-open"
 			>
-				${V}
+				<div class="path-text">
+					<span>${I}</span>
+				</div>
 			</button>
-			${N(K,()=>d` <button
-						@click=${q}
-						class="actions__clear"
+			${M(j,()=>h` <button
+						@click=${V}
+						class="action-reset"
 						part="action-reset"
 					>
 						<svg
@@ -252,14 +252,14 @@ import{x as d}from"./lit-element-D-o1_RG-.js";import{c as Z,u as k,b as ee,d as 
 						</svg>
 					</button>`)}
 		</div>
-		${N(Q(a,c.length),()=>d`
+		${M(H(a,d.length),()=>h`
 				<div id="chips" part="chips" class="row">
-					${c.map(e=>d`
+					${d.map(e=>h`
 							<div class="chip">
-								<span>${J(e)}</span>
+								<span>${K(e)}</span>
 								<button
 									class="chip__clear"
-									@click=${t=>H({item:e,ev:t})}
+									@click=${o=>q({item:e,ev:o})}
 									type="button"
 								>
 									&times;
@@ -268,28 +268,29 @@ import{x as d}from"./lit-element-D-o1_RG-.js";import{c as Z,u as k,b as ee,d as 
 						`)}
 				</div>
 			`)}
+
 		<dialog
 			class="dialog"
 			part="dialog"
-			${ne(e=>{n.current=e})}
+			${te(e=>{n.current=e})}
 		>
 			<header class="dialog-header" part="header">
-				<h1 class="dialog-heading" part="heading">${s}</h1>
+				<h1 class="dialog-heading" part="heading">${l}</h1>
 			</header>
 			<main class="dialog-main" part="main">
 				<cosmoz-treenode-navigator
 					id="treeNavigator"
 					class="dialog-treenode-navigator no-padding"
-					.highlightedNode=${i}
-					@highlighted-node-changed=${ae(_)}
+					.highlightedNode=${r}
+					@highlighted-node-changed=${oe(y)}
 					.searchPlaceholder=${m}
 					.searchGlobalPlaceholder=${f}
-					.searchMinLength=${g}
-					.tree=${o}
-					.opened=${I}
-					@select-node=${T}
+					.searchMinLength=${b}
+					.tree=${t}
+					.opened=${A}
+					.nodesOnNodePath=${c}
 					@node-dblclicked=${T}
-					@on-data-plane-changed=${U}
+					@on-data-plane-changed=${J}
 				>
 					<slot></slot>
 				</cosmoz-treenode-navigator>
@@ -297,7 +298,7 @@ import{x as d}from"./lit-element-D-o1_RG-.js";import{c as Z,u as k,b as ee,d as 
 			<footer class="dialog-footer" part="footer">
 				<p class="dialog-footer-button-container">
 					<button
-						?disabled=${!(i!=null&&i.pathLocator)}
+						?disabled=${!(r!=null&&r.pathLocator)}
 						autofocus
 						class="dialog-footer-button"
 						part="select-button"
@@ -308,27 +309,27 @@ import{x as d}from"./lit-element-D-o1_RG-.js";import{c as Z,u as k,b as ee,d as 
 					<button
 						class="dialog-footer-button"
 						part="cancel-button"
-						@click=${y}
+						@click=${v}
 					>
 						Cancel
 					</button>
 				</p>
 			</footer>
 		</dialog>
-	`};A.observedAttributes=["button-text-placeholder","dialog-text","search-placeholder","search-global-placeholder","node-path"];customElements.define("cosmoz-treenode-button-view",ee(A,{styleSheets:[ie]}));const ge={title:"Components/CosmozTreenodeButtonView",component:"cosmoz-treenode-button-view",tags:["autodocs"],argTypes:{buttonTextPlaceholder:{control:"text"},dialogText:{control:"text"},searchPlaceholder:{control:"text"},searchGlobalPlaceholder:{control:"text"},searchMinLength:{control:"number"},noReset:{control:"boolean"},multiSelection:{control:"boolean"}}},z=o=>{const a=new se(le);return d`
+	`};W.observedAttributes=["button-text-placeholder","dialog-text","search-placeholder","search-global-placeholder","no-reset"];customElements.define("cosmoz-treenode-button-view",Z(W,{styleSheets:[se]}));const pe={title:"Components/CosmozTreenodeButtonView",component:"cosmoz-treenode-button-view",tags:["autodocs"],argTypes:{buttonTextPlaceholder:{control:"text"},dialogText:{control:"text"},searchPlaceholder:{control:"text"},searchGlobalPlaceholder:{control:"text"},searchMinLength:{control:"number"},noReset:{control:"boolean"},multiSelection:{control:"boolean"}}},$=t=>{const a=new re(ae);return h`
         <div style="padding: 20px;">
             <cosmoz-treenode-button-view
                 .tree=${a}
-                button-text-placeholder=${o.buttonTextPlaceholder}
-                dialog-text=${o.dialogText}
-                search-placeholder=${o.searchPlaceholder}
-                search-global-placeholder=${o.searchGlobalPlaceholder}
-                .searchMinLength=${o.searchMinLength}
-                .noReset=${o.noReset}
-                .multiSelection=${o.multiSelection}
+                button-text-placeholder=${t.buttonTextPlaceholder}
+                dialog-text=${t.dialogText}
+                search-placeholder=${t.searchPlaceholder}
+                search-global-placeholder=${t.searchGlobalPlaceholder}
+                .searchMinLength=${t.searchMinLength}
+                no-reset=${t.noReset}
+                .multiSelection=${t.multiSelection}
             ></cosmoz-treenode-button-view>
         </div>
-    `},h=z.bind({});h.args={buttonTextPlaceholder:"Select a node",dialogText:"Search or navigate to chosen destination",searchPlaceholder:"Search...",searchGlobalPlaceholder:"Click to search again but globally",searchMinLength:3,noReset:!1,multiSelection:!1};const p=z.bind({});p.args={buttonTextPlaceholder:"Select multiple nodes",dialogText:"Search or navigate to chosen destination",searchPlaceholder:"Search...",searchGlobalPlaceholder:"Click to search again but globally",searchMinLength:3,noReset:!1,multiSelection:!0};const u=z.bind({});u.args={buttonTextPlaceholder:"Select a node (no reset)",dialogText:"Search or navigate to chosen destination",searchPlaceholder:"Search...",searchGlobalPlaceholder:"Click to search again but globally",searchMinLength:3,noReset:!0,multiSelection:!1};var C,D,G;h.parameters={...h.parameters,docs:{...(C=h.parameters)==null?void 0:C.docs,source:{originalSource:`args => {
+    `},p=$.bind({});p.args={buttonTextPlaceholder:"Select a node",dialogText:"Search or navigate to chosen destination",searchPlaceholder:"Search...",searchGlobalPlaceholder:"Click to search again but globally",searchMinLength:3,noReset:!1,multiSelection:!1};const u=$.bind({});u.args={buttonTextPlaceholder:"Select multiple nodes",dialogText:"Search or navigate to chosen destination",searchPlaceholder:"Search...",searchGlobalPlaceholder:"Click to search again but globally",searchMinLength:3,noReset:!1,multiSelection:!0};const g=$.bind({});g.args={buttonTextPlaceholder:"Select a node (no reset)",dialogText:"Search or navigate to chosen destination",searchPlaceholder:"Search...",searchGlobalPlaceholder:"Click to search again but globally",searchMinLength:3,noReset:!0,multiSelection:!1};var R,N,C;p.parameters={...p.parameters,docs:{...(R=p.parameters)==null?void 0:R.docs,source:{originalSource:`args => {
   const tree = new DefaultTree(adminFilesTree);
   return html\`
         <div style="padding: 20px;">
@@ -339,12 +340,12 @@ import{x as d}from"./lit-element-D-o1_RG-.js";import{c as Z,u as k,b as ee,d as 
                 search-placeholder=\${args.searchPlaceholder}
                 search-global-placeholder=\${args.searchGlobalPlaceholder}
                 .searchMinLength=\${args.searchMinLength}
-                .noReset=\${args.noReset}
+                no-reset=\${args.noReset}
                 .multiSelection=\${args.multiSelection}
             ></cosmoz-treenode-button-view>
         </div>
     \`;
-}`,...(G=(D=h.parameters)==null?void 0:D.docs)==null?void 0:G.source}}};var E,F,O;p.parameters={...p.parameters,docs:{...(E=p.parameters)==null?void 0:E.docs,source:{originalSource:`args => {
+}`,...(C=(N=p.parameters)==null?void 0:N.docs)==null?void 0:C.source}}};var _,D,G;u.parameters={...u.parameters,docs:{...(_=u.parameters)==null?void 0:_.docs,source:{originalSource:`args => {
   const tree = new DefaultTree(adminFilesTree);
   return html\`
         <div style="padding: 20px;">
@@ -355,12 +356,12 @@ import{x as d}from"./lit-element-D-o1_RG-.js";import{c as Z,u as k,b as ee,d as 
                 search-placeholder=\${args.searchPlaceholder}
                 search-global-placeholder=\${args.searchGlobalPlaceholder}
                 .searchMinLength=\${args.searchMinLength}
-                .noReset=\${args.noReset}
+                no-reset=\${args.noReset}
                 .multiSelection=\${args.multiSelection}
             ></cosmoz-treenode-button-view>
         </div>
     \`;
-}`,...(O=(F=p.parameters)==null?void 0:F.docs)==null?void 0:O.source}}};var B,W,j;u.parameters={...u.parameters,docs:{...(B=u.parameters)==null?void 0:B.docs,source:{originalSource:`args => {
+}`,...(G=(D=u.parameters)==null?void 0:D.docs)==null?void 0:G.source}}};var E,O,F;g.parameters={...g.parameters,docs:{...(E=g.parameters)==null?void 0:E.docs,source:{originalSource:`args => {
   const tree = new DefaultTree(adminFilesTree);
   return html\`
         <div style="padding: 20px;">
@@ -371,9 +372,9 @@ import{x as d}from"./lit-element-D-o1_RG-.js";import{c as Z,u as k,b as ee,d as 
                 search-placeholder=\${args.searchPlaceholder}
                 search-global-placeholder=\${args.searchGlobalPlaceholder}
                 .searchMinLength=\${args.searchMinLength}
-                .noReset=\${args.noReset}
+                no-reset=\${args.noReset}
                 .multiSelection=\${args.multiSelection}
             ></cosmoz-treenode-button-view>
         </div>
     \`;
-}`,...(j=(W=u.parameters)==null?void 0:W.docs)==null?void 0:j.source}}};const be=["Default","WithMultiSelection","WithNoReset"];export{h as Default,p as WithMultiSelection,u as WithNoReset,be as __namedExportsOrder,ge as default};
+}`,...(F=(O=g.parameters)==null?void 0:O.docs)==null?void 0:F.source}}};const ue=["Default","WithMultiSelection","WithNoReset"];export{p as Default,u as WithMultiSelection,g as WithNoReset,ue as __namedExportsOrder,pe as default};
