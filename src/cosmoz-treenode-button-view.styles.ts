@@ -58,12 +58,18 @@ export default css`
 		padding: 10px 16px 10px 16px;
 		margin: 14px 14px 12px 14px;
 
-		color: #101010;
+		color: var(--cosmoz-treenode-actions-button-text-color, #101010);
 		font-size: 14px;
 
-		background-color: white;
+		background-color: var(
+			--cosmoz-treenode-actions-button-background-color,
+			white
+		);
 		border: 0px none rgb(16, 16, 16);
-		box-shadow: 0 2px 4px 0 #e5e5e5;
+		box-shadow: var(
+			--cosmoz-treenode-actions-button-box-shadow,
+			0 2px 4px 0 #e5e5e5
+		);
 
 		transition-behavior: normal, normal;
 		transition-delay: 0s, 0s;
@@ -73,7 +79,10 @@ export default css`
 	}
 
 	.actions button:hover {
-		box-shadow: 0 2px 3px 0 rgb(0 0 0 / 30%);
+		box-shadow: var(
+			--cosmoz-treenode-actions-button-box-shadow-hover,
+			0 2px 3px 0 rgb(0 0 0 / 30%)
+		);
 	}
 
 	.actions__open-dialog {

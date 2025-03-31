@@ -1,12 +1,10 @@
 # [7.0.0](https://github.com/neovici/cosmoz-treenode-navigator/compare/v6.0.2...v7.0.0) (2025-03-19)
 
-
-* refactor!: convert codebase to TS (#146) ([5961c77](https://github.com/neovici/cosmoz-treenode-navigator/commit/5961c77e2e714b191647d114dae7d742741e718f)), closes [#146](https://github.com/neovici/cosmoz-treenode-navigator/issues/146)
-
+- refactor!: convert codebase to TS (#146) ([5961c77](https://github.com/neovici/cosmoz-treenode-navigator/commit/5961c77e2e714b191647d114dae7d742741e718f)), closes [#146](https://github.com/neovici/cosmoz-treenode-navigator/issues/146)
 
 ### BREAKING CHANGES
 
-* convert "<cosmoz-treenode-button-view>" to Pion
+- convert "<cosmoz-treenode-button-view>" to Pion
 
 ## [6.0.2](https://github.com/neovici/cosmoz-treenode-navigator/compare/v6.0.1...v6.0.2) (2025-02-14)
 
