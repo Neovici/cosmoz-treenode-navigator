@@ -14,10 +14,9 @@ import style from './cosmoz-treenode-button-view.styles';
 
 import './cosmoz-treenode-navigator';
 import { useKeyDown } from './hooks/useKeyDown';
-import { getTreePathParts } from './util/helpers';
 import { when } from 'lit-html/directives/when.js';
 import { debounce$ } from '@neovici/cosmoz-utils/promise';
-import { Node, Tree } from '@neovici/cosmoz-tree';
+import type { Node, Tree } from '@neovici/cosmoz-tree';
 
 type ButtonViewProps = {
 	tree: Tree;
@@ -28,6 +27,7 @@ type ButtonViewProps = {
 	noReset?: boolean;
 	searchGlobalPlaceholder?: string;
 	searchMinLength?: number;
+	searchDebounceTimeout: number;
 };
 
 type ClearItemSelectionParams = {
@@ -55,7 +55,8 @@ const CosmozNodeButtonView = ({
 	searchPlaceholder,
 	noReset = false,
 	searchGlobalPlaceholder,
-	searchMinLength,
+	searchMinLength = 3,
+	searchDebounceTimeout = 2000,
 }: ButtonViewProps) => {
 	const dialogRef = useRef<ButtonViewDialog | null>(null);
 	const searchInputRef = useRef<HTMLInputElement | null>(null);
@@ -94,8 +95,6 @@ const CosmozNodeButtonView = ({
 		setSelectedNodes([]);
 		setHighlightedNode(null);
 	};
-
-	const enableReset = !noReset && !!highlightedNode;
 
 	const clearItemSelection = ({ item, ev }: ClearItemSelectionParams) => {
 		setSelectedNodes(selectedNodes.filter((node) => node !== item));
@@ -137,12 +136,11 @@ const CosmozNodeButtonView = ({
 
 	useKeyDown('Escape', onClose);
 
+	// `cosmoz-treenode-navigator` handles updating nodesOnNodePath
 	const selectNode = () => {
 		if (!highlightedNode?.pathLocator) {
 			return;
 		}
-
-		setNodesOnNodePath(getTreePathParts(highlightedNode.pathLocator, tree));
 
 		if (
 			multiSelection &&
@@ -167,7 +165,7 @@ const CosmozNodeButtonView = ({
 				</div>
 			</button>
 			${when(
-				enableReset,
+				!noReset && !!highlightedNode,
 				() =>
 					html` <button
 						@click=${reset}
@@ -240,9 +238,11 @@ const CosmozNodeButtonView = ({
 					.searchPlaceholder=${searchPlaceholder}
 					.searchGlobalPlaceholder=${searchGlobalPlaceholder}
 					.searchMinLength=${searchMinLength}
+					.searchDebounceTimeout=${searchDebounceTimeout}
 					.tree=${tree}
 					.opened=${opened}
 					.nodesOnNodePath=${nodesOnNodePath}
+					@nodes-on-node-path-changed=${lift(setNodesOnNodePath)}
 					@node-dblclicked=${selectNode}
 					@on-data-plane-changed=${refit}
 				>

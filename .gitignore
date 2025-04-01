@@ -2,9 +2,11 @@ node_modules/
 coverage/
 dist/
 storybook-static/
+demo/
 debug.log
 yarn-error.log
 .vscode
 .DS_Store
 .eslintcache
 .idea/
+/web-dev-server.config.mjs

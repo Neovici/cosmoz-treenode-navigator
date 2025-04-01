@@ -11,6 +11,7 @@ export default {
 		searchPlaceholder: { control: 'text' },
 		searchGlobalPlaceholder: { control: 'text' },
 		searchMinLength: { control: 'number' },
+		searchDebounceTimeout: { control: 'number' },
 		opened: { control: 'boolean' },
 	},
 };
@@ -26,6 +27,7 @@ const Template = (args) => {
 				.searchPlaceholder=${args.searchPlaceholder}
 				.searchGlobalPlaceholder=${args.searchGlobalPlaceholder}
 				.searchMinLength=${args.searchMinLength}
+				.searchDebounceTimeout=${args.searchDebounceTimeout}
 				.opened=${args.opened}
 			></cosmoz-treenode-navigator>
 		</div>
@@ -37,6 +39,7 @@ Default.args! = {
 	searchPlaceholder: 'Search...',
 	searchGlobalPlaceholder: 'Click to search again but globally',
 	searchMinLength: 3,
+	searchDebounceTimeout: 2000,
 	opened: true,
 };
 
@@ -45,5 +48,6 @@ WithCustomPlaceholders.args! = {
 	searchPlaceholder: 'Enter search term...',
 	searchGlobalPlaceholder: 'Search in the entire tree',
 	searchMinLength: 2,
+	searchDebounceTimeout: 1000,
 	opened: true,
 };

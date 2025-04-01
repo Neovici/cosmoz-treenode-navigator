@@ -7,7 +7,7 @@ import {
 	useRef,
 	useState,
 } from '@pionjs/pion';
-import { html, nothing, TemplateResult } from 'lit-html';
+import { html, nothing, type TemplateResult } from 'lit-html';
 import { when } from 'lit-html/directives/when.js';
 import { guard } from 'lit-html/directives/guard.js';
 import { ref } from 'lit-html/directives/ref.js';
@@ -21,11 +21,12 @@ import {
 	computeRowClass,
 	getParentPath,
 	onNodeDblClicked,
+	getTreePathParts,
 } from './util/helpers';
 import style from './cosmoz-treenode-navigator.styles';
 import { useHost } from '@neovici/cosmoz-utils/hooks/use-host';
 import { notifyProperty } from '@neovici/cosmoz-utils/hooks/use-notify-property';
-import { Node, Tree } from '@neovici/cosmoz-tree';
+import type { Node, Tree } from '@neovici/cosmoz-tree';
 
 type TreenodeNavigatorProps = {
 	tree: Tree;
@@ -34,6 +35,7 @@ type TreenodeNavigatorProps = {
 	searchMinLength?: number;
 	opened?: boolean;
 	nodesOnNodePath?: Node[];
+	searchDebounceTimeout: number;
 };
 
 type NavigatorMeta = {
@@ -59,9 +61,9 @@ const NodeNavigator = ({
 	/**
 	 * Minimum length of searchValue to trigger a search
 	 */
-	searchMinLength,
+	searchMinLength = 3,
 	opened,
-	nodesOnNodePath,
+	searchDebounceTimeout = 2000,
 }: TreenodeNavigatorProps) => {
 	const listRef = useRef<HTMLElement>();
 	const host = useHost();
@@ -70,15 +72,28 @@ const NodeNavigator = ({
 		'highlightedNode',
 	);
 
+	const [nodesOnNodePath, setNodesOnNodePath] = useProperty<Node[]>(
+		'nodesOnNodePath',
+		[],
+	);
+
+	const [search, setSearch] = useState<string>('');
 	const [searchValue, setSearchValue] = useState<string>('');
 	const [openNodePath, setOpenNodePath] = useState<string>('');
 
-	const search = useMemo(
-		() =>
-			(searchValue?.length > (searchMinLength ?? 2) - 1 && searchValue) ||
-			undefined,
-		[searchValue, searchMinLength],
-	);
+	useEffect(() => {
+		const timeoutId = setTimeout(() => {
+			const searchLength = searchValue.trim().length;
+
+			if (searchLength > 0 && searchLength < searchMinLength) {
+				return;
+			}
+
+			setSearch(searchValue.trim());
+		}, searchDebounceTimeout);
+
+		return () => clearTimeout(timeoutId);
+	}, [searchValue]);
 
 	const dataPlane = useMemo(
 		() => computeDataPlane(tree, search, openNodePath),
@@ -86,7 +101,28 @@ const NodeNavigator = ({
 	);
 
 	/**
+	 * Updates the nodes on path when a node is selected
+	 * @param node
+	 */
+	const updateNodesOnPath = useCallback(
+		(node: Node | null) => {
+			if (!node?.pathLocator || !tree) {
+				setNodesOnNodePath([]);
+				return;
+			}
+
+			const pathNodes = getTreePathParts(node.pathLocator, tree);
+			setNodesOnNodePath(pathNodes);
+		},
+		[tree],
+	);
+
+	/**
 	 * Opens a node (renderLevel) based on a given path
+	 *
+	 * Don't update nodesOnNodePath here - this is just navigation
+	 * nodesOnNodePath should only change on selection
+	 *
 	 * @param clickedNode - The clicked node
 	 * @return undefined
 	 */
@@ -95,6 +131,20 @@ const NodeNavigator = ({
 		setSearchValue('');
 		setHighlightedNode(null);
 	}, []);
+
+	/**
+	 * Handles node selection (e.g. on double-click)
+	 * @param node
+	 */
+	const onNodeSelect = useCallback(
+		(node: Node | null) => {
+			if (node) {
+				setHighlightedNode(node);
+				updateNodesOnPath(node);
+			}
+		},
+		[updateNodesOnPath],
+	);
 
 	useEffect(() => {
 		if (!openNodePath) {
@@ -216,6 +266,7 @@ const NodeNavigator = ({
 					e.preventDefault();
 					if (node) {
 						host.dispatchEvent(new CustomEvent('node-dblclicked'));
+						onNodeSelect(node);
 					}
 					break;
 
@@ -234,7 +285,17 @@ const NodeNavigator = ({
 		document.addEventListener('keydown', handler, true);
 
 		return () => document.removeEventListener('keydown', handler, true);
-	}, [opened, meta]);
+	}, [opened, meta, onNodeSelect]);
+
+	// update the event handler for double-click
+	const handleNodeDblClick = (e: Event) => {
+		onNodeDblClicked(e, host);
+
+		// get the node that was double-clicked
+		if (highlightedNode) {
+			onNodeSelect(highlightedNode);
+		}
+	};
 
 	const renderItem = (node: Node | null, index: number) => {
 		if (!node) {
@@ -256,7 +317,7 @@ const NodeNavigator = ({
 			<div
 				class=${computeRowClass('node', node, highlightedNode)}
 				@click=${() => setHighlightedNode(node)}
-				@dblclick=${(e: Event) => onNodeDblClicked(e, host)}
+				@dblclick=${handleNodeDblClick}
 			>
 				<div class="name">${node[tree.searchProperty]}</div>
 				${when(

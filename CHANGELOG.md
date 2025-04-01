@@ -7,10 +7,9 @@
 
 ## [7.0.1](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.0.0...v7.0.1) (2025-03-21)
 
-
 ### Bug Fixes
 
-* use "nodesOnNodePath" as main state ([0727392](https://github.com/neovici/cosmoz-treenode-navigator/commit/072739272a436358d26f12d9632048d1783b14eb))
+- use "nodesOnNodePath" as main state ([0727392](https://github.com/neovici/cosmoz-treenode-navigator/commit/072739272a436358d26f12d9632048d1783b14eb))
 
 # [7.0.0](https://github.com/neovici/cosmoz-treenode-navigator/compare/v6.0.2...v7.0.0) (2025-03-19)
 

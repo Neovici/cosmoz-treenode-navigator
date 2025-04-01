@@ -13,6 +13,7 @@ export default {
 		searchPlaceholder: { control: 'text' },
 		searchGlobalPlaceholder: { control: 'text' },
 		searchMinLength: { control: 'number' },
+		searchDebounceTimeout: { control: 'number' },
 		noReset: { control: 'boolean' },
 		multiSelection: { control: 'boolean' },
 	},
@@ -29,7 +30,8 @@ const Template = (args) => {
 				search-placeholder=${args.searchPlaceholder}
 				search-global-placeholder=${args.searchGlobalPlaceholder}
 				.searchMinLength=${args.searchMinLength}
-				no-reset=${args.noReset}
+				.searchDebounceTimeout=${args.searchDebounceTimeout}
+				.noReset=${args.noReset}
 				.multiSelection=${args.multiSelection}
 			></cosmoz-treenode-button-view>
 		</div>
@@ -43,6 +45,7 @@ Default.args! = {
 	searchPlaceholder: 'Search...',
 	searchGlobalPlaceholder: 'Click to search again but globally',
 	searchMinLength: 3,
+	searchDebounceTimeout: 2000,
 	noReset: false,
 	multiSelection: false,
 };
@@ -54,6 +57,7 @@ WithMultiSelection.args! = {
 	searchPlaceholder: 'Search...',
 	searchGlobalPlaceholder: 'Click to search again but globally',
 	searchMinLength: 3,
+	searchDebounceTimeout: 2000,
 	noReset: false,
 	multiSelection: true,
 };
@@ -65,6 +69,7 @@ WithNoReset.args! = {
 	searchPlaceholder: 'Search...',
 	searchGlobalPlaceholder: 'Click to search again but globally',
 	searchMinLength: 3,
+	searchDebounceTimeout: 2000,
 	noReset: true,
 	multiSelection: false,
 };
