@@ -1,9 +1,8 @@
 ## [7.0.2](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.0.1...v7.0.2) (2025-03-31)
 
-
 ### Bug Fixes
 
-* **style:** vars allowing styling from outside coherently with new color theme guidelines ([26b9405](https://github.com/neovici/cosmoz-treenode-navigator/commit/26b9405ee0cd6c827f8cde93308092634b6624a0))
+- **style:** vars allowing styling from outside coherently with new color theme guidelines ([26b9405](https://github.com/neovici/cosmoz-treenode-navigator/commit/26b9405ee0cd6c827f8cde93308092634b6624a0))
 
 ## [7.0.1](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.0.0...v7.0.1) (2025-03-21)
 
