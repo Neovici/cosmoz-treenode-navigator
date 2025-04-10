@@ -1,3 +1,10 @@
+# [7.1.0](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.0.2...v7.1.0) (2025-04-10)
+
+
+### Features
+
+* debounce search and optimize state ([#149](https://github.com/neovici/cosmoz-treenode-navigator/issues/149)) ([1774f3e](https://github.com/neovici/cosmoz-treenode-navigator/commit/1774f3e62585ef0ee50546259359796462b4bfec))
+
 ## [7.0.2](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.0.1...v7.0.2) (2025-03-31)
 
 ### Bug Fixes
