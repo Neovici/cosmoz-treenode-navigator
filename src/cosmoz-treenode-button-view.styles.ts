@@ -59,7 +59,9 @@ export default css`
 		margin: 14px 14px 12px 14px;
 
 		color: var(--cosmoz-treenode-actions-button-text-color, #101010);
-		font-size: 14px;
+		font: inherit;
+		font-size: inherit;
+		line-height: inherit;
 
 		background-color: var(
 			--cosmoz-treenode-actions-button-background-color,
