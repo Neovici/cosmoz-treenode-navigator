@@ -1,3 +1,10 @@
+## [7.1.1](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.1.0...v7.1.1) (2025-06-23)
+
+
+### Bug Fixes
+
+* font styles didn't follow convert pr ([#159](https://github.com/neovici/cosmoz-treenode-navigator/issues/159)) ([e23d120](https://github.com/neovici/cosmoz-treenode-navigator/commit/e23d120f17c41b9681d82852f276ff01543eb340))
+
 # [7.1.0](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.0.2...v7.1.0) (2025-04-10)
 
 ### Features
