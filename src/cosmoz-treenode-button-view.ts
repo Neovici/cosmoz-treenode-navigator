@@ -17,6 +17,7 @@ import { useKeyDown } from './hooks/useKeyDown';
 import { when } from 'lit-html/directives/when.js';
 import { debounce$ } from '@neovici/cosmoz-utils/promise';
 import type { Node, Tree } from '@neovici/cosmoz-tree';
+import { getTreePathParts } from './util/helpers';
 
 type ButtonViewProps = {
 	tree: Tree;
@@ -28,6 +29,8 @@ type ButtonViewProps = {
 	searchGlobalPlaceholder?: string;
 	searchMinLength?: number;
 	searchDebounceTimeout: number;
+	nodePath?: string;
+	selectedNode?: Node | null;
 };
 
 type ClearItemSelectionParams = {
@@ -40,6 +43,8 @@ type ObservedAttributes =
 	| 'dialog-text'
 	| 'search-placeholder'
 	| 'search-global-placeholder'
+	| 'node-path'
+	| 'selected-node'
 	| 'no-reset'
 	| 'search-min-length';
 
@@ -64,6 +69,13 @@ const CosmozNodeButtonView = ({
 	const [highlightedNode, setHighlightedNode] = useProperty<Node | null>(
 		'highlightedNode',
 	);
+
+	// legacy props
+	const [selectedNode, setSelectedNode] = useProperty<Node | null>(
+		'selectedNode',
+	);
+	const [nodePath, setNodePath] = useProperty<string>('nodePath', '');
+
 	const [nodesOnNodePath, setNodesOnNodePath] = useProperty<Node[]>(
 		'nodesOnNodePath',
 		[],
@@ -78,6 +90,38 @@ const CosmozNodeButtonView = ({
 				?.shadowRoot?.querySelector('cosmoz-input') as HTMLInputElement | null;
 		}
 	}, [dialogRef.current]);
+
+	// keep legacy props in sync w/ "highlightedNode"
+	useEffect(() => {
+		if (highlightedNode !== selectedNode) {
+			setSelectedNode(highlightedNode);
+		}
+		if (highlightedNode?.pathLocator !== nodePath) {
+			setNodePath(highlightedNode?.pathLocator ?? '');
+		}
+	}, [highlightedNode]);
+
+	// external updates to "selectedNode"
+	useEffect(() => {
+		if (selectedNode && selectedNode !== highlightedNode) {
+			setHighlightedNode(selectedNode);
+		}
+	}, [selectedNode]);
+
+	// external updates to "nodePath"
+	useEffect(() => {
+		if (!(nodePath || tree)) {
+			return;
+		}
+
+		const parts = getTreePathParts(nodePath, tree);
+		setNodesOnNodePath(parts);
+
+		const last = parts.length > 0 ? parts[parts.length - 1] : null;
+		if (last && last !== highlightedNode) {
+			setHighlightedNode(last);
+		}
+	}, [nodePath, tree]);
 
 	const buttonLabel = useMemo(() => {
 		if (!Array.isArray(nodesOnNodePath) || nodesOnNodePath.length === 0) {
@@ -94,6 +138,8 @@ const CosmozNodeButtonView = ({
 		setNodesOnNodePath([]);
 		setSelectedNodes([]);
 		setHighlightedNode(null);
+		setSelectedNode(null);
+		setNodePath('');
 	};
 
 	const clearItemSelection = ({ item, ev }: ClearItemSelectionParams) => {
@@ -148,6 +194,11 @@ const CosmozNodeButtonView = ({
 		) {
 			setSelectedNodes([...selectedNodes, highlightedNode]);
 		}
+
+		// update legacy props
+		setSelectedNode(highlightedNode);
+		setNodePath(highlightedNode.pathLocator);
+		setNodesOnNodePath(getTreePathParts(highlightedNode.pathLocator, tree));
 
 		onClose();
 	};
@@ -278,7 +329,10 @@ CosmozNodeButtonView.observedAttributes = [
 	'dialog-text',
 	'search-placeholder',
 	'search-global-placeholder',
+	'node-path',
+	'selected-node',
 	'no-reset',
+	'search-min-length',
 ] as readonly ObservedAttributes[];
 
 customElements.define(

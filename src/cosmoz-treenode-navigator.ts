@@ -81,6 +81,11 @@ const NodeNavigator = ({
 	const [searchValue, setSearchValue] = useState<string>('');
 	const [openNodePath, setOpenNodePath] = useState<string>('');
 
+	const [selectedNode, setSelectedNode] = useProperty<Node | null>(
+		'selectedNode',
+	);
+	const [nodePath, setNodePath] = useProperty<string>('nodePath', '');
+
 	useEffect(() => {
 		const timeoutId = setTimeout(() => {
 			const searchLength = searchValue.trim().length;
@@ -140,6 +145,9 @@ const NodeNavigator = ({
 		(node: Node | null) => {
 			if (node) {
 				setHighlightedNode(node);
+				// keep legacy props in sync
+				setSelectedNode(node);
+				setNodePath(node.pathLocator ?? '');
 				updateNodesOnPath(node);
 			}
 		},
@@ -152,6 +160,9 @@ const NodeNavigator = ({
 		}
 
 		notifyProperty(host, 'highlightedNodePath', '');
+
+		// clear nodePath when navigating away
+		setNodePath('');
 	}, [openNodePath]);
 
 	useEffect(() => {
@@ -181,7 +192,36 @@ const NodeNavigator = ({
 			'highlightedNodePath',
 			highlightedNode?.pathLocator || '',
 		);
+
+		if (highlightedNode?.pathLocator !== nodePath) {
+			setNodePath(highlightedNode?.pathLocator ?? '');
+		}
+
+		if (highlightedNode !== selectedNode) {
+			setSelectedNode(highlightedNode);
+		}
 	}, [highlightedNode]);
+
+	useEffect(() => {
+		if (selectedNode !== highlightedNode) {
+			setHighlightedNode(selectedNode);
+		}
+	}, [selectedNode]);
+
+	useEffect(() => {
+		if (!(nodePath || tree)) {
+			return;
+		}
+
+		const parts = getTreePathParts(nodePath, tree);
+		setNodesOnNodePath(parts);
+
+		const last = parts.length > 0 ? parts[parts.length - 1] : null;
+
+		if (last && last !== highlightedNode) {
+			setHighlightedNode(last);
+		}
+	}, [nodePath, tree]);
 
 	const meta = useMeta<NavigatorMeta>({
 		dataPlane,
