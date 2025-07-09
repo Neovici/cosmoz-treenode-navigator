@@ -31,3 +31,5 @@ It needs an object structure which looks, for example, like this in JSON:
 ```
 
 The property names "name" and "children" are configurable in the component through the setting of "childProperty" and "comparisonProperty".
+
+### Backwards compatibility added
