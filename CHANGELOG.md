@@ -1,3 +1,10 @@
+# [7.3.0](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.2.0...v7.3.0) (2025-07-21)
+
+
+### Features
+
+* new automerge workflow ([ec780e9](https://github.com/neovici/cosmoz-treenode-navigator/commit/ec780e982d45ca7e929cdd7381b0cf729a005a13))
+
 # [7.2.0](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.1.1...v7.2.0) (2025-07-09)
 
 ### Features
