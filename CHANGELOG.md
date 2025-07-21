@@ -1,9 +1,8 @@
 # [7.2.0](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.1.1...v7.2.0) (2025-07-09)
 
-
 ### Features
 
-* add backwards compatibility for "nodePath" and "selectedNode" ([8000ba8](https://github.com/neovici/cosmoz-treenode-navigator/commit/8000ba80a3228fef8c4454cb7cd207b8713bd3ad))
+- add backwards compatibility for "nodePath" and "selectedNode" ([8000ba8](https://github.com/neovici/cosmoz-treenode-navigator/commit/8000ba80a3228fef8c4454cb7cd207b8713bd3ad))
 
 ## [7.1.1](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.1.0...v7.1.1) (2025-06-23)
 
