@@ -1,4 +1,4 @@
-import{c as H,u,b as V,d as E,e as x,f as T,g as _,h as J,i as O,n as Q,l as C}from"./tree-data-D6XDig43.js";import{x as m}from"./lit-element-D5YJkDF8.js";const U=H`
+import{c as H,u,b as V,d as E,e as x,f as T,g as _,h as J,i as O,n as Q,l as C}from"./tree-data-DDf9mH4V.js";import{x as m}from"./lit-element-D5YJkDF8.js";const U=H`
 	h1,
 	h2 {
 		font-weight: 500;
@@ -230,11 +230,11 @@ import{c as H,u,b as V,d as E,e as x,f as T,g as _,h as J,i as O,n as Q,l as C}f
 				@click=${F}
 				part="action-open"
 			>
-				<slot name="button-before"><slot>
+				<slot name="button-before"></slot>
 				<div class="path-text">
 					<span>${A}</span>
 				</div>
-				<slot name="button-after"><slot>
+				<slot name="button-after"></slot>
 			</button>
 			${O(!v&&!!o,()=>m` <button
 						@click=${I}
