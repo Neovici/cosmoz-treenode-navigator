@@ -1,9 +1,8 @@
 # [7.4.0](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.3.0...v7.4.0) (2025-08-03)
 
-
 ### Features
 
-* **button-view:** add more slots ([83b0420](https://github.com/neovici/cosmoz-treenode-navigator/commit/83b0420334ba66fc1a9a15d14f0be707ce2ccc42))
+- **button-view:** add more slots ([83b0420](https://github.com/neovici/cosmoz-treenode-navigator/commit/83b0420334ba66fc1a9a15d14f0be707ce2ccc42))
 
 # [7.3.0](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.2.0...v7.3.0) (2025-07-21)
 

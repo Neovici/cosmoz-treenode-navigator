@@ -211,11 +211,11 @@ const CosmozNodeButtonView = ({
 				@click=${onOpen}
 				part="action-open"
 			>
-				<slot name="button-before"><slot>
+				<slot name="button-before"></slot>
 				<div class="path-text">
 					<span>${buttonLabel}</span>
 				</div>
-				<slot name="button-after"><slot>
+				<slot name="button-after"></slot>
 			</button>
 			${when(
 				!noReset && !!highlightedNode,
