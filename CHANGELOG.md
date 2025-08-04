@@ -1,9 +1,8 @@
 ## [7.4.1](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.4.0...v7.4.1) (2025-08-03)
 
-
 ### Bug Fixes
 
-* **button-view:** correct the extra slots ([6489e07](https://github.com/neovici/cosmoz-treenode-navigator/commit/6489e07763b304b2998f3a59bcaf0d59aeeeac54))
+- **button-view:** correct the extra slots ([6489e07](https://github.com/neovici/cosmoz-treenode-navigator/commit/6489e07763b304b2998f3a59bcaf0d59aeeeac54))
 
 # [7.4.0](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.3.0...v7.4.0) (2025-08-03)
 
