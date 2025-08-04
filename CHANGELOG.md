@@ -1,3 +1,10 @@
+## [7.4.2](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.4.1...v7.4.2) (2025-08-04)
+
+
+### Bug Fixes
+
+* automerge workflow ([380b328](https://github.com/neovici/cosmoz-treenode-navigator/commit/380b328a9377c6feb742b7b87ad6ac6d4db572e8))
+
 ## [7.4.1](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.4.0...v7.4.1) (2025-08-03)
 
 ### Bug Fixes

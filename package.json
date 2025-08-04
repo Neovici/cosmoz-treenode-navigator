@@ -1,6 +1,6 @@
 {
 	"name": "@neovici/cosmoz-treenode-navigator",
-	"version": "7.4.1",
+	"version": "7.4.2",
 	"type": "module",
 	"description": "A Pion component that lets you navigate and search through hierarchically structured data-nodes and select one of them.",
 	"keywords": [
