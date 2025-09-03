@@ -52,7 +52,7 @@ export default css`
 	}
 
 	.section {
-		background-color: #f5f5f5;
+		background-color: var(--cz-bg-color, #f5f5f5);
 		padding: 5px;
 	}
 
