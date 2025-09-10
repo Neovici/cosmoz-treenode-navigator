@@ -1,3 +1,10 @@
+## [7.5.1](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.5.0...v7.5.1) (2025-09-10)
+
+
+### Bug Fixes
+
+* add storybook plugin for documentation ([12c15ef](https://github.com/neovici/cosmoz-treenode-navigator/commit/12c15ef48643c807ea430394436604bf5768bc45))
+
 # [7.5.0](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.4.2...v7.5.0) (2025-09-03)
 
 ### Features
