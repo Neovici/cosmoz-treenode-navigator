@@ -2,7 +2,7 @@ import neoviciConfig from '@neovici/cfg/eslint/index.mjs';
 
 // Ignore configuration
 const ignores = {
-	ignores: ['dist/**', 'node_modules/**'],
+	ignores: ['dist/**', 'node_modules/**', 'storybook-static/*'],
 };
 
 // Custom rules specific to this project

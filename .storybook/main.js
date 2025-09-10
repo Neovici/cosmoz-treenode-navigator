@@ -1,10 +1,5 @@
-/** @type { import('@storybook/web-components-vite').StorybookConfig } */
-const config = {
-	stories: [
-		'../stories/**/*.mdx',
-		'../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)',
-	],
-	addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
+export default {
+	stories: ['../stories/**/*.stories.@(js|jsx|ts|tsx)'],
 	framework: {
 		name: '@storybook/web-components-vite',
 		options: {},
@@ -13,5 +8,3 @@ const config = {
 		autodocs: 'tag',
 	},
 };
-
-export default config;

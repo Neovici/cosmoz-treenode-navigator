@@ -1,16 +1,14 @@
 # [7.5.0](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.4.2...v7.5.0) (2025-09-03)
 
-
 ### Features
 
-* new color variable ([a28199f](https://github.com/neovici/cosmoz-treenode-navigator/commit/a28199f15d19cb267d5014c9ae4a28393daf58c0))
+- new color variable ([a28199f](https://github.com/neovici/cosmoz-treenode-navigator/commit/a28199f15d19cb267d5014c9ae4a28393daf58c0))
 
 ## [7.4.2](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.4.1...v7.4.2) (2025-08-04)
 
-
 ### Bug Fixes
 
-* automerge workflow ([380b328](https://github.com/neovici/cosmoz-treenode-navigator/commit/380b328a9377c6feb742b7b87ad6ac6d4db572e8))
+- automerge workflow ([380b328](https://github.com/neovici/cosmoz-treenode-navigator/commit/380b328a9377c6feb742b7b87ad6ac6d4db572e8))
 
 ## [7.4.1](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.4.0...v7.4.1) (2025-08-03)
 
