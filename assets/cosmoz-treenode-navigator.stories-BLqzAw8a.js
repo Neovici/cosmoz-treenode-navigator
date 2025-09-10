@@ -1,9 +1,9 @@
-import{x as i}from"./lit-element-D5YJkDF8.js";import{T as m,a as p}from"./tree-data-CXI3kqpg.js";import"./iframe-D9sFQmMn.js";const P={title:"Components/CosmozTreenodeNavigator",component:"cosmoz-treenode-navigator",tags:["autodocs"],argTypes:{searchPlaceholder:{control:"text"},searchGlobalPlaceholder:{control:"text"},searchMinLength:{control:"number"},searchDebounceTimeout:{control:"number"},opened:{control:"boolean"}}},h=e=>{const d=new m(p);return i`
+import{x as c}from"./iframe-CBzwKJhu.js";import{T as t,a as s}from"./tree-data-CYx-o4-t.js";import"./preload-helper-D9Z9MdNV.js";const i={title:"Components/CosmozTreenodeNavigator",component:"cosmoz-treenode-navigator",tags:["autodocs"],argTypes:{searchPlaceholder:{control:"text"},searchGlobalPlaceholder:{control:"text"},searchMinLength:{control:"number"},searchDebounceTimeout:{control:"number"},opened:{control:"boolean"}}},a=e=>{const n=new t(s);return c`
         <div
             style="height: 400px; width: 500px; border: 1px solid #ccc; padding: 10px;"
         >
             <cosmoz-treenode-navigator
-                .tree=${d}
+                .tree=${n}
                 .searchPlaceholder=${e.searchPlaceholder}
                 .searchGlobalPlaceholder=${e.searchGlobalPlaceholder}
                 .searchMinLength=${e.searchMinLength}
@@ -11,7 +11,7 @@ import{x as i}from"./lit-element-D5YJkDF8.js";import{T as m,a as p}from"./tree-d
                 .opened=${e.opened}
             ></cosmoz-treenode-navigator>
         </div>
-    `},r=h.bind({});r.args={searchPlaceholder:"Search...",searchGlobalPlaceholder:"Click to search again but globally",searchMinLength:3,searchDebounceTimeout:2e3,opened:!0};const o=h.bind({});o.args={searchPlaceholder:"Enter search term...",searchGlobalPlaceholder:"Search in the entire tree",searchMinLength:2,searchDebounceTimeout:1e3,opened:!0};var a,n,c;r.parameters={...r.parameters,docs:{...(a=r.parameters)==null?void 0:a.docs,source:{originalSource:`args => {
+    `},r=a.bind({});r.args={searchPlaceholder:"Search...",searchGlobalPlaceholder:"Click to search again but globally",searchMinLength:3,searchDebounceTimeout:2e3,opened:!0};const o=a.bind({});o.args={searchPlaceholder:"Enter search term...",searchGlobalPlaceholder:"Search in the entire tree",searchMinLength:2,searchDebounceTimeout:1e3,opened:!0};r.parameters={...r.parameters,docs:{...r.parameters?.docs,source:{originalSource:`args => {
   const tree = new DefaultTree(adminFilesTree);
   return html\`
         <div
@@ -27,7 +27,7 @@ import{x as i}from"./lit-element-D5YJkDF8.js";import{T as m,a as p}from"./tree-d
             ></cosmoz-treenode-navigator>
         </div>
     \`;
-}`,...(c=(n=r.parameters)==null?void 0:n.docs)==null?void 0:c.source}}};var t,s,l;o.parameters={...o.parameters,docs:{...(t=o.parameters)==null?void 0:t.docs,source:{originalSource:`args => {
+}`,...r.parameters?.docs?.source}}};o.parameters={...o.parameters,docs:{...o.parameters?.docs,source:{originalSource:`args => {
   const tree = new DefaultTree(adminFilesTree);
   return html\`
         <div
@@ -43,4 +43,4 @@ import{x as i}from"./lit-element-D5YJkDF8.js";import{T as m,a as p}from"./tree-d
             ></cosmoz-treenode-navigator>
         </div>
     \`;
-}`,...(l=(s=o.parameters)==null?void 0:s.docs)==null?void 0:l.source}}};const T=["Default","WithCustomPlaceholders"];export{r as Default,o as WithCustomPlaceholders,T as __namedExportsOrder,P as default};
+}`,...o.parameters?.docs?.source}}};const m=["Default","WithCustomPlaceholders"];export{r as Default,o as WithCustomPlaceholders,m as __namedExportsOrder,i as default};
