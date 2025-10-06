@@ -34,7 +34,7 @@ export default css`
 	}
 
 	.icon svg {
-		fill: var(--cosmoz-treenode-navigator-icon-color, currentColor);
+		fill: currentColor;
 	}
 
 	.path {
