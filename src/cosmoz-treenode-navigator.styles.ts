@@ -30,6 +30,11 @@ export default css`
 		width: 40px;
 		height: 40px;
 		box-sizing: border-box;
+		color: var(--cosmoz-treenode-navigator-icon-color, currentColor);
+	}
+
+	.icon svg {
+		fill: currentColor;
 	}
 
 	.path {
@@ -78,20 +83,6 @@ export default css`
 
 	.name {
 		flex: auto;
-	}
-
-	.icon {
-		box-sizing: border-box;
-		cursor: pointer;
-		display: inline-block;
-		height: 40px;
-		line-height: 1;
-		outline: none;
-		padding: 8px;
-		position: relative;
-		user-select: none;
-		width: 40px;
-		z-index: 0;
 	}
 
 	.node.selected {
