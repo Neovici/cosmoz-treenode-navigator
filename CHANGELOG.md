@@ -1,3 +1,10 @@
+## [6.0.3](https://github.com/neovici/cosmoz-treenode-navigator/compare/v6.0.2...v6.0.3) (2025-10-29)
+
+
+### Bug Fixes
+
+* cfg is no longer a dependency ([6f1b8e1](https://github.com/neovici/cosmoz-treenode-navigator/commit/6f1b8e1fe56320adad280e29af47a6e6fb964828))
+
 ## [6.0.2](https://github.com/neovici/cosmoz-treenode-navigator/compare/v6.0.1...v6.0.2) (2025-02-14)
 
 
