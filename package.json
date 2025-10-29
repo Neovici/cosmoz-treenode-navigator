@@ -60,7 +60,6 @@
 	},
 	"dependencies": {
 		"@lit-labs/virtualizer": "^2.0.0",
-		"@neovici/cfg": "^1.33.0",
 		"@neovici/cosmoz-dialog": "^3.0.0",
 		"@neovici/cosmoz-i18next": "^3.2.0",
 		"@neovici/cosmoz-input": "^5.0.0",
@@ -77,6 +76,7 @@
 	"devDependencies": {
 		"@commitlint/cli": "^18.0.0",
 		"@commitlint/config-conventional": "^18.0.0",
+		"@neovici/cfg": "^1.33.0",
 		"@open-wc/testing": "^4.0.0",
 		"@polymer/iron-ajax": "^3.0.0",
 		"@polymer/iron-component-page": "^4.0.0",
