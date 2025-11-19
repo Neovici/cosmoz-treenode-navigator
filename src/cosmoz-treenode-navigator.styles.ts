@@ -11,6 +11,7 @@ export default css`
 
 	.header {
 		margin: 0 16px;
+		color: var(--cz-text-color, inherit);
 	}
 
 	.header a {
@@ -75,6 +76,7 @@ export default css`
 		font-family: 'Roboto', 'Noto', sans-serif;
 		font-size: 16px;
 		font-weight: 400;
+		color: var(--cz-text-color, inherit);
 		height: 40px;
 		line-height: 24px;
 		padding: 6px 12px 6px 16px;
