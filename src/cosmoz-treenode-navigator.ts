@@ -135,6 +135,8 @@ const NodeNavigator = ({
 		setOpenNodePath(clickedNode?.pathLocator || '');
 		setSearchValue('');
 		setHighlightedNode(null);
+		setNodePath('');
+		setNodesOnNodePath([]);
 	}, []);
 
 	/**
@@ -153,17 +155,6 @@ const NodeNavigator = ({
 		},
 		[updateNodesOnPath],
 	);
-
-	useEffect(() => {
-		if (!openNodePath) {
-			return;
-		}
-
-		notifyProperty(host, 'highlightedNodePath', '');
-
-		// clear nodePath when navigating away
-		setNodePath('');
-	}, [openNodePath]);
 
 	useEffect(() => {
 		if (!nodesOnNodePath?.length || !tree || !opened) {
@@ -192,18 +183,11 @@ const NodeNavigator = ({
 			'highlightedNodePath',
 			highlightedNode?.pathLocator || '',
 		);
-
-		if (highlightedNode?.pathLocator !== nodePath) {
-			setNodePath(highlightedNode?.pathLocator ?? '');
-		}
-
-		if (highlightedNode !== selectedNode) {
-			setSelectedNode(highlightedNode);
-		}
 	}, [highlightedNode]);
 
+	// Sync selectedNode to highlightedNode when selectedNode changes externally
 	useEffect(() => {
-		if (selectedNode !== highlightedNode) {
+		if (selectedNode && selectedNode !== highlightedNode) {
 			setHighlightedNode(selectedNode);
 		}
 	}, [selectedNode]);
