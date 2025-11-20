@@ -1,16 +1,14 @@
 # [7.6.0](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.5.1...v7.6.0) (2025-10-10)
 
-
 ### Features
 
-* color variable for icons ([#167](https://github.com/neovici/cosmoz-treenode-navigator/issues/167)) ([5f99fa3](https://github.com/neovici/cosmoz-treenode-navigator/commit/5f99fa358c255f43ee97b8e780aa12e0b9718fd0))
+- color variable for icons ([#167](https://github.com/neovici/cosmoz-treenode-navigator/issues/167)) ([5f99fa3](https://github.com/neovici/cosmoz-treenode-navigator/commit/5f99fa358c255f43ee97b8e780aa12e0b9718fd0))
 
 ## [7.5.1](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.5.0...v7.5.1) (2025-09-10)
 
-
 ### Bug Fixes
 
-* add storybook plugin for documentation ([12c15ef](https://github.com/neovici/cosmoz-treenode-navigator/commit/12c15ef48643c807ea430394436604bf5768bc45))
+- add storybook plugin for documentation ([12c15ef](https://github.com/neovici/cosmoz-treenode-navigator/commit/12c15ef48643c807ea430394436604bf5768bc45))
 
 # [7.5.0](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.4.2...v7.5.0) (2025-09-03)
 
