@@ -44,6 +44,7 @@ type NavigatorMeta = {
 	onNodeClick: (node: Node | null) => void;
 };
 
+// eslint-disable-next-line max-statements
 const NodeNavigator = ({
 	/**
 	 * The main node structure
@@ -135,6 +136,8 @@ const NodeNavigator = ({
 		setOpenNodePath(clickedNode?.pathLocator || '');
 		setSearchValue('');
 		setHighlightedNode(null);
+		setNodePath('');
+		setNodesOnNodePath([]);
 	}, []);
 
 	/**
@@ -153,17 +156,6 @@ const NodeNavigator = ({
 		},
 		[updateNodesOnPath],
 	);
-
-	useEffect(() => {
-		if (!openNodePath) {
-			return;
-		}
-
-		notifyProperty(host, 'highlightedNodePath', '');
-
-		// clear nodePath when navigating away
-		setNodePath('');
-	}, [openNodePath]);
 
 	useEffect(() => {
 		if (!nodesOnNodePath?.length || !tree || !opened) {
@@ -192,18 +184,11 @@ const NodeNavigator = ({
 			'highlightedNodePath',
 			highlightedNode?.pathLocator || '',
 		);
-
-		if (highlightedNode?.pathLocator !== nodePath) {
-			setNodePath(highlightedNode?.pathLocator ?? '');
-		}
-
-		if (highlightedNode !== selectedNode) {
-			setSelectedNode(highlightedNode);
-		}
 	}, [highlightedNode]);
 
+	// Sync selectedNode to highlightedNode when selectedNode changes externally
 	useEffect(() => {
-		if (selectedNode !== highlightedNode) {
+		if (selectedNode && selectedNode !== highlightedNode) {
 			setHighlightedNode(selectedNode);
 		}
 	}, [selectedNode]);
@@ -251,6 +236,7 @@ const NodeNavigator = ({
 			}
 		}
 
+		// eslint-disable-next-line max-statements
 		const handler = (e: KeyboardEvent) => {
 			if ((e.ctrlKey && e.altKey) || e.defaultPrevented) {
 				return;
@@ -328,13 +314,11 @@ const NodeNavigator = ({
 	}, [opened, meta, onNodeSelect]);
 
 	// update the event handler for double-click
-	const handleNodeDblClick = (e: Event) => {
+	const handleNodeDblClick = (node: Node) => (e: Event) => {
 		onNodeDblClicked(e, host);
 
-		// get the node that was double-clicked
-		if (highlightedNode) {
-			onNodeSelect(highlightedNode);
-		}
+		// select the node that was double-clicked
+		onNodeSelect(node);
 	};
 
 	const renderItem = (node: Node | null, index: number) => {
@@ -357,7 +341,7 @@ const NodeNavigator = ({
 			<div
 				class=${computeRowClass('node', node, highlightedNode)}
 				@click=${() => setHighlightedNode(node)}
-				@dblclick=${handleNodeDblClick}
+				@dblclick=${handleNodeDblClick(node)}
 			>
 				<div class="name">${node[tree.searchProperty]}</div>
 				${when(

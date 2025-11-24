@@ -91,16 +91,6 @@ const CosmozNodeButtonView = ({
 		}
 	}, [dialogRef.current]);
 
-	// keep legacy props in sync w/ "highlightedNode"
-	useEffect(() => {
-		if (highlightedNode !== selectedNode) {
-			setSelectedNode(highlightedNode);
-		}
-		if (highlightedNode?.pathLocator !== nodePath) {
-			setNodePath(highlightedNode?.pathLocator ?? '');
-		}
-	}, [highlightedNode]);
-
 	// external updates to "selectedNode"
 	useEffect(() => {
 		if (selectedNode && selectedNode !== highlightedNode) {
@@ -218,7 +208,7 @@ const CosmozNodeButtonView = ({
 				<slot name="button-after"></slot>
 			</button>
 			${when(
-				!noReset && !!highlightedNode,
+				!noReset && !!selectedNode,
 				() =>
 					html` <button
 						@click=${reset}
