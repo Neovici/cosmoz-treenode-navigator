@@ -1,4 +1,4 @@
-import{c as H,u as x,b as V,d as E,e as b,f as T,g as _,h as J,i as O,n as Q,l as C}from"./tree-data-D6JT0cnr.js";import{x as f}from"./iframe-rL8wds2w.js";const U=H`
+import{c as H,u as x,b as V,d as E,e as b,f as T,g as _,h as J,i as O,n as Q,l as C}from"./tree-data-BprkFw0B.js";import{x as f}from"./iframe-DGU9eMji.js";const U=H`
 	h1,
 	h2 {
 		font-weight: 500;
@@ -222,7 +222,7 @@ import{c as H,u as x,b as V,d as E,e as b,f as T,g as _,h as J,i as O,n as Q,l a
 		background-color: #f2f2f2;
 		cursor: default;
 	}
-`,W=(o,i)=>{const s=a=>{if(a.key===o&&i instanceof Function)return a.preventDefault(),i()};x(()=>(document.addEventListener("keydown",s),()=>{document.removeEventListener("keydown",s)}))},X=(o,i)=>{let s;const a=[];return(...m)=>new Promise((w,v)=>{clearTimeout(s),s=setTimeout(()=>{const p=[...a];a.length=0,Promise.resolve(o(...m)).then(c=>{p.forEach(({resolve:t})=>t(c))},c=>{p.forEach(({reject:t})=>t(c))})},i),a.push({resolve:w,reject:v})})},D=({tree:o,multiSelection:i=!1,dialogText:s,buttonTextPlaceholder:a,searchPlaceholder:m,noReset:w=!1,searchGlobalPlaceholder:v,searchMinLength:p=3,searchDebounceTimeout:c=2e3})=>{const t=E(null),y=E(null),[n,h]=b("highlightedNode"),[u,P]=b("selectedNode"),[k,z]=b("nodePath",""),[d,g]=b("nodesOnNodePath",[]),[R,L]=T(!1),[l,$]=T([]);x(()=>{t.current&&(y.current=t.current.querySelector("cosmoz-treenode-navigator")?.shadowRoot?.querySelector("cosmoz-input"))},[t.current]),x(()=>{u&&u!==n&&h(u)},[u]),x(()=>{if(!(k||o))return;const e=_(k,o);g(e);const r=e.length>0?e[e.length-1]:null;r&&r!==n&&h(r)},[k,o]);const A=J(()=>!Array.isArray(d)||d.length===0?a||"":d.filter(e=>e).map(e=>e[o.searchProperty]).join(" / "),[d,o]),I=()=>{g([]),$([]),h(null),P(null),z("")},M=({item:e,ev:r})=>{$(l.filter(G=>G!==e)),r.preventDefault(),r.stopPropagation()},j=e=>e.name,q=(e,r)=>e&&r>0,B=X(()=>{t.current?.fit?.()},50),K=()=>{y.current&&y.current.focus()},F=()=>{t.current?.showModal(),L(!0),setTimeout(K,0)},N=()=>{L(!1),t.current?.close()};W("Escape",N);const S=()=>{n?.pathLocator&&(i&&!l.some(e=>e.pathLocator===n.pathLocator)&&$([...l,n]),P(n),z(n.pathLocator),g(_(n.pathLocator,o)),N())};return f`
+`,W=(o,i)=>{const s=a=>{if(a.key===o&&i instanceof Function)return a.preventDefault(),i()};x(()=>(document.addEventListener("keydown",s),()=>{document.removeEventListener("keydown",s)}))},X=(o,i)=>{let s;const a=[];return(...m)=>new Promise((w,v)=>{clearTimeout(s),s=setTimeout(()=>{const h=[...a];a.length=0,Promise.resolve(o(...m)).then(c=>{h.forEach(({resolve:t})=>t(c))},c=>{h.forEach(({reject:t})=>t(c))})},i),a.push({resolve:w,reject:v})})},D=({tree:o,multiSelection:i=!1,dialogText:s,buttonTextPlaceholder:a,searchPlaceholder:m,noReset:w=!1,searchGlobalPlaceholder:v,searchMinLength:h=3,searchDebounceTimeout:c=2e3})=>{const t=E(null),y=E(null),[n,u]=b("highlightedNode"),[d,P]=b("selectedNode"),[k,z]=b("nodePath",""),[l,g]=b("nodesOnNodePath",[]),[R,L]=T(!1),[p,$]=T([]);x(()=>{t.current&&(y.current=t.current.querySelector("cosmoz-treenode-navigator")?.shadowRoot?.querySelector("cosmoz-input"))},[t.current]),x(()=>{d&&d!==n&&u(d)},[d]),x(()=>{if(!(k||o))return;const e=_(k,o);g(e);const r=e.length>0?e[e.length-1]:null;r&&r!==n&&u(r)},[k,o]);const A=J(()=>!Array.isArray(l)||l.length===0?a||"":l.filter(e=>e).map(e=>e[o.searchProperty]).join(" / "),[l,o]),I=()=>{g([]),$([]),u(null),P(null),z("")},M=({item:e,ev:r})=>{$(p.filter(G=>G!==e)),r.preventDefault(),r.stopPropagation()},j=e=>e.name,q=(e,r)=>e&&r>0,B=X(()=>{t.current?.fit?.()},50),K=()=>{y.current&&y.current.focus()},F=()=>{t.current?.showModal(),L(!0),setTimeout(K,0)},N=()=>{L(!1),t.current?.close()};W("Escape",N);const S=()=>{n?.pathLocator&&(i&&!p.some(e=>e.pathLocator===n.pathLocator)&&$([...p,n]),P(n),z(n.pathLocator),g(_(n.pathLocator,o)),N())};return f`
 		<div class="actions" part="actions">
 			<button
 				class="action-open"
@@ -236,7 +236,7 @@ import{c as H,u as x,b as V,d as E,e as b,f as T,g as _,h as J,i as O,n as Q,l a
 				</div>
 				<slot name="button-after"></slot>
 			</button>
-			${O(!w&&!!n,()=>f` <button
+			${O(!w&&!!d,()=>f` <button
 						@click=${I}
 						class="action-reset"
 						part="action-reset"
@@ -265,9 +265,9 @@ import{c as H,u as x,b as V,d as E,e as b,f as T,g as _,h as J,i as O,n as Q,l a
 						</svg>
 					</button>`)}
 		</div>
-		${O(q(i,l.length),()=>f`
+		${O(q(i,p.length),()=>f`
 				<div id="chips" part="chips" class="row">
-					${l.map(e=>f`
+					${p.map(e=>f`
 							<div class="chip">
 								<span>${j(e)}</span>
 								<button
@@ -295,14 +295,14 @@ import{c as H,u as x,b as V,d as E,e as b,f as T,g as _,h as J,i as O,n as Q,l a
 					id="treeNavigator"
 					class="dialog-treenode-navigator no-padding"
 					.highlightedNode=${n}
-					@highlighted-node-changed=${C(h)}
+					@highlighted-node-changed=${C(u)}
 					.searchPlaceholder=${m}
 					.searchGlobalPlaceholder=${v}
-					.searchMinLength=${p}
+					.searchMinLength=${h}
 					.searchDebounceTimeout=${c}
 					.tree=${o}
 					.opened=${R}
-					.nodesOnNodePath=${d}
+					.nodesOnNodePath=${l}
 					@nodes-on-node-path-changed=${C(g)}
 					@node-dblclicked=${S}
 					@on-data-plane-changed=${B}

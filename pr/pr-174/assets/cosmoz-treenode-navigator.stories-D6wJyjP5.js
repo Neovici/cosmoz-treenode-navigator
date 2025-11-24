@@ -1,4 +1,4 @@
-import{x as c}from"./iframe-rL8wds2w.js";import{T as t,a as s}from"./tree-data-D6JT0cnr.js";import"./preload-helper-PPVm8Dsz.js";const i={title:"Components/CosmozTreenodeNavigator",component:"cosmoz-treenode-navigator",tags:["autodocs"],argTypes:{searchPlaceholder:{control:"text"},searchGlobalPlaceholder:{control:"text"},searchMinLength:{control:"number"},searchDebounceTimeout:{control:"number"},opened:{control:"boolean"}}},a=e=>{const n=new t(s);return c`
+import{x as c}from"./iframe-DGU9eMji.js";import{T as t,a as s}from"./tree-data-BprkFw0B.js";import"./preload-helper-PPVm8Dsz.js";const i={title:"Components/CosmozTreenodeNavigator",component:"cosmoz-treenode-navigator",tags:["autodocs"],argTypes:{searchPlaceholder:{control:"text"},searchGlobalPlaceholder:{control:"text"},searchMinLength:{control:"number"},searchDebounceTimeout:{control:"number"},opened:{control:"boolean"}}},a=e=>{const n=new t(s);return c`
         <div
             style="height: 400px; width: 500px; border: 1px solid #ccc; padding: 10px;"
         >
