@@ -208,7 +208,7 @@ const CosmozNodeButtonView = ({
 				<slot name="button-after"></slot>
 			</button>
 			${when(
-				!noReset && !!highlightedNode,
+				!noReset && !!selectedNode,
 				() =>
 					html` <button
 						@click=${reset}
