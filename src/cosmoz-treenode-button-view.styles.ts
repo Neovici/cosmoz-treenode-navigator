@@ -194,6 +194,7 @@ export default css`
 		padding: 0 8px;
 		font-size: 1.25rem;
 		font-weight: normal;
+		color: var(--cz-text-color, inherit);
 	}
 
 	.dialog-footer {
