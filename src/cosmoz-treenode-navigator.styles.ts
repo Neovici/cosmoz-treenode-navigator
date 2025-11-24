@@ -4,7 +4,7 @@ export default css`
 	:host {
 		--cosmoz-treenode-navigator-select-node-icon-color: var(
 			--primary-color,
-			white
+			#3a91e2
 		);
 		--cosmoz-treenode-navigator-list-item-focused-color: #f0f8ff;
 	}
