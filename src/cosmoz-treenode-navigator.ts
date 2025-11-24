@@ -44,6 +44,7 @@ type NavigatorMeta = {
 	onNodeClick: (node: Node | null) => void;
 };
 
+// eslint-disable-next-line max-statements
 const NodeNavigator = ({
 	/**
 	 * The main node structure
@@ -235,6 +236,7 @@ const NodeNavigator = ({
 			}
 		}
 
+		// eslint-disable-next-line max-statements
 		const handler = (e: KeyboardEvent) => {
 			if ((e.ctrlKey && e.altKey) || e.defaultPrevented) {
 				return;
@@ -312,13 +314,11 @@ const NodeNavigator = ({
 	}, [opened, meta, onNodeSelect]);
 
 	// update the event handler for double-click
-	const handleNodeDblClick = (e: Event) => {
+	const handleNodeDblClick = (node: Node) => (e: Event) => {
 		onNodeDblClicked(e, host);
 
-		// get the node that was double-clicked
-		if (highlightedNode) {
-			onNodeSelect(highlightedNode);
-		}
+		// select the node that was double-clicked
+		onNodeSelect(node);
 	};
 
 	const renderItem = (node: Node | null, index: number) => {
@@ -340,8 +340,7 @@ const NodeNavigator = ({
 				))(getParentPath(tree, node))}
 			<div
 				class=${computeRowClass('node', node, highlightedNode)}
-				@click=${() => setHighlightedNode(node)}
-				@dblclick=${handleNodeDblClick}
+				@dblclick=${handleNodeDblClick(node)}
 			>
 				<div class="name">${node[tree.searchProperty]}</div>
 				${when(
