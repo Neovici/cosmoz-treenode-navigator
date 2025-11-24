@@ -1,4 +1,4 @@
-import{c as H,u as h,b as V,d as E,e as x,f as T,g as _,h as J,i as O,n as Q,l as C}from"./tree-data-Dt5M9LLj.js";import{x as m}from"./iframe-DTnk9l0f.js";const U=H`
+import{c as H,u as x,b as V,d as E,e as b,f as T,g as _,h as J,i as O,n as Q,l as C}from"./tree-data-D6JT0cnr.js";import{x as f}from"./iframe-rL8wds2w.js";const U=H`
 	h1,
 	h2 {
 		font-weight: 500;
@@ -222,7 +222,7 @@ import{c as H,u as h,b as V,d as E,e as x,f as T,g as _,h as J,i as O,n as Q,l a
 		background-color: #f2f2f2;
 		cursor: default;
 	}
-`,W=(t,i)=>{const s=a=>{if(a.key===t&&i instanceof Function)return a.preventDefault(),i()};h(()=>(document.addEventListener("keydown",s),()=>{document.removeEventListener("keydown",s)}))},X=(t,i)=>{let s;const a=[];return(...w)=>new Promise((v,y)=>{clearTimeout(s),s=setTimeout(()=>{const u=[...a];a.length=0,Promise.resolve(t(...w)).then(c=>{u.forEach(({resolve:n})=>n(c))},c=>{u.forEach(({reject:n})=>n(c))})},i),a.push({resolve:v,reject:y})})},D=({tree:t,multiSelection:i=!1,dialogText:s,buttonTextPlaceholder:a,searchPlaceholder:w,noReset:v=!1,searchGlobalPlaceholder:y,searchMinLength:u=3,searchDebounceTimeout:c=2e3})=>{const n=E(null),k=E(null),[o,g]=x("highlightedNode"),[d,$]=x("selectedNode"),[f,N]=x("nodePath",""),[l,b]=x("nodesOnNodePath",[]),[R,L]=T(!1),[p,P]=T([]);h(()=>{n.current&&(k.current=n.current.querySelector("cosmoz-treenode-navigator")?.shadowRoot?.querySelector("cosmoz-input"))},[n.current]),h(()=>{o!==d&&$(o),o?.pathLocator!==f&&N(o?.pathLocator??"")},[o]),h(()=>{d&&d!==o&&g(d)},[d]),h(()=>{if(!(f||t))return;const e=_(f,t);b(e);const r=e.length>0?e[e.length-1]:null;r&&r!==o&&g(r)},[f,t]);const A=J(()=>!Array.isArray(l)||l.length===0?a||"":l.filter(e=>e).map(e=>e[t.searchProperty]).join(" / "),[l,t]),I=()=>{b([]),P([]),g(null),$(null),N("")},M=({item:e,ev:r})=>{P(p.filter(G=>G!==e)),r.preventDefault(),r.stopPropagation()},j=e=>e.name,q=(e,r)=>e&&r>0,B=X(()=>{n.current?.fit?.()},50),K=()=>{k.current&&k.current.focus()},F=()=>{n.current?.showModal(),L(!0),setTimeout(K,0)},z=()=>{L(!1),n.current?.close()};W("Escape",z);const S=()=>{o?.pathLocator&&(i&&!p.some(e=>e.pathLocator===o.pathLocator)&&P([...p,o]),$(o),N(o.pathLocator),b(_(o.pathLocator,t)),z())};return m`
+`,W=(o,i)=>{const s=a=>{if(a.key===o&&i instanceof Function)return a.preventDefault(),i()};x(()=>(document.addEventListener("keydown",s),()=>{document.removeEventListener("keydown",s)}))},X=(o,i)=>{let s;const a=[];return(...m)=>new Promise((w,v)=>{clearTimeout(s),s=setTimeout(()=>{const p=[...a];a.length=0,Promise.resolve(o(...m)).then(c=>{p.forEach(({resolve:t})=>t(c))},c=>{p.forEach(({reject:t})=>t(c))})},i),a.push({resolve:w,reject:v})})},D=({tree:o,multiSelection:i=!1,dialogText:s,buttonTextPlaceholder:a,searchPlaceholder:m,noReset:w=!1,searchGlobalPlaceholder:v,searchMinLength:p=3,searchDebounceTimeout:c=2e3})=>{const t=E(null),y=E(null),[n,h]=b("highlightedNode"),[u,P]=b("selectedNode"),[k,z]=b("nodePath",""),[d,g]=b("nodesOnNodePath",[]),[R,L]=T(!1),[l,$]=T([]);x(()=>{t.current&&(y.current=t.current.querySelector("cosmoz-treenode-navigator")?.shadowRoot?.querySelector("cosmoz-input"))},[t.current]),x(()=>{u&&u!==n&&h(u)},[u]),x(()=>{if(!(k||o))return;const e=_(k,o);g(e);const r=e.length>0?e[e.length-1]:null;r&&r!==n&&h(r)},[k,o]);const A=J(()=>!Array.isArray(d)||d.length===0?a||"":d.filter(e=>e).map(e=>e[o.searchProperty]).join(" / "),[d,o]),I=()=>{g([]),$([]),h(null),P(null),z("")},M=({item:e,ev:r})=>{$(l.filter(G=>G!==e)),r.preventDefault(),r.stopPropagation()},j=e=>e.name,q=(e,r)=>e&&r>0,B=X(()=>{t.current?.fit?.()},50),K=()=>{y.current&&y.current.focus()},F=()=>{t.current?.showModal(),L(!0),setTimeout(K,0)},N=()=>{L(!1),t.current?.close()};W("Escape",N);const S=()=>{n?.pathLocator&&(i&&!l.some(e=>e.pathLocator===n.pathLocator)&&$([...l,n]),P(n),z(n.pathLocator),g(_(n.pathLocator,o)),N())};return f`
 		<div class="actions" part="actions">
 			<button
 				class="action-open"
@@ -236,7 +236,7 @@ import{c as H,u as h,b as V,d as E,e as x,f as T,g as _,h as J,i as O,n as Q,l a
 				</div>
 				<slot name="button-after"></slot>
 			</button>
-			${O(!v&&!!o,()=>m` <button
+			${O(!w&&!!n,()=>f` <button
 						@click=${I}
 						class="action-reset"
 						part="action-reset"
@@ -265,9 +265,9 @@ import{c as H,u as h,b as V,d as E,e as x,f as T,g as _,h as J,i as O,n as Q,l a
 						</svg>
 					</button>`)}
 		</div>
-		${O(q(i,p.length),()=>m`
+		${O(q(i,l.length),()=>f`
 				<div id="chips" part="chips" class="row">
-					${p.map(e=>m`
+					${l.map(e=>f`
 							<div class="chip">
 								<span>${j(e)}</span>
 								<button
@@ -285,7 +285,7 @@ import{c as H,u as h,b as V,d as E,e as x,f as T,g as _,h as J,i as O,n as Q,l a
 		<dialog
 			class="dialog"
 			part="dialog"
-			${Q(e=>{n.current=e})}
+			${Q(e=>{t.current=e})}
 		>
 			<header class="dialog-header" part="header">
 				<h1 class="dialog-heading" part="heading">${s}</h1>
@@ -294,16 +294,16 @@ import{c as H,u as h,b as V,d as E,e as x,f as T,g as _,h as J,i as O,n as Q,l a
 				<cosmoz-treenode-navigator
 					id="treeNavigator"
 					class="dialog-treenode-navigator no-padding"
-					.highlightedNode=${o}
-					@highlighted-node-changed=${C(g)}
-					.searchPlaceholder=${w}
-					.searchGlobalPlaceholder=${y}
-					.searchMinLength=${u}
+					.highlightedNode=${n}
+					@highlighted-node-changed=${C(h)}
+					.searchPlaceholder=${m}
+					.searchGlobalPlaceholder=${v}
+					.searchMinLength=${p}
 					.searchDebounceTimeout=${c}
-					.tree=${t}
+					.tree=${o}
 					.opened=${R}
-					.nodesOnNodePath=${l}
-					@nodes-on-node-path-changed=${C(b)}
+					.nodesOnNodePath=${d}
+					@nodes-on-node-path-changed=${C(g)}
 					@node-dblclicked=${S}
 					@on-data-plane-changed=${B}
 				>
@@ -313,7 +313,7 @@ import{c as H,u as h,b as V,d as E,e as x,f as T,g as _,h as J,i as O,n as Q,l a
 			<footer class="dialog-footer" part="footer">
 				<p class="dialog-footer-button-container">
 					<button
-						?disabled=${!o?.pathLocator}
+						?disabled=${!n?.pathLocator}
 						autofocus
 						class="dialog-footer-button"
 						part="select-button"
@@ -324,7 +324,7 @@ import{c as H,u as h,b as V,d as E,e as x,f as T,g as _,h as J,i as O,n as Q,l a
 					<button
 						class="dialog-footer-button"
 						part="cancel-button"
-						@click=${z}
+						@click=${N}
 					>
 						Cancel
 					</button>
