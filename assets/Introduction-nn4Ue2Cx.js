@@ -1,4 +1,4 @@
-import{j as e,M as s}from"./blocks-DPOIS9yh.js";import{useMDXComponents as r}from"./index-KLSJZJ9y.js";import"./preload-helper-PPVm8Dsz.js";import"./iframe-Deo8i-tZ.js";function o(t){const n={a:"a",code:"code",h1:"h1",h2:"h2",li:"li",p:"p",pre:"pre",ul:"ul",...r(),...t.components};return e.jsxs(e.Fragment,{children:[e.jsx(s,{title:"Introduction"}),`
+import{j as e,M as s}from"./blocks-BzrkHt-z.js";import{useMDXComponents as r}from"./index-UBU57QzD.js";import"./preload-helper-PPVm8Dsz.js";import"./iframe-DyxKSRA1.js";function o(t){const n={a:"a",code:"code",h1:"h1",h2:"h2",li:"li",p:"p",pre:"pre",ul:"ul",...r(),...t.components};return e.jsxs(e.Fragment,{children:[e.jsx(s,{title:"Introduction"}),`
 `,e.jsx(n.h1,{id:"cosmoz-treenode-navigator",children:"Cosmoz Treenode Navigator"}),`
 `,e.jsx(n.p,{children:"A Pion component that lets you navigate and search through hierarchically structured data-nodes and select one of them."}),`
 `,e.jsx(n.p,{children:"This Storybook demonstrates the two main components:"}),`

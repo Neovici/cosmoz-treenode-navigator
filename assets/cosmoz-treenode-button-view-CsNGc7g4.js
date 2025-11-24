@@ -1,4 +1,4 @@
-import{c as H,u as x,b as V,d as E,e as b,f as T,g as _,h as J,i as O,n as Q,l as C}from"./tree-data-CndkXM9U.js";import{x as f}from"./iframe-Deo8i-tZ.js";const U=H`
+import{c as H,u as x,b as V,d as E,e as b,f as T,g as _,h as J,i as O,n as Q,l as C}from"./tree-data-D3IJl10x.js";import{x as f}from"./iframe-DyxKSRA1.js";const U=H`
 	h1,
 	h2 {
 		font-weight: 500;
@@ -192,6 +192,7 @@ import{c as H,u as x,b as V,d as E,e as b,f as T,g as _,h as J,i as O,n as Q,l a
 		padding: 0 8px;
 		font-size: 1.25rem;
 		font-weight: normal;
+		color: var(--cz-text-color, inherit);
 	}
 
 	.dialog-footer {
@@ -222,7 +223,7 @@ import{c as H,u as x,b as V,d as E,e as b,f as T,g as _,h as J,i as O,n as Q,l a
 		background-color: #f2f2f2;
 		cursor: default;
 	}
-`,W=(o,i)=>{const s=a=>{if(a.key===o&&i instanceof Function)return a.preventDefault(),i()};x(()=>(document.addEventListener("keydown",s),()=>{document.removeEventListener("keydown",s)}))},X=(o,i)=>{let s;const a=[];return(...m)=>new Promise((w,v)=>{clearTimeout(s),s=setTimeout(()=>{const h=[...a];a.length=0,Promise.resolve(o(...m)).then(c=>{h.forEach(({resolve:t})=>t(c))},c=>{h.forEach(({reject:t})=>t(c))})},i),a.push({resolve:w,reject:v})})},D=({tree:o,multiSelection:i=!1,dialogText:s,buttonTextPlaceholder:a,searchPlaceholder:m,noReset:w=!1,searchGlobalPlaceholder:v,searchMinLength:h=3,searchDebounceTimeout:c=2e3})=>{const t=E(null),y=E(null),[n,u]=b("highlightedNode"),[d,P]=b("selectedNode"),[k,z]=b("nodePath",""),[l,g]=b("nodesOnNodePath",[]),[R,L]=T(!1),[p,$]=T([]);x(()=>{t.current&&(y.current=t.current.querySelector("cosmoz-treenode-navigator")?.shadowRoot?.querySelector("cosmoz-input"))},[t.current]),x(()=>{d&&d!==n&&u(d)},[d]),x(()=>{if(!(k||o))return;const e=_(k,o);g(e);const r=e.length>0?e[e.length-1]:null;r&&r!==n&&u(r)},[k,o]);const A=J(()=>!Array.isArray(l)||l.length===0?a||"":l.filter(e=>e).map(e=>e[o.searchProperty]).join(" / "),[l,o]),I=()=>{g([]),$([]),u(null),P(null),z("")},M=({item:e,ev:r})=>{$(p.filter(G=>G!==e)),r.preventDefault(),r.stopPropagation()},j=e=>e.name,q=(e,r)=>e&&r>0,B=X(()=>{t.current?.fit?.()},50),K=()=>{y.current&&y.current.focus()},F=()=>{t.current?.showModal(),L(!0),setTimeout(K,0)},N=()=>{L(!1),t.current?.close()};W("Escape",N);const S=()=>{n?.pathLocator&&(i&&!p.some(e=>e.pathLocator===n.pathLocator)&&$([...p,n]),P(n),z(n.pathLocator),g(_(n.pathLocator,o)),N())};return f`
+`,W=(o,i)=>{const s=a=>{if(a.key===o&&i instanceof Function)return a.preventDefault(),i()};x(()=>(document.addEventListener("keydown",s),()=>{document.removeEventListener("keydown",s)}))},X=(o,i)=>{let s;const a=[];return(...m)=>new Promise((w,v)=>{clearTimeout(s),s=setTimeout(()=>{const h=[...a];a.length=0,Promise.resolve(o(...m)).then(c=>{h.forEach(({resolve:t})=>t(c))},c=>{h.forEach(({reject:t})=>t(c))})},i),a.push({resolve:w,reject:v})})},D=({tree:o,multiSelection:i=!1,dialogText:s,buttonTextPlaceholder:a,searchPlaceholder:m,noReset:w=!1,searchGlobalPlaceholder:v,searchMinLength:h=3,searchDebounceTimeout:c=2e3})=>{const t=E(null),y=E(null),[n,u]=b("highlightedNode"),[d,z]=b("selectedNode"),[k,P]=b("nodePath",""),[l,g]=b("nodesOnNodePath",[]),[R,L]=T(!1),[p,$]=T([]);x(()=>{t.current&&(y.current=t.current.querySelector("cosmoz-treenode-navigator")?.shadowRoot?.querySelector("cosmoz-input"))},[t.current]),x(()=>{d&&d!==n&&u(d)},[d]),x(()=>{if(!(k||o))return;const e=_(k,o);g(e);const r=e.length>0?e[e.length-1]:null;r&&r!==n&&u(r)},[k,o]);const A=J(()=>!Array.isArray(l)||l.length===0?a||"":l.filter(e=>e).map(e=>e[o.searchProperty]).join(" / "),[l,o]),I=()=>{g([]),$([]),u(null),z(null),P("")},M=({item:e,ev:r})=>{$(p.filter(G=>G!==e)),r.preventDefault(),r.stopPropagation()},j=e=>e.name,q=(e,r)=>e&&r>0,B=X(()=>{t.current?.fit?.()},50),K=()=>{y.current&&y.current.focus()},F=()=>{t.current?.showModal(),L(!0),setTimeout(K,0)},N=()=>{L(!1),t.current?.close()};W("Escape",N);const S=()=>{n?.pathLocator&&(i&&!p.some(e=>e.pathLocator===n.pathLocator)&&$([...p,n]),z(n),P(n.pathLocator),g(_(n.pathLocator,o)),N())};return f`
 		<div class="actions" part="actions">
 			<button
 				class="action-open"
