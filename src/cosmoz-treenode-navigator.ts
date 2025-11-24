@@ -340,6 +340,7 @@ const NodeNavigator = ({
 				))(getParentPath(tree, node))}
 			<div
 				class=${computeRowClass('node', node, highlightedNode)}
+				@click=${() => setHighlightedNode(node)}
 				@dblclick=${handleNodeDblClick(node)}
 			>
 				<div class="name">${node[tree.searchProperty]}</div>
