@@ -1,3 +1,10 @@
+## [7.6.1](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.6.0...v7.6.1) (2025-11-24)
+
+
+### Bug Fixes
+
+* don't select node until user clicks select ([#174](https://github.com/neovici/cosmoz-treenode-navigator/issues/174)) ([fa68432](https://github.com/neovici/cosmoz-treenode-navigator/commit/fa68432c99062234a50b098a7f78acc29e870bff))
+
 # [7.6.0](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.5.1...v7.6.0) (2025-10-10)
 
 ### Features
