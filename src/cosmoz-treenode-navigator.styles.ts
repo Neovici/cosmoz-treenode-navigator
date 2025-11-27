@@ -55,6 +55,7 @@ export default css`
 	.items {
 		height: var(--cosmoz-treenode-navigator-list-height, 50vh);
 		width: 100%;
+		overflow-y: auto;
 	}
 
 	.section {

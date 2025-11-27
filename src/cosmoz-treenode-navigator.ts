@@ -325,17 +325,18 @@ const NodeNavigator = ({
 		}
 
 		return html` <div class="item">
-			${((parentPath: string) =>
-				when(
-					search &&
-						(index === 0 ||
-							parentPath !== getParentPath(tree, dataPlane[index - 1])),
+			${when(search, () => {
+				const parentPath = getParentPath(tree, node);
+				return when(
+					index === 0 ||
+						parentPath !== getParentPath(tree, dataPlane[index - 1]),
 					() => html`
 						<div class="section">
 							${tree.getPathString(parentPath, tree.searchProperty)}
 						</div>
 					`,
-				))(getParentPath(tree, node))}
+				);
+			})}
 			<div
 				class=${computeRowClass('node', node, highlightedNode)}
 				@click=${() => setHighlightedNode(node)}
