@@ -1,3 +1,10 @@
+## [7.7.1](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.7.0...v7.7.1) (2025-11-27)
+
+
+### Bug Fixes
+
+* don't change node button selection when navigating ([3a17fff](https://github.com/neovici/cosmoz-treenode-navigator/commit/3a17fff49f9856e0012acb35ff950a4b95c4c6ba))
+
 # [7.7.0](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.6.1...v7.7.0) (2025-11-24)
 
 ### Features
