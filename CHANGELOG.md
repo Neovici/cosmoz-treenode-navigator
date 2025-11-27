@@ -1,16 +1,14 @@
 # [7.7.0](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.6.1...v7.7.0) (2025-11-24)
 
-
 ### Features
 
-* text color variables ([#169](https://github.com/neovici/cosmoz-treenode-navigator/issues/169)) ([f602494](https://github.com/neovici/cosmoz-treenode-navigator/commit/f6024945cdf16707b2c3bb9337758c20c65cbe2a))
+- text color variables ([#169](https://github.com/neovici/cosmoz-treenode-navigator/issues/169)) ([f602494](https://github.com/neovici/cosmoz-treenode-navigator/commit/f6024945cdf16707b2c3bb9337758c20c65cbe2a))
 
 ## [7.6.1](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.6.0...v7.6.1) (2025-11-24)
 
-
 ### Bug Fixes
 
-* don't select node until user clicks select ([#174](https://github.com/neovici/cosmoz-treenode-navigator/issues/174)) ([fa68432](https://github.com/neovici/cosmoz-treenode-navigator/commit/fa68432c99062234a50b098a7f78acc29e870bff))
+- don't select node until user clicks select ([#174](https://github.com/neovici/cosmoz-treenode-navigator/issues/174)) ([fa68432](https://github.com/neovici/cosmoz-treenode-navigator/commit/fa68432c99062234a50b098a7f78acc29e870bff))
 
 # [7.6.0](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.5.1...v7.6.0) (2025-10-10)
 

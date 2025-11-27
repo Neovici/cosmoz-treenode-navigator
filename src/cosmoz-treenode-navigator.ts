@@ -136,8 +136,6 @@ const NodeNavigator = ({
 		setOpenNodePath(clickedNode?.pathLocator || '');
 		setSearchValue('');
 		setHighlightedNode(null);
-		setNodePath('');
-		setNodesOnNodePath([]);
 	}, []);
 
 	/**
