@@ -187,6 +187,8 @@ export default css`
 
 	.dialog-header {
 		padding: 10px 10px 0 10px;
+		cursor: move;
+		user-select: none;
 	}
 
 	.dialog-heading {

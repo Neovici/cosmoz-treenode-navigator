@@ -172,6 +172,34 @@ const CosmozNodeButtonView = ({
 
 	useKeyDown('Escape', onClose);
 
+	const onHeaderMouseDown = (e: MouseEvent) => {
+		const dialog = dialogRef.current;
+		if (!dialog) return;
+
+		const startX = e.clientX;
+		const startY = e.clientY;
+		const rect = dialog.getBoundingClientRect();
+		const startLeft = rect.left;
+		const startTop = rect.top;
+
+		const onMouseMove = (moveEvent: MouseEvent) => {
+			const dx = moveEvent.clientX - startX;
+			const dy = moveEvent.clientY - startY;
+
+			dialog.style.left = `${startLeft + dx}px`;
+			dialog.style.top = `${startTop + dy}px`;
+			dialog.style.margin = '0';
+		};
+
+		const onMouseUp = () => {
+			document.removeEventListener('mousemove', onMouseMove);
+			document.removeEventListener('mouseup', onMouseUp);
+		};
+
+		document.addEventListener('mousemove', onMouseMove);
+		document.addEventListener('mouseup', onMouseUp);
+	};
+
 	// `cosmoz-treenode-navigator` handles updating nodesOnNodePath
 	const selectNode = () => {
 		if (!highlightedNode?.pathLocator) {
@@ -269,7 +297,11 @@ const CosmozNodeButtonView = ({
 				dialogRef.current = el as ButtonViewDialog;
 			})}
 		>
-			<header class="dialog-header" part="header">
+			<header
+				class="dialog-header"
+				part="header"
+				@mousedown=${onHeaderMouseDown}
+			>
 				<h1 class="dialog-heading" part="heading">${dialogText}</h1>
 			</header>
 			<main class="dialog-main" part="main">
