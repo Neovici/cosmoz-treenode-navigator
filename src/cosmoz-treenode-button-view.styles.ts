@@ -187,6 +187,8 @@ export default css`
 
 	.dialog-header {
 		padding: 10px 10px 0 10px;
+		cursor: move;
+		user-select: none;
 	}
 
 	.dialog-heading {
@@ -224,5 +226,39 @@ export default css`
 		color: #a8a8a8;
 		background-color: #f2f2f2;
 		cursor: default;
+	}
+
+	.dialog-footer-button[part='select-button'] {
+		background: var(--cosmoz-button-primary-bg-color, #2196f3);
+		color: var(--cosmoz-button-primary-color, #fff);
+		border-color: var(--cosmoz-button-primary-bg-color, #2196f3);
+	}
+
+	.dialog-footer-button[part='select-button']:not(:disabled):hover {
+		background: var(--cosmoz-button-primary-hover-bg-color, #1976d2);
+		border-color: var(--cosmoz-button-primary-hover-bg-color, #1976d2);
+	}
+
+	.dialog-footer-button[part='select-button']:not(:disabled):active {
+		background: hsl(
+			from var(--cosmoz-button-primary-hover-bg-color, #1976d2) h s calc(l - 5)
+		);
+	}
+
+	.dialog-footer-button[part='cancel-button'] {
+		background: var(--cosmoz-button-secondary-bg-color, white);
+		color: var(--cosmoz-button-secondary-color, #000);
+		border: 1px solid var(--cosmoz-button-secondary-border-color, #ccc);
+	}
+
+	.dialog-footer-button[part='cancel-button']:hover {
+		background: var(--cosmoz-button-secondary-hover-bg-color, #f5f5f5);
+	}
+
+	.dialog-footer-button[part='cancel-button']:active {
+		background: hsl(
+			from var(--cosmoz-button-secondary-hover-bg-color, #f5f5f5) h s
+				calc(l - 5)
+		);
 	}
 `;
