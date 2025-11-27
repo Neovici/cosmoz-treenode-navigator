@@ -285,7 +285,6 @@ const CosmozNodeButtonView = ({
 					.tree=${tree}
 					.opened=${opened}
 					.nodesOnNodePath=${nodesOnNodePath}
-					@nodes-on-node-path-changed=${lift(setNodesOnNodePath)}
 					@node-dblclicked=${selectNode}
 					@on-data-plane-changed=${refit}
 				>
