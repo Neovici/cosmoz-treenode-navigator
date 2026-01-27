@@ -10,13 +10,13 @@
 		"lit-html",
 		"web-components"
 	],
-	"homepage": "https://github.com/neovici/cosmoz-treenode-navigator#readme",
+	"homepage": "https://github.com/Neovici/cosmoz-treenode-navigator#readme",
 	"bugs": {
-		"url": "https://github.com/neovici/cosmoz-treenode-navigator/issues"
+		"url": "https://github.com/Neovici/cosmoz-treenode-navigator/issues"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/neovici/cosmoz-treenode-navigator.git"
+		"url": "git+https://github.com/Neovici/cosmoz-treenode-navigator.git"
 	},
 	"license": "Apache-2.0",
 	"author": "",
