@@ -1,6 +1,6 @@
 {
 	"name": "@neovici/cosmoz-treenode-navigator",
-	"version": "7.8.0",
+	"version": "7.9.0",
 	"type": "module",
 	"description": "A Pion component that lets you navigate and search through hierarchically structured data-nodes and select one of them.",
 	"keywords": [
@@ -31,7 +31,7 @@
 	],
 	"scripts": {
 		"lint": "eslint --cache --ext .js,.ts .",
-    "check:duplicates": "check-duplicate-components",
+		"check:duplicates": "check-duplicate-components",
 		"start": "npm run storybook:start",
 		"test": "wtr --coverage",
 		"test:watch": "wtr --watch",

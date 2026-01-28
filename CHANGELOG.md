@@ -1,21 +1,28 @@
-# [7.8.0](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.7.0...v7.8.0) (2025-11-27)
-
+# [7.9.0](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v7.8.0...v7.9.0) (2026-01-28)
 
 ### Bug Fixes
 
-* don't change node button selection when navigating ([3a17fff](https://github.com/neovici/cosmoz-treenode-navigator/commit/3a17fff49f9856e0012acb35ff950a4b95c4c6ba))
-
+- repository URL case sensitivity ([2fdd508](https://github.com/Neovici/cosmoz-treenode-navigator/commit/2fdd508b22eaaed04991de33c8a5c7db7c765d1c))
 
 ### Features
 
-* don't change button state while navigating + fixes ([#176](https://github.com/neovici/cosmoz-treenode-navigator/issues/176)) ([7428d90](https://github.com/neovici/cosmoz-treenode-navigator/commit/7428d9031ba142d999808ea0c3a85573ca74c17c))
+- add duplicate web component check ([#183](https://github.com/Neovici/cosmoz-treenode-navigator/issues/183)) ([9cf57e7](https://github.com/Neovici/cosmoz-treenode-navigator/commit/9cf57e7a5ddee5c7b4757f007c64546e50235260))
 
-## [7.7.1](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.7.0...v7.7.1) (2025-11-27)
-
+# [7.8.0](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.7.0...v7.8.0) (2025-11-27)
 
 ### Bug Fixes
 
-* don't change node button selection when navigating ([3a17fff](https://github.com/neovici/cosmoz-treenode-navigator/commit/3a17fff49f9856e0012acb35ff950a4b95c4c6ba))
+- don't change node button selection when navigating ([3a17fff](https://github.com/neovici/cosmoz-treenode-navigator/commit/3a17fff49f9856e0012acb35ff950a4b95c4c6ba))
+
+### Features
+
+- don't change button state while navigating + fixes ([#176](https://github.com/neovici/cosmoz-treenode-navigator/issues/176)) ([7428d90](https://github.com/neovici/cosmoz-treenode-navigator/commit/7428d9031ba142d999808ea0c3a85573ca74c17c))
+
+## [7.7.1](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.7.0...v7.7.1) (2025-11-27)
+
+### Bug Fixes
+
+- don't change node button selection when navigating ([3a17fff](https://github.com/neovici/cosmoz-treenode-navigator/commit/3a17fff49f9856e0012acb35ff950a4b95c4c6ba))
 
 # [7.7.0](https://github.com/neovici/cosmoz-treenode-navigator/compare/v7.6.1...v7.7.0) (2025-11-24)
 
