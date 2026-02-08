@@ -6,6 +6,7 @@ import {
 	useMemo,
 	useProperty,
 	useRef,
+	useState,
 } from '@pionjs/pion';
 import { html } from 'lit-html';
 import { ref } from 'lit/directives/ref.js';
@@ -76,6 +77,9 @@ const CosmozNodeButtonView = ({
 
 	// opened is controllable externally
 	const [opened, setOpened] = useProperty<boolean>('opened', false);
+
+	// Track highlighted node path from navigator for Select button
+	const [highlightedNodePath, setHighlightedNodePath] = useState<string>('');
 
 	// nodesOnNodePath derived from nodePath + tree
 	const nodesOnNodePath = useMemo(
@@ -184,6 +188,19 @@ const CosmozNodeButtonView = ({
 		}
 	};
 
+	// Handle highlighted-node-path-changed from navigator
+	const onHighlightedNodePathChanged = (e: CustomEvent<{ value: string }>) => {
+		setHighlightedNodePath(e.detail.value);
+	};
+
+	// Handle Select button click
+	const onSelect = () => {
+		if (highlightedNodePath) {
+			setNodePath(highlightedNodePath);
+			onClose();
+		}
+	};
+
 	return html`
 		<div class="actions" part="actions">
 			<cosmoz-button
@@ -204,12 +221,13 @@ const CosmozNodeButtonView = ({
 			${when(
 				showReset && !!nodePath,
 				() =>
-					html` <button
+					html`<cosmoz-button
+						variant="tertiary"
 						@click=${reset}
-						class="action-reset"
 						part="action-reset"
 					>
 						<svg
+							slot="prefix"
 							width="10"
 							height="9"
 							viewBox="0 0 10 9"
@@ -231,7 +249,7 @@ const CosmozNodeButtonView = ({
 								stroke-width="1.5"
 							></line>
 						</svg>
-					</button>`,
+					</cosmoz-button>`,
 			)}
 		</div>
 
@@ -255,6 +273,7 @@ const CosmozNodeButtonView = ({
 					class="dialog-treenode-navigator no-padding"
 					.nodePath=${nodePath}
 					@node-path-changed=${onNodePathChanged}
+					@highlighted-node-path-changed=${onHighlightedNodePathChanged}
 					.searchPlaceholder=${searchPlaceholder}
 					.searchGlobalPlaceholder=${searchGlobalPlaceholder}
 					.searchMinLength=${searchMinLength}
@@ -266,15 +285,23 @@ const CosmozNodeButtonView = ({
 				</cosmoz-treenode-navigator>
 			</main>
 			<footer class="dialog-footer" part="footer">
-				<p class="dialog-footer-button-container">
-					<button
-						class="dialog-footer-button"
-						part="cancel-button"
+				<div class="dialog-footer-button-container">
+					<cosmoz-button
+						variant="primary"
+						?disabled=${!highlightedNodePath}
+						@click=${onSelect}
+						part="select-button"
+					>
+						Select
+					</cosmoz-button>
+					<cosmoz-button
+						variant="secondary"
 						@click=${onClose}
+						part="cancel-button"
 					>
 						Cancel
-					</button>
-				</p>
+					</cosmoz-button>
+				</div>
 			</footer>
 		</dialog>
 	`;

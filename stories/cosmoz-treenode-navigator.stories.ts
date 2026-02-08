@@ -343,7 +343,9 @@ export const GlobalSearchButton: Story = {
 						expect(nodeNames[0]).toBe('John');
 
 						// Global search button should be visible
-						const globalBtn = el.shadowRoot?.querySelector('button.btn-ghost');
+						const globalBtn = el.shadowRoot?.querySelector(
+							'cosmoz-button[variant="link"]',
+						);
 						expect(globalBtn).toBeTruthy();
 						expect(globalBtn?.textContent).toContain(
 							'Click to search globally',
@@ -358,7 +360,7 @@ export const GlobalSearchButton: Story = {
 			'Global search for "John" returns 2 results (C:/Users/John and D:/Data/John)',
 			async () => {
 				const globalBtn = el.shadowRoot?.querySelector(
-					'button.btn-ghost',
+					'cosmoz-button[variant="link"]',
 				) as HTMLButtonElement;
 				await userEvent.click(globalBtn);
 
@@ -370,8 +372,9 @@ export const GlobalSearchButton: Story = {
 						expect(nodeNames.every((name) => name === 'John')).toBe(true);
 
 						// Global search button should disappear (now searching from root)
-						const globalBtnAfter =
-							el.shadowRoot?.querySelector('button.btn-ghost');
+						const globalBtnAfter = el.shadowRoot?.querySelector(
+							'cosmoz-button[variant="link"]',
+						);
 						expect(globalBtnAfter).toBeNull();
 					},
 					{ timeout: 500 },

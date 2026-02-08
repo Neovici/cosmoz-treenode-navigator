@@ -13,6 +13,7 @@ import { guard } from 'lit-html/directives/guard.js';
 import { ref } from 'lit-html/directives/ref.js';
 import { when } from 'lit-html/directives/when.js';
 
+import '@neovici/cosmoz-button/cosmoz-button';
 import '@neovici/cosmoz-input';
 import { useMeta } from '@neovici/cosmoz-utils/hooks/use-meta';
 
@@ -380,9 +381,13 @@ const NodeNavigator = ({
 		${when(
 			search && openNodePath,
 			() => html`
-				<button class="btn-ghost" @click=${() => setOpenNodePath('')}>
+				<cosmoz-button
+					variant="link"
+					full-width
+					@click=${() => setOpenNodePath('')}
+				>
 					${searchGlobalPlaceholder}
-				</button>
+				</cosmoz-button>
 			`,
 		)}
 	`;

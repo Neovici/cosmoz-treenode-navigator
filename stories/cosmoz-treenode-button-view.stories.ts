@@ -1,7 +1,7 @@
 import { DefaultTree } from '@neovici/cosmoz-tree/cosmoz-default-tree';
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
-import { expect, waitFor } from 'storybook/test';
+import { expect, userEvent, waitFor } from 'storybook/test';
 import '../src/cosmoz-treenode-button-view';
 import { adminFilesTree } from './data/tree-data';
 
@@ -70,7 +70,9 @@ export const Default: Story = {
 		) as HTMLElement & { nodePath: string };
 
 		await step('Renders with placeholder text', async () => {
-			const button = el.shadowRoot?.querySelector('button.action-open');
+			const button = el.shadowRoot?.querySelector(
+				'cosmoz-button[part="action-open"]',
+			);
 			expect(button).toBeTruthy();
 			expect(button?.textContent?.trim()).toContain('Select a node');
 		});
@@ -103,7 +105,9 @@ export const WithPreselectedNode: Story = {
 
 		await step('Button renders selected path', async () => {
 			await waitFor(() => {
-				const button = el.shadowRoot?.querySelector('button.action-open');
+				const button = el.shadowRoot?.querySelector(
+					'cosmoz-button[part="action-open"]',
+				);
 				// nodePath '1.2.3' corresponds to 'C: / Windows / System' in the tree
 				expect(button?.textContent?.trim()).toContain('C: / Windows / System');
 			});
@@ -134,13 +138,68 @@ export const WithShowReset: Story = {
 	play: async ({ canvasElement, step }) => {
 		const el = canvasElement.querySelector(
 			'cosmoz-treenode-button-view',
+		) as HTMLElement & { nodePath: string };
+
+		await step(
+			'Reset button is shown when showReset is true and node is selected',
+			async () => {
+				await waitFor(() => {
+					const resetButton = el.shadowRoot?.querySelector(
+						'cosmoz-button[part="action-reset"]',
+					);
+					expect(resetButton).toBeTruthy();
+				});
+			},
+		);
+
+		await step('Reset button clears selection', async () => {
+			const resetButton = el.shadowRoot?.querySelector(
+				'cosmoz-button[part="action-reset"]',
+			) as HTMLElement;
+			await userEvent.click(resetButton);
+
+			await waitFor(() => {
+				expect(el.nodePath).toBe('');
+				// Reset button should disappear when no node is selected
+				const resetButtonAfter = el.shadowRoot?.querySelector(
+					'cosmoz-button[part="action-reset"]',
+				);
+				expect(resetButtonAfter).toBeNull();
+			});
+		});
+	},
+};
+
+export const ResetButtonHiddenByDefault: Story = {
+	args: {
+		showReset: false,
+		nodePath: '1.2.3',
+	},
+	render: (args) => html`
+		<div style="padding: 20px;">
+			<cosmoz-treenode-button-view
+				.tree=${tree}
+				.nodePath=${args.nodePath || ''}
+				button-text-placeholder=${args.buttonTextPlaceholder}
+				dialog-text=${args.dialogText}
+				search-placeholder=${args.searchPlaceholder}
+				search-global-placeholder=${args.searchGlobalPlaceholder}
+				.searchMinLength=${args.searchMinLength}
+				.searchDebounceTimeout=${args.searchDebounceTimeout}
+				?show-reset=${args.showReset}
+			></cosmoz-treenode-button-view>
+		</div>
+	`,
+	play: async ({ canvasElement, step }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-button-view',
 		) as HTMLElement;
 
-		await step('Reset button is visible when showReset is true', async () => {
-			await waitFor(() => {
-				const resetButton = el.shadowRoot?.querySelector('button.action-reset');
-				expect(resetButton).toBeTruthy();
-			});
+		await step('Reset button is hidden by default', async () => {
+			const resetButton = el.shadowRoot?.querySelector(
+				'cosmoz-button[part="action-reset"]',
+			);
+			expect(resetButton).toBeNull();
 		});
 	},
 };
@@ -161,14 +220,14 @@ export const DialogInteraction: Story = {
 			></cosmoz-treenode-button-view>
 		</div>
 	`,
-	play: async ({ canvasElement, step, userEvent }) => {
+	play: async ({ canvasElement, step }) => {
 		const el = canvasElement.querySelector(
 			'cosmoz-treenode-button-view',
 		) as HTMLElement;
 
 		await step('Opens dialog on button click', async () => {
 			const openButton = el.shadowRoot?.querySelector(
-				'button.action-open',
+				'cosmoz-button[part="action-open"]',
 			) as HTMLElement;
 			await userEvent.click(openButton);
 
@@ -185,7 +244,7 @@ export const DialogInteraction: Story = {
 				'dialog',
 			) as HTMLDialogElement;
 			const cancelButton = dialog.querySelector(
-				'button[part="cancel-button"]',
+				'cosmoz-button[part="cancel-button"]',
 			) as HTMLElement;
 			await userEvent.click(cancelButton);
 
@@ -212,14 +271,14 @@ export const SelectButtonInteraction: Story = {
 			></cosmoz-treenode-button-view>
 		</div>
 	`,
-	play: async ({ canvasElement, step, userEvent }) => {
+	play: async ({ canvasElement, step }) => {
 		const el = canvasElement.querySelector(
 			'cosmoz-treenode-button-view',
 		) as HTMLElement & { nodePath: string };
 
 		const openDialog = async () => {
 			const openButton = el.shadowRoot?.querySelector(
-				'button.action-open',
+				'cosmoz-button[part="action-open"]',
 			) as HTMLElement;
 			await userEvent.click(openButton);
 			await waitFor(() => {
@@ -236,12 +295,12 @@ export const SelectButtonInteraction: Story = {
 		const getSelectButton = () =>
 			el.shadowRoot
 				?.querySelector('dialog')
-				?.querySelector('button[part="select-button"]') as HTMLButtonElement;
+				?.querySelector('cosmoz-button[part="select-button"]') as HTMLElement;
 
 		const getCancelButton = () =>
 			el.shadowRoot
 				?.querySelector('dialog')
-				?.querySelector('button[part="cancel-button"]') as HTMLElement;
+				?.querySelector('cosmoz-button[part="cancel-button"]') as HTMLElement;
 
 		await step('Select button is initially disabled', async () => {
 			await openDialog();
@@ -249,7 +308,7 @@ export const SelectButtonInteraction: Story = {
 			await waitFor(() => {
 				const selectButton = getSelectButton();
 				expect(selectButton).toBeTruthy();
-				expect(selectButton.disabled).toBe(true);
+				expect(selectButton.hasAttribute('disabled')).toBe(true);
 			});
 		});
 
@@ -269,7 +328,7 @@ export const SelectButtonInteraction: Story = {
 
 			await waitFor(() => {
 				const selectButton = getSelectButton();
-				expect(selectButton.disabled).toBe(false);
+				expect(selectButton.hasAttribute('disabled')).toBe(false);
 			});
 		});
 
@@ -326,7 +385,7 @@ export const SelectButtonInteraction: Story = {
 				// Verify Select button is enabled
 				await waitFor(() => {
 					const selectButton = getSelectButton();
-					expect(selectButton.disabled).toBe(false);
+					expect(selectButton.hasAttribute('disabled')).toBe(false);
 				});
 
 				// Click Cancel
