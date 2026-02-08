@@ -1,8 +1,8 @@
-import{c as F,u as M,a as ne,b as ae,d as N,e as A,f as se,g as G,h as ce,i as re,n as le,j as ie,T as de,k as he}from"./tree-data-C9fqV6qj.js";import{b as p}from"./iframe-DkyyI9pv.js";import"./preload-helper-PPVm8Dsz.js";const ue=F`
+import{c as F,u as L,a as ne,b as ae,d as H,e as A,f as se,g as G,h as re,i as ce,n as le,j as ie,T as de,k as he}from"./tree-data-BObDBIfY.js";import{b as w}from"./iframe-Bi2p_YJy.js";import"./preload-helper-PPVm8Dsz.js";const ue=F`
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-`,pe=F`
+`,ge=F`
 	:host {
 		display: block;
 		container-type: inline-size;
@@ -97,7 +97,7 @@ import{c as F,u as M,a as ne,b as ae,d as N,e as A,f as se,g as G,h as ce,i as r
 		justify-content: flex-end;
 		margin: 0;
 	}
-`,ge=(e,a)=>{const o=t=>{if(t.key===e&&a instanceof Function)return t.preventDefault(),a()};M(()=>(document.addEventListener("keydown",o),()=>{document.removeEventListener("keydown",o)}))},we=p`<svg
+`,pe=(e,a)=>{const t=n=>{if(n.key===e&&a instanceof Function)return n.preventDefault(),a()};L(()=>(document.addEventListener("keydown",t),()=>{document.removeEventListener("keydown",t)}))},we=w`<svg
 	class="default-icon"
 	width="20"
 	height="20"
@@ -111,7 +111,7 @@ import{c as F,u as M,a as ne,b as ae,d as N,e as A,f as se,g as G,h as ce,i as r
 	<path
 		d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"
 	/>
-</svg>`,I=({tree:e,dialogText:a,buttonTextPlaceholder:o,searchPlaceholder:t,showReset:r=!1,searchGlobalPlaceholder:g,searchMinLength:b=3,searchDebounceTimeout:z=2e3})=>{const c=ae(),s=N(null),d=N(null),[h,y]=A("nodePath",""),[u,D]=A("opened",!1),[q,W]=se(""),x=G(()=>ce(h,e),[h,e]),_=G(()=>!Array.isArray(x)||x.length===0?o||"":x.filter(i=>i).map(i=>i[e.searchProperty]).join(" / "),[x,e,o]),O=re(i=>{const L=i.target.assignedNodes().length>0;c.toggleAttribute("has-prefix",L)},[c]);M(()=>{s.current&&(d.current=s.current.querySelector("cosmoz-treenode-navigator")?.shadowRoot?.querySelector("cosmoz-input"))},[s.current]),M(()=>{u?(s.current?.showModal(),setTimeout(()=>d.current?.focus(),0)):s.current?.close()},[u]);const j=()=>{y("")},V=()=>{d.current&&d.current.focus()},Y=()=>{s.current?.showModal(),D(!0),setTimeout(V,0)},v=()=>{D(!1),s.current?.close()};ge("Escape",v);const K=i=>{const w=s.current;if(!w)return;const L=i.clientX,J=i.clientY,k=w.getBoundingClientRect(),Q=k.left,ee=k.top,E=H=>{const te=H.clientX-L,oe=H.clientY-J;w.style.left=`${Q+te}px`,w.style.top=`${ee+oe}px`,w.style.margin="0"},C=()=>{document.removeEventListener("mousemove",E),document.removeEventListener("mouseup",C)};document.addEventListener("mousemove",E),document.addEventListener("mouseup",C)},X=i=>{i.preventDefault();const w=i.detail.value;w&&(y(w),v())},U=i=>{W(i.detail.value)},Z=()=>{q&&(y(q),v())};return p`
+</svg>`,W=({tree:e,dialogText:a,buttonTextPlaceholder:t,searchPlaceholder:n,showReset:h=!1,searchGlobalPlaceholder:m,searchMinLength:R=3,searchDebounceTimeout:s=2e3})=>{const l=ae(),r=H(null),d=H(null),[b,u]=A("nodePath",""),[z,M]=A("opened",!1),[q,_]=se(""),v=G(()=>re(b,e),[b,e]),O=G(()=>!Array.isArray(v)||v.length===0?t||"":v.filter(i=>i).map(i=>i[e.searchProperty]).join(" / "),[v,e,t]),j=ce(i=>{const k=i.target.assignedNodes().length>0;l.toggleAttribute("has-prefix",k)},[l]);L(()=>{r.current&&(d.current=r.current.querySelector("cosmoz-treenode-navigator")?.shadowRoot?.querySelector("cosmoz-input"))},[r.current]),L(()=>{z?(r.current?.showModal(),setTimeout(()=>d.current?.focus(),0)):r.current?.close()},[z]);const I=()=>{u("")},V=()=>{d.current&&d.current.focus()},Y=()=>{r.current?.showModal(),M(!0),setTimeout(V,0)},x=()=>{M(!1),r.current?.close()};pe("Escape",x);const K=i=>{const p=r.current;if(!p)return;const k=i.clientX,J=i.clientY,E=p.getBoundingClientRect(),Q=E.left,ee=E.top,D=N=>{const te=N.clientX-k,oe=N.clientY-J;p.style.left=`${Q+te}px`,p.style.top=`${ee+oe}px`,p.style.margin="0"},C=()=>{document.removeEventListener("mousemove",D),document.removeEventListener("mouseup",C)};document.addEventListener("mousemove",D),document.addEventListener("mouseup",C)},X=i=>{i.preventDefault();const p=i.detail.value;p&&(u(p),x())},U=i=>{_(i.detail.value)},Z=()=>{q&&(u(q),x())};return w`
 		<div class="actions" part="actions">
 			<cosmoz-button
 				variant="secondary"
@@ -120,17 +120,17 @@ import{c as F,u as M,a as ne,b as ae,d as N,e as A,f as se,g as G,h as ce,i as r
 				part="action-open"
 			>
 				<span slot="prefix">
-					<slot name="button-before" @slotchange=${O}></slot>
+					<slot name="button-before" @slotchange=${j}></slot>
 					${we}
 				</span>
 				<div class="path-text">
-					<span>${_}</span>
+					<span>${O}</span>
 				</div>
 				<slot name="button-after" slot="suffix"></slot>
 			</cosmoz-button>
-			${le(r&&!!h,()=>p`<cosmoz-button
+			${le(h&&!!b,()=>w`<cosmoz-button
 						variant="tertiary"
-						@click=${j}
+						@click=${I}
 						part="action-reset"
 					>
 						<svg
@@ -162,7 +162,7 @@ import{c as F,u as M,a as ne,b as ae,d as N,e as A,f as se,g as G,h as ce,i as r
 		<dialog
 			class="dialog"
 			part="dialog"
-			${ie(i=>{s.current=i})}
+			${ie(i=>{r.current=i})}
 		>
 			<header
 				class="dialog-header"
@@ -175,15 +175,15 @@ import{c as F,u as M,a as ne,b as ae,d as N,e as A,f as se,g as G,h as ce,i as r
 				<cosmoz-treenode-navigator
 					id="treeNavigator"
 					class="dialog-treenode-navigator no-padding"
-					.nodePath=${h}
+					.nodePath=${b}
 					@node-path-changed=${X}
 					@highlighted-node-path-changed=${U}
-					.searchPlaceholder=${t}
-					.searchGlobalPlaceholder=${g}
-					.searchMinLength=${b}
-					.searchDebounceTimeout=${z}
+					.searchPlaceholder=${n}
+					.searchGlobalPlaceholder=${m}
+					.searchMinLength=${R}
+					.searchDebounceTimeout=${s}
 					.tree=${e}
-					.opened=${u}
+					.opened=${z}
 				>
 					<slot></slot>
 				</cosmoz-treenode-navigator>
@@ -200,7 +200,7 @@ import{c as F,u as M,a as ne,b as ae,d as N,e as A,f as se,g as G,h as ce,i as r
 					</cosmoz-button>
 					<cosmoz-button
 						variant="secondary"
-						@click=${v}
+						@click=${x}
 						part="cancel-button"
 					>
 						Cancel
@@ -208,10 +208,10 @@ import{c as F,u as M,a as ne,b as ae,d as N,e as A,f as se,g as G,h as ce,i as r
 				</div>
 			</footer>
 		</dialog>
-	`};I.observedAttributes=["button-text-placeholder","dialog-text","search-placeholder","search-global-placeholder","show-reset","search-min-length"];customElements.define("cosmoz-treenode-button-view",ne(I,{styleSheets:[pe]}));const{expect:n,waitFor:l}=__STORYBOOK_MODULE_TEST__,m=new de(he),xe={title:"CosmozTreenodeButtonView",component:"cosmoz-treenode-button-view",tags:["autodocs"],argTypes:{buttonTextPlaceholder:{control:"text"},dialogText:{control:"text"},searchPlaceholder:{control:"text"},searchGlobalPlaceholder:{control:"text"},searchMinLength:{control:"number"},searchDebounceTimeout:{control:"number"},showReset:{control:"boolean"},nodePath:{control:"text"}},args:{buttonTextPlaceholder:"Select a node",dialogText:"Search or navigate to chosen destination",searchPlaceholder:"Search...",searchGlobalPlaceholder:"Click to search again but globally",searchMinLength:3,searchDebounceTimeout:2e3,showReset:!1,nodePath:""}},$={render:e=>p`
+	`};W.observedAttributes=["button-text-placeholder","dialog-text","search-placeholder","search-global-placeholder","show-reset","search-min-length"];customElements.define("cosmoz-treenode-button-view",ne(W,{styleSheets:[ge]}));const{expect:o,userEvent:g,waitFor:c}=__STORYBOOK_MODULE_TEST__,y=new de(he),ve={title:"CosmozTreenodeButtonView",component:"cosmoz-treenode-button-view",tags:["autodocs"],argTypes:{buttonTextPlaceholder:{control:"text"},dialogText:{control:"text"},searchPlaceholder:{control:"text"},searchGlobalPlaceholder:{control:"text"},searchMinLength:{control:"number"},searchDebounceTimeout:{control:"number"},showReset:{control:"boolean"},nodePath:{control:"text"}},args:{buttonTextPlaceholder:"Select a node",dialogText:"Search or navigate to chosen destination",searchPlaceholder:"Search...",searchGlobalPlaceholder:"Click to search again but globally",searchMinLength:3,searchDebounceTimeout:2e3,showReset:!1,nodePath:""}},$={render:e=>w`
         <div style="padding: 20px;">
             <cosmoz-treenode-button-view
-                .tree=${m}
+                .tree=${y}
                 .nodePath=${e.nodePath||""}
                 button-text-placeholder=${e.buttonTextPlaceholder}
                 dialog-text=${e.dialogText}
@@ -222,10 +222,10 @@ import{c as F,u as M,a as ne,b as ae,d as N,e as A,f as se,g as G,h as ce,i as r
                 ?show-reset=${e.showReset}
             ></cosmoz-treenode-button-view>
         </div>
-    `,play:async({canvasElement:e,step:a})=>{const o=e.querySelector("cosmoz-treenode-button-view");await a("Renders with placeholder text",async()=>{const t=o.shadowRoot?.querySelector("cosmoz-button");n(t).toBeTruthy(),n(t?.textContent?.trim()).toContain("Select a node")}),await a("Has container-type: inline-size for container queries",async()=>{const t=window.getComputedStyle(o);n(t.containerType).toBe("inline-size")}),await a("Shows default icon when no prefix slot content",async()=>{const t=o.shadowRoot?.querySelector(".default-icon");n(t).toBeTruthy();const r=window.getComputedStyle(t);n(r.display).not.toBe("none")})}},f={args:{nodePath:"1.2.3"},render:e=>p`
+    `,play:async({canvasElement:e,step:a})=>{const t=e.querySelector("cosmoz-treenode-button-view");await a("Renders with placeholder text",async()=>{const n=t.shadowRoot?.querySelector('cosmoz-button[part="action-open"]');o(n).toBeTruthy(),o(n?.textContent?.trim()).toContain("Select a node")})}},S={args:{nodePath:"1.2.3"},render:e=>w`
         <div style="padding: 20px;">
             <cosmoz-treenode-button-view
-                .tree=${m}
+                .tree=${y}
                 .nodePath=${e.nodePath||""}
                 button-text-placeholder=${e.buttonTextPlaceholder}
                 dialog-text=${e.dialogText}
@@ -236,10 +236,10 @@ import{c as F,u as M,a as ne,b as ae,d as N,e as A,f as se,g as G,h as ce,i as r
                 ?show-reset=${e.showReset}
             ></cosmoz-treenode-button-view>
         </div>
-    `,play:async({canvasElement:e,step:a})=>{const o=e.querySelector("cosmoz-treenode-button-view");await a("Button renders selected path",async()=>{await l(()=>{const t=o.shadowRoot?.querySelector("cosmoz-button");n(t?.textContent?.trim()).toContain("C: / Windows / System")})})}},S={args:{showReset:!0,nodePath:"1.2.3"},render:e=>p`
+    `,play:async({canvasElement:e,step:a})=>{const t=e.querySelector("cosmoz-treenode-button-view");await a("Button renders selected path",async()=>{await c(()=>{const n=t.shadowRoot?.querySelector('cosmoz-button[part="action-open"]');o(n?.textContent?.trim()).toContain("C: / Windows / System")})})}},f={args:{showReset:!0,nodePath:"1.2.3"},render:e=>w`
         <div style="padding: 20px;">
             <cosmoz-treenode-button-view
-                .tree=${m}
+                .tree=${y}
                 .nodePath=${e.nodePath||""}
                 button-text-placeholder=${e.buttonTextPlaceholder}
                 dialog-text=${e.dialogText}
@@ -250,10 +250,10 @@ import{c as F,u as M,a as ne,b as ae,d as N,e as A,f as se,g as G,h as ce,i as r
                 ?show-reset=${e.showReset}
             ></cosmoz-treenode-button-view>
         </div>
-    `,play:async({canvasElement:e,step:a,userEvent:o})=>{const t=e.querySelector("cosmoz-treenode-button-view");await a("Reset button is shown when showReset is true and node is selected",async()=>{await l(()=>{const r=t.shadowRoot?.querySelector('cosmoz-button[part="action-reset"]');n(r).toBeTruthy()})}),await a("Reset button clears selection",async()=>{const r=t.shadowRoot?.querySelector('cosmoz-button[part="action-reset"]');await o.click(r),await l(()=>{n(t.nodePath).toBe("")})})}},P={render:e=>p`
+    `,play:async({canvasElement:e,step:a})=>{const t=e.querySelector("cosmoz-treenode-button-view");await a("Reset button is shown when showReset is true and node is selected",async()=>{await c(()=>{const n=t.shadowRoot?.querySelector('cosmoz-button[part="action-reset"]');o(n).toBeTruthy()})}),await a("Reset button clears selection",async()=>{const n=t.shadowRoot?.querySelector('cosmoz-button[part="action-reset"]');await g.click(n),await c(()=>{o(t.nodePath).toBe("");const h=t.shadowRoot?.querySelector('cosmoz-button[part="action-reset"]');o(h).toBeNull()})})}},P={args:{showReset:!1,nodePath:"1.2.3"},render:e=>w`
         <div style="padding: 20px;">
             <cosmoz-treenode-button-view
-                .tree=${m}
+                .tree=${y}
                 .nodePath=${e.nodePath||""}
                 button-text-placeholder=${e.buttonTextPlaceholder}
                 dialog-text=${e.dialogText}
@@ -264,26 +264,10 @@ import{c as F,u as M,a as ne,b as ae,d as N,e as A,f as se,g as G,h as ce,i as r
                 ?show-reset=${e.showReset}
             ></cosmoz-treenode-button-view>
         </div>
-    `,play:async({canvasElement:e,step:a,userEvent:o})=>{const t=e.querySelector("cosmoz-treenode-button-view");await a("Opens dialog on button click",async()=>{const r=t.shadowRoot?.querySelector("cosmoz-button");await o.click(r),await l(()=>{const g=t.shadowRoot?.querySelector("dialog");n(g.open).toBe(!0)})}),await a("Closes dialog on cancel button click",async()=>{const r=t.shadowRoot?.querySelector("dialog"),g=r.querySelector('cosmoz-button[part="cancel-button"]');await o.click(g),await l(()=>{n(r.open).toBe(!1)})})}},T={render:e=>p`
+    `,play:async({canvasElement:e,step:a})=>{const t=e.querySelector("cosmoz-treenode-button-view");await a("Reset button is hidden by default",async()=>{const n=t.shadowRoot?.querySelector('cosmoz-button[part="action-reset"]');o(n).toBeNull()})}},T={render:e=>w`
         <div style="padding: 20px;">
             <cosmoz-treenode-button-view
-                .tree=${m}
-                .nodePath=${e.nodePath||""}
-                button-text-placeholder=${e.buttonTextPlaceholder}
-                dialog-text=${e.dialogText}
-                search-placeholder=${e.searchPlaceholder}
-                search-global-placeholder=${e.searchGlobalPlaceholder}
-                .searchMinLength=${e.searchMinLength}
-                .searchDebounceTimeout=${e.searchDebounceTimeout}
-                ?show-reset=${e.showReset}
-            >
-                <span slot="button-before">Custom Icon</span>
-            </cosmoz-treenode-button-view>
-        </div>
-    `,play:async({canvasElement:e,step:a})=>{const o=e.querySelector("cosmoz-treenode-button-view");await a("Has has-prefix attribute when prefix slot has content",async()=>{await l(()=>{n(o.hasAttribute("has-prefix")).toBe(!0)})}),await a("Hides default icon when prefix slot has content",async()=>{const t=o.shadowRoot?.querySelector(".default-icon"),r=window.getComputedStyle(t);n(r.display).toBe("none")})}},B={args:{showReset:!1,nodePath:"1.2.3"},render:e=>p`
-        <div style="padding: 20px;">
-            <cosmoz-treenode-button-view
-                .tree=${m}
+                .tree=${y}
                 .nodePath=${e.nodePath||""}
                 button-text-placeholder=${e.buttonTextPlaceholder}
                 dialog-text=${e.dialogText}
@@ -294,10 +278,10 @@ import{c as F,u as M,a as ne,b as ae,d as N,e as A,f as se,g as G,h as ce,i as r
                 ?show-reset=${e.showReset}
             ></cosmoz-treenode-button-view>
         </div>
-    `,play:async({canvasElement:e,step:a})=>{const o=e.querySelector("cosmoz-treenode-button-view");await a("Reset button is hidden by default",async()=>{const t=o.shadowRoot?.querySelector('cosmoz-button[part="action-reset"]');n(t).toBeNull()})}},R={render:e=>p`
+    `,play:async({canvasElement:e,step:a})=>{const t=e.querySelector("cosmoz-treenode-button-view");await a("Opens dialog on button click",async()=>{const n=t.shadowRoot?.querySelector('cosmoz-button[part="action-open"]');await g.click(n),await c(()=>{const h=t.shadowRoot?.querySelector("dialog");o(h.open).toBe(!0)})}),await a("Closes dialog on cancel button click",async()=>{const n=t.shadowRoot?.querySelector("dialog"),h=n.querySelector('cosmoz-button[part="cancel-button"]');await g.click(h),await c(()=>{o(n.open).toBe(!1)})})}},B={render:e=>w`
         <div style="padding: 20px;">
             <cosmoz-treenode-button-view
-                .tree=${m}
+                .tree=${y}
                 .nodePath=${e.nodePath||""}
                 button-text-placeholder=${e.buttonTextPlaceholder}
                 dialog-text=${e.dialogText}
@@ -308,7 +292,7 @@ import{c as F,u as M,a as ne,b as ae,d as N,e as A,f as se,g as G,h as ce,i as r
                 ?show-reset=${e.showReset}
             ></cosmoz-treenode-button-view>
         </div>
-    `,play:async({canvasElement:e,step:a,userEvent:o})=>{const t=e.querySelector("cosmoz-treenode-button-view"),r=async()=>{const c=t.shadowRoot?.querySelector('cosmoz-button[part="action-open"]');await o.click(c),await l(()=>{const s=t.shadowRoot?.querySelector("dialog");n(s.open).toBe(!0)})},g=()=>t.shadowRoot?.querySelector("cosmoz-treenode-navigator"),b=()=>t.shadowRoot?.querySelector("dialog")?.querySelector('cosmoz-button[part="select-button"]'),z=()=>t.shadowRoot?.querySelector("dialog")?.querySelector('cosmoz-button[part="cancel-button"]');await a("Select button is initially disabled",async()=>{await r(),await l(()=>{const c=b();n(c).toBeTruthy(),n(c.hasAttribute("disabled")).toBe(!0)})}),await a("Single-clicking a node enables the Select button",async()=>{const c=g();await l(()=>{const d=c.shadowRoot?.querySelectorAll(".node");n(d?.length).toBeGreaterThan(0)});const s=c.shadowRoot?.querySelector(".node");await o.click(s),await l(()=>{const d=b();n(d.hasAttribute("disabled")).toBe(!1)})}),await a("Clicking Select confirms selection and closes dialog",async()=>{const c=b();await o.click(c),await l(()=>{const s=t.shadowRoot?.querySelector("dialog");n(s.open).toBe(!1),n(t.nodePath).toBe("1")})}),await a("Cancel after highlighting does not change nodePath",async()=>{const c=t.nodePath;await r();const s=g();await l(()=>{const u=s.shadowRoot?.querySelectorAll(".node");n(u?.length).toBeGreaterThan(0)});const d=s.shadowRoot?.querySelector(".node .icon");await o.click(d),await l(()=>{const u=s.shadowRoot?.querySelectorAll(".node");n(u?.length).toBeGreaterThan(0)});const h=s.shadowRoot?.querySelector(".node");await o.click(h),await l(()=>{const u=b();n(u.hasAttribute("disabled")).toBe(!1)});const y=z();await o.click(y),await l(()=>{const u=t.shadowRoot?.querySelector("dialog");n(u.open).toBe(!1),n(t.nodePath).toBe(c)})}),await a("Double-click on a node selects it and closes dialog",async()=>{await r();const c=g();await l(()=>{const h=c.shadowRoot?.querySelectorAll(".node");n(h?.length).toBeGreaterThan(0)});const s=c.shadowRoot?.querySelector(".node .icon");await o.click(s),await l(()=>{const h=c.shadowRoot?.querySelectorAll(".node");n(h?.length).toBeGreaterThan(0)});const d=c.shadowRoot?.querySelector(".node");await o.dblClick(d),await l(()=>{const h=t.shadowRoot?.querySelector("dialog");n(h.open).toBe(!1),n(t.nodePath).not.toBe("1")})})}};$.parameters={...$.parameters,docs:{...$.parameters?.docs,source:{originalSource:`{
+    `,play:async({canvasElement:e,step:a})=>{const t=e.querySelector("cosmoz-treenode-button-view"),n=async()=>{const s=t.shadowRoot?.querySelector('cosmoz-button[part="action-open"]');await g.click(s),await c(()=>{const l=t.shadowRoot?.querySelector("dialog");o(l.open).toBe(!0)})},h=()=>t.shadowRoot?.querySelector("cosmoz-treenode-navigator"),m=()=>t.shadowRoot?.querySelector("dialog")?.querySelector('cosmoz-button[part="select-button"]'),R=()=>t.shadowRoot?.querySelector("dialog")?.querySelector('cosmoz-button[part="cancel-button"]');await a("Select button is initially disabled",async()=>{await n(),await c(()=>{const s=m();o(s).toBeTruthy(),o(s.hasAttribute("disabled")).toBe(!0)})}),await a("Single-clicking a node enables the Select button",async()=>{const s=h();await c(()=>{const r=s.shadowRoot?.querySelectorAll(".node");o(r?.length).toBeGreaterThan(0)});const l=s.shadowRoot?.querySelector(".node");await g.click(l),await c(()=>{const r=m();o(r.hasAttribute("disabled")).toBe(!1)})}),await a("Clicking Select confirms selection and closes dialog",async()=>{const s=m();await g.click(s),await c(()=>{const l=t.shadowRoot?.querySelector("dialog");o(l.open).toBe(!1),o(t.nodePath).toBe("1")})}),await a("Cancel after highlighting does not change nodePath",async()=>{const s=t.nodePath;await n();const l=h();await c(()=>{const u=l.shadowRoot?.querySelectorAll(".node");o(u?.length).toBeGreaterThan(0)});const r=l.shadowRoot?.querySelector(".node .icon");await g.click(r),await c(()=>{const u=l.shadowRoot?.querySelectorAll(".node");o(u?.length).toBeGreaterThan(0)});const d=l.shadowRoot?.querySelector(".node");await g.click(d),await c(()=>{const u=m();o(u.hasAttribute("disabled")).toBe(!1)});const b=R();await g.click(b),await c(()=>{const u=t.shadowRoot?.querySelector("dialog");o(u.open).toBe(!1),o(t.nodePath).toBe(s)})}),await a("Double-click on a node selects it and closes dialog",async()=>{await n();const s=h();await c(()=>{const d=s.shadowRoot?.querySelectorAll(".node");o(d?.length).toBeGreaterThan(0)});const l=s.shadowRoot?.querySelector(".node .icon");await g.click(l),await c(()=>{const d=s.shadowRoot?.querySelectorAll(".node");o(d?.length).toBeGreaterThan(0)});const r=s.shadowRoot?.querySelector(".node");await g.dblClick(r),await c(()=>{const d=t.shadowRoot?.querySelector("dialog");o(d.open).toBe(!1),o(t.nodePath).not.toBe("1")})})}};$.parameters={...$.parameters,docs:{...$.parameters?.docs,source:{originalSource:`{
   render: args => html\`
         <div style="padding: 20px;">
             <cosmoz-treenode-button-view
@@ -332,22 +316,12 @@ import{c as F,u as M,a as ne,b as ae,d as N,e as A,f as se,g as G,h as ce,i as r
       nodePath: string;
     };
     await step('Renders with placeholder text', async () => {
-      const button = el.shadowRoot?.querySelector('cosmoz-button');
+      const button = el.shadowRoot?.querySelector('cosmoz-button[part="action-open"]');
       expect(button).toBeTruthy();
       expect(button?.textContent?.trim()).toContain('Select a node');
     });
-    await step('Has container-type: inline-size for container queries', async () => {
-      const computedStyle = window.getComputedStyle(el);
-      expect(computedStyle.containerType).toBe('inline-size');
-    });
-    await step('Shows default icon when no prefix slot content', async () => {
-      const defaultIcon = el.shadowRoot?.querySelector('.default-icon');
-      expect(defaultIcon).toBeTruthy();
-      const computedStyle = window.getComputedStyle(defaultIcon as Element);
-      expect(computedStyle.display).not.toBe('none');
-    });
   }
-}`,...$.parameters?.docs?.source}}};f.parameters={...f.parameters,docs:{...f.parameters?.docs,source:{originalSource:`{
+}`,...$.parameters?.docs?.source}}};S.parameters={...S.parameters,docs:{...S.parameters?.docs,source:{originalSource:`{
   args: {
     nodePath: '1.2.3'
   },
@@ -373,13 +347,13 @@ import{c as F,u as M,a as ne,b as ae,d as N,e as A,f as se,g as G,h as ce,i as r
     const el = canvasElement.querySelector('cosmoz-treenode-button-view') as HTMLElement;
     await step('Button renders selected path', async () => {
       await waitFor(() => {
-        const button = el.shadowRoot?.querySelector('cosmoz-button');
+        const button = el.shadowRoot?.querySelector('cosmoz-button[part="action-open"]');
         // nodePath '1.2.3' corresponds to 'C: / Windows / System' in the tree
         expect(button?.textContent?.trim()).toContain('C: / Windows / System');
       });
     });
   }
-}`,...f.parameters?.docs?.source}}};S.parameters={...S.parameters,docs:{...S.parameters?.docs,source:{originalSource:`{
+}`,...S.parameters?.docs?.source}}};f.parameters={...f.parameters,docs:{...f.parameters?.docs,source:{originalSource:`{
   args: {
     showReset: true,
     nodePath: '1.2.3'
@@ -401,8 +375,7 @@ import{c as F,u as M,a as ne,b as ae,d as N,e as A,f as se,g as G,h as ce,i as r
     \`,
   play: async ({
     canvasElement,
-    step,
-    userEvent
+    step
   }) => {
     const el = canvasElement.querySelector('cosmoz-treenode-button-view') as HTMLElement & {
       nodePath: string;
@@ -418,83 +391,13 @@ import{c as F,u as M,a as ne,b as ae,d as N,e as A,f as se,g as G,h as ce,i as r
       await userEvent.click(resetButton);
       await waitFor(() => {
         expect(el.nodePath).toBe('');
+        // Reset button should disappear when no node is selected
+        const resetButtonAfter = el.shadowRoot?.querySelector('cosmoz-button[part="action-reset"]');
+        expect(resetButtonAfter).toBeNull();
       });
     });
   }
-}`,...S.parameters?.docs?.source}}};P.parameters={...P.parameters,docs:{...P.parameters?.docs,source:{originalSource:`{
-  render: args => html\`
-        <div style="padding: 20px;">
-            <cosmoz-treenode-button-view
-                .tree=\${tree}
-                .nodePath=\${args.nodePath || ''}
-                button-text-placeholder=\${args.buttonTextPlaceholder}
-                dialog-text=\${args.dialogText}
-                search-placeholder=\${args.searchPlaceholder}
-                search-global-placeholder=\${args.searchGlobalPlaceholder}
-                .searchMinLength=\${args.searchMinLength}
-                .searchDebounceTimeout=\${args.searchDebounceTimeout}
-                ?show-reset=\${args.showReset}
-            ></cosmoz-treenode-button-view>
-        </div>
-    \`,
-  play: async ({
-    canvasElement,
-    step,
-    userEvent
-  }) => {
-    const el = canvasElement.querySelector('cosmoz-treenode-button-view') as HTMLElement;
-    await step('Opens dialog on button click', async () => {
-      const openButton = el.shadowRoot?.querySelector('cosmoz-button') as HTMLElement;
-      await userEvent.click(openButton);
-      await waitFor(() => {
-        const dialog = el.shadowRoot?.querySelector('dialog') as HTMLDialogElement;
-        expect(dialog.open).toBe(true);
-      });
-    });
-    await step('Closes dialog on cancel button click', async () => {
-      const dialog = el.shadowRoot?.querySelector('dialog') as HTMLDialogElement;
-      const cancelButton = dialog.querySelector('cosmoz-button[part="cancel-button"]') as HTMLElement;
-      await userEvent.click(cancelButton);
-      await waitFor(() => {
-        expect(dialog.open).toBe(false);
-      });
-    });
-  }
-}`,...P.parameters?.docs?.source}}};T.parameters={...T.parameters,docs:{...T.parameters?.docs,source:{originalSource:`{
-  render: args => html\`
-        <div style="padding: 20px;">
-            <cosmoz-treenode-button-view
-                .tree=\${tree}
-                .nodePath=\${args.nodePath || ''}
-                button-text-placeholder=\${args.buttonTextPlaceholder}
-                dialog-text=\${args.dialogText}
-                search-placeholder=\${args.searchPlaceholder}
-                search-global-placeholder=\${args.searchGlobalPlaceholder}
-                .searchMinLength=\${args.searchMinLength}
-                .searchDebounceTimeout=\${args.searchDebounceTimeout}
-                ?show-reset=\${args.showReset}
-            >
-                <span slot="button-before">Custom Icon</span>
-            </cosmoz-treenode-button-view>
-        </div>
-    \`,
-  play: async ({
-    canvasElement,
-    step
-  }) => {
-    const el = canvasElement.querySelector('cosmoz-treenode-button-view') as HTMLElement;
-    await step('Has has-prefix attribute when prefix slot has content', async () => {
-      await waitFor(() => {
-        expect(el.hasAttribute('has-prefix')).toBe(true);
-      });
-    });
-    await step('Hides default icon when prefix slot has content', async () => {
-      const defaultIcon = el.shadowRoot?.querySelector('.default-icon');
-      const computedStyle = window.getComputedStyle(defaultIcon as Element);
-      expect(computedStyle.display).toBe('none');
-    });
-  }
-}`,...T.parameters?.docs?.source}}};B.parameters={...B.parameters,docs:{...B.parameters?.docs,source:{originalSource:`{
+}`,...f.parameters?.docs?.source}}};P.parameters={...P.parameters,docs:{...P.parameters?.docs,source:{originalSource:`{
   args: {
     showReset: false,
     nodePath: '1.2.3'
@@ -524,7 +427,7 @@ import{c as F,u as M,a as ne,b as ae,d as N,e as A,f as se,g as G,h as ce,i as r
       expect(resetButton).toBeNull();
     });
   }
-}`,...B.parameters?.docs?.source}}};R.parameters={...R.parameters,docs:{...R.parameters?.docs,source:{originalSource:`{
+}`,...P.parameters?.docs?.source}}};T.parameters={...T.parameters,docs:{...T.parameters?.docs,source:{originalSource:`{
   render: args => html\`
         <div style="padding: 20px;">
             <cosmoz-treenode-button-view
@@ -542,8 +445,45 @@ import{c as F,u as M,a as ne,b as ae,d as N,e as A,f as se,g as G,h as ce,i as r
     \`,
   play: async ({
     canvasElement,
-    step,
-    userEvent
+    step
+  }) => {
+    const el = canvasElement.querySelector('cosmoz-treenode-button-view') as HTMLElement;
+    await step('Opens dialog on button click', async () => {
+      const openButton = el.shadowRoot?.querySelector('cosmoz-button[part="action-open"]') as HTMLElement;
+      await userEvent.click(openButton);
+      await waitFor(() => {
+        const dialog = el.shadowRoot?.querySelector('dialog') as HTMLDialogElement;
+        expect(dialog.open).toBe(true);
+      });
+    });
+    await step('Closes dialog on cancel button click', async () => {
+      const dialog = el.shadowRoot?.querySelector('dialog') as HTMLDialogElement;
+      const cancelButton = dialog.querySelector('cosmoz-button[part="cancel-button"]') as HTMLElement;
+      await userEvent.click(cancelButton);
+      await waitFor(() => {
+        expect(dialog.open).toBe(false);
+      });
+    });
+  }
+}`,...T.parameters?.docs?.source}}};B.parameters={...B.parameters,docs:{...B.parameters?.docs,source:{originalSource:`{
+  render: args => html\`
+        <div style="padding: 20px;">
+            <cosmoz-treenode-button-view
+                .tree=\${tree}
+                .nodePath=\${args.nodePath || ''}
+                button-text-placeholder=\${args.buttonTextPlaceholder}
+                dialog-text=\${args.dialogText}
+                search-placeholder=\${args.searchPlaceholder}
+                search-global-placeholder=\${args.searchGlobalPlaceholder}
+                .searchMinLength=\${args.searchMinLength}
+                .searchDebounceTimeout=\${args.searchDebounceTimeout}
+                ?show-reset=\${args.showReset}
+            ></cosmoz-treenode-button-view>
+        </div>
+    \`,
+  play: async ({
+    canvasElement,
+    step
   }) => {
     const el = canvasElement.querySelector('cosmoz-treenode-button-view') as HTMLElement & {
       nodePath: string;
@@ -557,7 +497,7 @@ import{c as F,u as M,a as ne,b as ae,d as N,e as A,f as se,g as G,h as ce,i as r
       });
     };
     const getNavigator = () => el.shadowRoot?.querySelector('cosmoz-treenode-navigator') as HTMLElement;
-    const getSelectButton = () => el.shadowRoot?.querySelector('dialog')?.querySelector('cosmoz-button[part="select-button"]') as HTMLButtonElement;
+    const getSelectButton = () => el.shadowRoot?.querySelector('dialog')?.querySelector('cosmoz-button[part="select-button"]') as HTMLElement;
     const getCancelButton = () => el.shadowRoot?.querySelector('dialog')?.querySelector('cosmoz-button[part="cancel-button"]') as HTMLElement;
     await step('Select button is initially disabled', async () => {
       await openDialog();
@@ -661,4 +601,4 @@ import{c as F,u as M,a as ne,b as ae,d as N,e as A,f as se,g as G,h as ce,i as r
       });
     });
   }
-}`,...R.parameters?.docs?.source}}};const ve=["Default","WithPreselectedNode","WithShowReset","DialogInteraction","WithCustomPrefixIcon","ResetButtonHiddenByDefault","SelectButtonInteraction"];export{$ as Default,P as DialogInteraction,B as ResetButtonHiddenByDefault,R as SelectButtonInteraction,T as WithCustomPrefixIcon,f as WithPreselectedNode,S as WithShowReset,ve as __namedExportsOrder,xe as default};
+}`,...B.parameters?.docs?.source}}};const xe=["Default","WithPreselectedNode","WithShowReset","ResetButtonHiddenByDefault","DialogInteraction","SelectButtonInteraction"];export{$ as Default,T as DialogInteraction,P as ResetButtonHiddenByDefault,B as SelectButtonInteraction,S as WithPreselectedNode,f as WithShowReset,xe as __namedExportsOrder,ve as default};
