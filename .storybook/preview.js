@@ -1,14 +1,20 @@
-/** @type { import('@storybook/web-components').Preview } */
-const preview = {
+import { within as withinShadow } from 'shadow-dom-testing-library';
+
+export default {
 	parameters: {
-		actions: { argTypesRegex: '^on[A-Z].*' },
-		controls: {
-			matchers: {
-				color: /(background|color)$/iu,
-				date: /Date$/iu,
+		docs: {
+			source: {
+				excludeDecorators: true,
+				type: 'code',
+				transform: (source) => {
+					const match = source.match(/html`([\s\S]*?)`/u);
+					return match?.[1]?.trim() ?? source;
+				},
 			},
 		},
 	},
+	// Augment the canvas with shadow-dom-testing-library queries
+	beforeEach({ canvasElement, canvas }) {
+		Object.assign(canvas, { ...withinShadow(canvasElement) });
+	},
 };
-
-export default preview;
