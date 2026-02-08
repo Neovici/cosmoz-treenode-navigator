@@ -1,7 +1,6 @@
 import { DefaultTree } from '@neovici/cosmoz-tree/cosmoz-default-tree';
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { expect, waitFor } from 'storybook/test';
 import '../src/cosmoz-treenode-button-view';
 import { adminFilesTree } from './data/tree-data';
@@ -13,7 +12,7 @@ interface StoryArgs {
 	searchGlobalPlaceholder: string;
 	searchMinLength: number;
 	searchDebounceTimeout: number;
-	noReset: boolean;
+	showReset: boolean;
 	nodePath: string;
 }
 
@@ -30,7 +29,7 @@ const meta: Meta<StoryArgs> = {
 		searchGlobalPlaceholder: { control: 'text' },
 		searchMinLength: { control: 'number' },
 		searchDebounceTimeout: { control: 'number' },
-		noReset: { control: 'boolean' },
+		showReset: { control: 'boolean' },
 		nodePath: { control: 'text' },
 	},
 	args: {
@@ -40,7 +39,7 @@ const meta: Meta<StoryArgs> = {
 		searchGlobalPlaceholder: 'Click to search again but globally',
 		searchMinLength: 3,
 		searchDebounceTimeout: 2000,
-		noReset: false,
+		showReset: false,
 		nodePath: '',
 	},
 };
@@ -54,14 +53,14 @@ export const Default: Story = {
 		<div style="padding: 20px;">
 			<cosmoz-treenode-button-view
 				.tree=${tree}
-				node-path=${ifDefined(args.nodePath || undefined)}
+				.nodePath=${args.nodePath || ''}
 				button-text-placeholder=${args.buttonTextPlaceholder}
 				dialog-text=${args.dialogText}
 				search-placeholder=${args.searchPlaceholder}
 				search-global-placeholder=${args.searchGlobalPlaceholder}
 				.searchMinLength=${args.searchMinLength}
 				.searchDebounceTimeout=${args.searchDebounceTimeout}
-				?no-reset=${args.noReset}
+				?show-reset=${args.showReset}
 			></cosmoz-treenode-button-view>
 		</div>
 	`,
@@ -86,14 +85,14 @@ export const WithPreselectedNode: Story = {
 		<div style="padding: 20px;">
 			<cosmoz-treenode-button-view
 				.tree=${tree}
-				node-path=${ifDefined(args.nodePath || undefined)}
+				.nodePath=${args.nodePath || ''}
 				button-text-placeholder=${args.buttonTextPlaceholder}
 				dialog-text=${args.dialogText}
 				search-placeholder=${args.searchPlaceholder}
 				search-global-placeholder=${args.searchGlobalPlaceholder}
 				.searchMinLength=${args.searchMinLength}
 				.searchDebounceTimeout=${args.searchDebounceTimeout}
-				?no-reset=${args.noReset}
+				?show-reset=${args.showReset}
 			></cosmoz-treenode-button-view>
 		</div>
 	`,
@@ -112,23 +111,23 @@ export const WithPreselectedNode: Story = {
 	},
 };
 
-export const WithNoReset: Story = {
+export const WithShowReset: Story = {
 	args: {
-		noReset: true,
+		showReset: true,
 		nodePath: '1.2.3',
 	},
 	render: (args) => html`
 		<div style="padding: 20px;">
 			<cosmoz-treenode-button-view
 				.tree=${tree}
-				node-path=${ifDefined(args.nodePath || undefined)}
+				.nodePath=${args.nodePath || ''}
 				button-text-placeholder=${args.buttonTextPlaceholder}
 				dialog-text=${args.dialogText}
 				search-placeholder=${args.searchPlaceholder}
 				search-global-placeholder=${args.searchGlobalPlaceholder}
 				.searchMinLength=${args.searchMinLength}
 				.searchDebounceTimeout=${args.searchDebounceTimeout}
-				?no-reset=${args.noReset}
+				?show-reset=${args.showReset}
 			></cosmoz-treenode-button-view>
 		</div>
 	`,
@@ -137,10 +136,10 @@ export const WithNoReset: Story = {
 			'cosmoz-treenode-button-view',
 		) as HTMLElement;
 
-		await step('Reset button is hidden when noReset is true', async () => {
+		await step('Reset button is visible when showReset is true', async () => {
 			await waitFor(() => {
 				const resetButton = el.shadowRoot?.querySelector('button.action-reset');
-				expect(resetButton).toBeNull();
+				expect(resetButton).toBeTruthy();
 			});
 		});
 	},
@@ -151,14 +150,14 @@ export const DialogInteraction: Story = {
 		<div style="padding: 20px;">
 			<cosmoz-treenode-button-view
 				.tree=${tree}
-				node-path=${ifDefined(args.nodePath || undefined)}
+				.nodePath=${args.nodePath || ''}
 				button-text-placeholder=${args.buttonTextPlaceholder}
 				dialog-text=${args.dialogText}
 				search-placeholder=${args.searchPlaceholder}
 				search-global-placeholder=${args.searchGlobalPlaceholder}
 				.searchMinLength=${args.searchMinLength}
 				.searchDebounceTimeout=${args.searchDebounceTimeout}
-				?no-reset=${args.noReset}
+				?show-reset=${args.showReset}
 			></cosmoz-treenode-button-view>
 		</div>
 	`,
@@ -202,14 +201,14 @@ export const SelectButtonInteraction: Story = {
 		<div style="padding: 20px;">
 			<cosmoz-treenode-button-view
 				.tree=${tree}
-				node-path=${ifDefined(args.nodePath || undefined)}
+				.nodePath=${args.nodePath || ''}
 				button-text-placeholder=${args.buttonTextPlaceholder}
 				dialog-text=${args.dialogText}
 				search-placeholder=${args.searchPlaceholder}
 				search-global-placeholder=${args.searchGlobalPlaceholder}
 				.searchMinLength=${args.searchMinLength}
 				.searchDebounceTimeout=${args.searchDebounceTimeout}
-				?no-reset=${args.noReset}
+				?show-reset=${args.showReset}
 			></cosmoz-treenode-button-view>
 		</div>
 	`,

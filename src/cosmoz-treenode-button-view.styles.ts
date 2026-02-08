@@ -1,6 +1,12 @@
+import { truncate } from '@neovici/cosmoz-tokens/truncate';
 import { css } from '@pionjs/pion';
 
 export default css`
+	:host {
+		display: block;
+		container-type: inline-size;
+	}
+
 	h1,
 	h2 {
 		font-weight: 500;
@@ -50,13 +56,47 @@ export default css`
 
 	.actions {
 		display: flex;
+		gap: 8px;
 	}
 
-	.actions button {
-		display: inline-block;
+	cosmoz-button {
+		flex: 1;
+		min-width: 0;
+	}
 
-		padding: 10px 16px 10px 16px;
-		margin: 14px 14px 12px 14px;
+	cosmoz-button::part(button) {
+		justify-content: flex-start;
+	}
+
+	.default-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+	}
+
+	:host([has-prefix]) .default-icon {
+		display: none;
+	}
+
+	.path-text {
+		${truncate}
+		direction: rtl;
+		flex: 1;
+		min-width: 0;
+	}
+
+	@container (max-width: 80px) {
+		.path-text {
+			display: none;
+		}
+	}
+
+	.action-reset {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 10px 16px;
 
 		color: var(--cosmoz-treenode-actions-button-text-color, #101010);
 		font: inherit;
@@ -80,35 +120,11 @@ export default css`
 		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1), ease;
 	}
 
-	.actions button:hover {
+	.action-reset:hover {
 		box-shadow: var(
 			--cosmoz-treenode-actions-button-box-shadow-hover,
 			0 2px 3px 0 rgb(0 0 0 / 30%)
 		);
-	}
-
-	.action-open {
-		flex: auto;
-	}
-
-	.path-text {
-		display: block;
-
-		overflow: hidden;
-		white-space: nowrap;
-
-		text-overflow: ellipsis;
-		direction: rtl;
-	}
-
-	.action-reset {
-		flex-basis: 100px;
-		flex-grow: 0;
-		flex-shrink: 0;
-	}
-
-	.action-open + .action-reset {
-		margin-left: 0;
 	}
 
 	/* Safari only css fix */
@@ -117,59 +133,6 @@ export default css`
 	_:lang(x) + _:-webkit-full-screen-document,
 	.pathToNode span {
 		display: inline-block;
-	}
-
-	#chips {
-		display: flex;
-		flex-wrap: wrap;
-		padding: 20px;
-		overflow-y: auto;
-		max-height: 30vh;
-	}
-
-	.chip {
-		display: flex;
-		margin: 1px 4px 1px 0;
-		padding: 0.25rem 0.45rem 0.25rem 0.5rem;
-
-		gap: 0.25rem;
-
-		border-radius: 500px;
-		background-color: #e0e0e0;
-		white-space: nowrap;
-		overflow: hidden;
-		align-items: center;
-	}
-
-	.chip .chip__clear {
-		margin: 0 0 0 0.5rem;
-
-		background: #a6a6a6;
-		border: none;
-		cursor: pointer;
-		font-size: 1rem;
-		color: white;
-		border-radius: 50%;
-	}
-
-	.chip > span {
-		color: #424242;
-		margin-left: 10px;
-		font-size: 13px;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-
-	.chip iron-icon {
-		margin: 2px 4px;
-		color: #cdcdcd;
-		background-color: #a6a6a6;
-		border-radius: 500px;
-		cursor: pointer;
-		min-width: 16px;
-		width: 16px;
-		min-height: 16px;
-		height: 16px;
 	}
 
 	.dialog {

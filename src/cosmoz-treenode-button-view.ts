@@ -1,41 +1,32 @@
-/*eslint-disable max-statements */
+import { useHost } from '@neovici/cosmoz-utils/hooks/use-host';
 import {
 	component,
-	lift,
+	useCallback,
 	useEffect,
 	useMemo,
 	useProperty,
 	useRef,
-	useState,
 } from '@pionjs/pion';
 import { html } from 'lit-html';
 import { ref } from 'lit/directives/ref.js';
 import style from './cosmoz-treenode-button-view.styles';
 
+import '@neovici/cosmoz-button/cosmoz-button';
+import type { Tree } from '@neovici/cosmoz-tree';
+import { when } from 'lit-html/directives/when.js';
 import './cosmoz-treenode-navigator';
 import { useKeyDown } from './hooks/useKeyDown';
-import { when } from 'lit-html/directives/when.js';
-import { debounce$ } from '@neovici/cosmoz-utils/promise';
-import type { Node, Tree } from '@neovici/cosmoz-tree';
 import { getTreePathParts } from './util/helpers';
 
 type ButtonViewProps = {
 	tree: Tree;
-	multiSelection?: boolean;
 	dialogText?: string;
 	buttonTextPlaceholder?: string;
 	searchPlaceholder?: string;
-	noReset?: boolean;
+	showReset?: boolean;
 	searchGlobalPlaceholder?: string;
 	searchMinLength?: number;
 	searchDebounceTimeout: number;
-	nodePath?: string;
-	selectedNode?: Node | null;
-};
-
-type ClearItemSelectionParams = {
-	item: Node;
-	ev: Event;
 };
 
 type ObservedAttributes =
@@ -43,76 +34,56 @@ type ObservedAttributes =
 	| 'dialog-text'
 	| 'search-placeholder'
 	| 'search-global-placeholder'
-	| 'node-path'
-	| 'selected-node'
-	| 'no-reset'
+	| 'show-reset'
 	| 'search-min-length';
 
 type ButtonViewDialog = HTMLDialogElement & {
 	fit: () => void;
 };
 
+const defaultIcon = html`<svg
+	class="default-icon"
+	width="20"
+	height="20"
+	viewBox="0 0 24 24"
+	fill="none"
+	stroke="currentColor"
+	stroke-width="2"
+	stroke-linecap="round"
+	stroke-linejoin="round"
+>
+	<path
+		d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"
+	/>
+</svg>`;
+
 const CosmozNodeButtonView = ({
 	tree,
-	multiSelection = false,
 	dialogText,
 	buttonTextPlaceholder,
 	searchPlaceholder,
-	noReset = false,
+	showReset = false,
 	searchGlobalPlaceholder,
 	searchMinLength = 3,
 	searchDebounceTimeout = 2000,
 }: ButtonViewProps) => {
+	const host = useHost();
 	const dialogRef = useRef<ButtonViewDialog | null>(null);
 	const searchInputRef = useRef<HTMLInputElement | null>(null);
 
-	const [highlightedNode, setHighlightedNode] = useProperty<Node | null>(
-		'highlightedNode',
-	);
-
-	// legacy props
-	const [selectedNode, setSelectedNode] = useProperty<Node | null>(
-		'selectedNode',
-	);
+	// nodePath is the single source of truth - external two-way binding
 	const [nodePath, setNodePath] = useProperty<string>('nodePath', '');
 
-	const [nodesOnNodePath, setNodesOnNodePath] = useProperty<Node[]>(
-		'nodesOnNodePath',
-		[],
+	// opened is controllable externally
+	const [opened, setOpened] = useProperty<boolean>('opened', false);
+
+	// nodesOnNodePath derived from nodePath + tree
+	const nodesOnNodePath = useMemo(
+		() => getTreePathParts(nodePath, tree),
+		[nodePath, tree],
 	);
-	const [opened, setOpened] = useState(false);
-	const [selectedNodes, setSelectedNodes] = useState<Node[]>([]);
 
-	useEffect(() => {
-		if (dialogRef.current) {
-			searchInputRef.current = dialogRef.current
-				.querySelector('cosmoz-treenode-navigator')
-				?.shadowRoot?.querySelector('cosmoz-input') as HTMLInputElement | null;
-		}
-	}, [dialogRef.current]);
-
-	// external updates to "selectedNode"
-	useEffect(() => {
-		if (selectedNode && selectedNode !== highlightedNode) {
-			setHighlightedNode(selectedNode);
-		}
-	}, [selectedNode]);
-
-	// external updates to "nodePath"
-	useEffect(() => {
-		if (!(nodePath || tree)) {
-			return;
-		}
-
-		const parts = getTreePathParts(nodePath, tree);
-		setNodesOnNodePath(parts);
-
-		const last = parts.length > 0 ? parts[parts.length - 1] : null;
-		if (last && last !== highlightedNode) {
-			setHighlightedNode(last);
-		}
-	}, [nodePath, tree]);
-
+	// buttonLabel derived from nodesOnNodePath
 	const buttonLabel = useMemo(() => {
 		if (!Array.isArray(nodesOnNodePath) || nodesOnNodePath.length === 0) {
 			return buttonTextPlaceholder || '';
@@ -122,36 +93,38 @@ const CosmozNodeButtonView = ({
 			.filter((n) => n)
 			.map((part) => part[tree.searchProperty])
 			.join(' / ');
-	}, [nodesOnNodePath, tree]);
+	}, [nodesOnNodePath, tree, buttonTextPlaceholder]);
+
+	const onPrefixSlotChange = useCallback(
+		(e: Event) => {
+			const slot = e.target as HTMLSlotElement;
+			const hasContent = slot.assignedNodes().length > 0;
+			host.toggleAttribute('has-prefix', hasContent);
+		},
+		[host],
+	);
+
+	useEffect(() => {
+		if (dialogRef.current) {
+			searchInputRef.current = dialogRef.current
+				.querySelector('cosmoz-treenode-navigator')
+				?.shadowRoot?.querySelector('cosmoz-input') as HTMLInputElement | null;
+		}
+	}, [dialogRef.current]);
+
+	// Sync dialog open state with opened property
+	useEffect(() => {
+		if (opened) {
+			dialogRef.current?.showModal();
+			setTimeout(() => searchInputRef.current?.focus(), 0);
+		} else {
+			dialogRef.current?.close();
+		}
+	}, [opened]);
 
 	const reset = () => {
-		setNodesOnNodePath([]);
-		setSelectedNodes([]);
-		setHighlightedNode(null);
-		setSelectedNode(null);
 		setNodePath('');
 	};
-
-	const clearItemSelection = ({ item, ev }: ClearItemSelectionParams) => {
-		setSelectedNodes(selectedNodes.filter((node) => node !== item));
-		ev.preventDefault();
-		ev.stopPropagation();
-	};
-
-	const getChipText = (node: Node) => {
-		return node.name;
-	};
-
-	const showSelectedNodes = (
-		multiSelection: boolean,
-		selectedNodesLength: number,
-	) => {
-		return multiSelection && selectedNodesLength > 0;
-	};
-
-	const refit = debounce$(() => {
-		dialogRef.current?.fit?.();
-	}, 50);
 
 	const focusSearch = () => {
 		if (searchInputRef.current) {
@@ -172,6 +145,7 @@ const CosmozNodeButtonView = ({
 
 	useKeyDown('Escape', onClose);
 
+	// Dialog dragging support
 	const onHeaderMouseDown = (e: MouseEvent) => {
 		const dialog = dialogRef.current;
 		if (!dialog) return;
@@ -200,43 +174,35 @@ const CosmozNodeButtonView = ({
 		document.addEventListener('mouseup', onMouseUp);
 	};
 
-	// `cosmoz-treenode-navigator` handles updating nodesOnNodePath
-	const selectNode = () => {
-		if (!highlightedNode?.pathLocator) {
-			return;
+	// Handle node-path-changed from navigator - close dialog on selection
+	const onNodePathChanged = (e: CustomEvent<{ value: string }>) => {
+		e.preventDefault();
+		const newPath = e.detail.value;
+		if (newPath) {
+			setNodePath(newPath);
+			onClose();
 		}
-
-		if (
-			multiSelection &&
-			!selectedNodes.some((n) => n.pathLocator === highlightedNode.pathLocator)
-		) {
-			setSelectedNodes([...selectedNodes, highlightedNode]);
-		}
-
-		// update legacy props
-		setSelectedNode(highlightedNode);
-		setNodePath(highlightedNode.pathLocator);
-		setNodesOnNodePath(getTreePathParts(highlightedNode.pathLocator, tree));
-
-		onClose();
 	};
 
 	return html`
 		<div class="actions" part="actions">
-			<button
-				class="action-open"
-				type="button"
+			<cosmoz-button
+				variant="secondary"
+				full-width
 				@click=${onOpen}
 				part="action-open"
 			>
-				<slot name="button-before"></slot>
+				<span slot="prefix">
+					<slot name="button-before" @slotchange=${onPrefixSlotChange}></slot>
+					${defaultIcon}
+				</span>
 				<div class="path-text">
 					<span>${buttonLabel}</span>
 				</div>
-				<slot name="button-after"></slot>
-			</button>
+				<slot name="button-after" slot="suffix"></slot>
+			</cosmoz-button>
 			${when(
-				!noReset && !!selectedNode,
+				showReset && !!nodePath,
 				() =>
 					html` <button
 						@click=${reset}
@@ -268,27 +234,6 @@ const CosmozNodeButtonView = ({
 					</button>`,
 			)}
 		</div>
-		${when(
-			showSelectedNodes(multiSelection, selectedNodes.length),
-			() => html`
-				<div id="chips" part="chips" class="row">
-					${selectedNodes.map(
-						(item) => html`
-							<div class="chip">
-								<span>${getChipText(item)}</span>
-								<button
-									class="chip__clear"
-									@click=${(ev: Event) => clearItemSelection({ item, ev })}
-									type="button"
-								>
-									&times;
-								</button>
-							</div>
-						`,
-					)}
-				</div>
-			`,
-		)}
 
 		<dialog
 			class="dialog"
@@ -308,32 +253,20 @@ const CosmozNodeButtonView = ({
 				<cosmoz-treenode-navigator
 					id="treeNavigator"
 					class="dialog-treenode-navigator no-padding"
-					.highlightedNode=${highlightedNode}
-					@highlighted-node-changed=${lift(setHighlightedNode)}
+					.nodePath=${nodePath}
+					@node-path-changed=${onNodePathChanged}
 					.searchPlaceholder=${searchPlaceholder}
 					.searchGlobalPlaceholder=${searchGlobalPlaceholder}
 					.searchMinLength=${searchMinLength}
 					.searchDebounceTimeout=${searchDebounceTimeout}
 					.tree=${tree}
 					.opened=${opened}
-					.nodesOnNodePath=${nodesOnNodePath}
-					@node-dblclicked=${selectNode}
-					@on-data-plane-changed=${refit}
 				>
 					<slot></slot>
 				</cosmoz-treenode-navigator>
 			</main>
 			<footer class="dialog-footer" part="footer">
 				<p class="dialog-footer-button-container">
-					<button
-						?disabled=${!highlightedNode?.pathLocator}
-						autofocus
-						class="dialog-footer-button"
-						part="select-button"
-						@click=${selectNode}
-					>
-						Select
-					</button>
 					<button
 						class="dialog-footer-button"
 						part="cancel-button"
@@ -352,9 +285,7 @@ CosmozNodeButtonView.observedAttributes = [
 	'dialog-text',
 	'search-placeholder',
 	'search-global-placeholder',
-	'node-path',
-	'selected-node',
-	'no-reset',
+	'show-reset',
 	'search-min-length',
 ] as readonly ObservedAttributes[];
 

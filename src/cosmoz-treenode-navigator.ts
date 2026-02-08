@@ -1,3 +1,4 @@
+import { virtualize } from '@lit-labs/virtualizer/virtualize.js';
 import {
 	component,
 	useCallback,
@@ -8,25 +9,23 @@ import {
 	useState,
 } from '@pionjs/pion';
 import { html, nothing, type TemplateResult } from 'lit-html';
-import { when } from 'lit-html/directives/when.js';
 import { guard } from 'lit-html/directives/guard.js';
 import { ref } from 'lit-html/directives/ref.js';
-import { virtualize } from '@lit-labs/virtualizer/virtualize.js';
+import { when } from 'lit-html/directives/when.js';
 
 import '@neovici/cosmoz-input';
 import { useMeta } from '@neovici/cosmoz-utils/hooks/use-meta';
 
+import type { Node, Tree } from '@neovici/cosmoz-tree';
+import { useHost } from '@neovici/cosmoz-utils/hooks/use-host';
+import { notifyProperty } from '@neovici/cosmoz-utils/hooks/use-notify-property';
+import style from './cosmoz-treenode-navigator.styles';
 import {
 	computeDataPlane,
 	computeRowClass,
 	getParentPath,
-	onNodeDblClicked,
 	getTreePathParts,
 } from './util/helpers';
-import style from './cosmoz-treenode-navigator.styles';
-import { useHost } from '@neovici/cosmoz-utils/hooks/use-host';
-import { notifyProperty } from '@neovici/cosmoz-utils/hooks/use-notify-property';
-import type { Node, Tree } from '@neovici/cosmoz-tree';
 
 type TreenodeNavigatorProps = {
 	tree: Tree;
@@ -34,7 +33,6 @@ type TreenodeNavigatorProps = {
 	searchGlobalPlaceholder?: string;
 	searchMinLength?: number;
 	opened?: boolean;
-	nodesOnNodePath?: Node[];
 	searchDebounceTimeout: number;
 };
 
@@ -69,23 +67,21 @@ const NodeNavigator = ({
 	const listRef = useRef<HTMLElement>();
 	const host = useHost();
 
-	const [highlightedNode, setHighlightedNode] = useProperty<Node | null>(
-		'highlightedNode',
-	);
+	// nodePath is the single source of truth - external two-way binding
+	const [nodePath, setNodePath] = useProperty<string>('nodePath', '');
 
-	const [nodesOnNodePath, setNodesOnNodePath] = useProperty<Node[]>(
-		'nodesOnNodePath',
-		[],
-	);
+	// highlightedNode is internal navigation state only
+	const [highlightedNode, setHighlightedNode] = useState<Node | null>(null);
 
 	const [search, setSearch] = useState<string>('');
 	const [searchValue, setSearchValue] = useState<string>('');
 	const [openNodePath, setOpenNodePath] = useState<string>('');
 
-	const [selectedNode, setSelectedNode] = useProperty<Node | null>(
-		'selectedNode',
+	// nodesOnNodePath derived from nodePath + tree
+	const nodesOnNodePath = useMemo(
+		() => getTreePathParts(nodePath, tree),
+		[nodePath, tree],
 	);
-	const [nodePath, setNodePath] = useProperty<string>('nodePath', '');
 
 	useEffect(() => {
 		const timeoutId = setTimeout(() => {
@@ -107,27 +103,10 @@ const NodeNavigator = ({
 	);
 
 	/**
-	 * Updates the nodes on path when a node is selected
-	 * @param node
-	 */
-	const updateNodesOnPath = useCallback(
-		(node: Node | null) => {
-			if (!node?.pathLocator || !tree) {
-				setNodesOnNodePath([]);
-				return;
-			}
-
-			const pathNodes = getTreePathParts(node.pathLocator, tree);
-			setNodesOnNodePath(pathNodes);
-		},
-		[tree],
-	);
-
-	/**
 	 * Opens a node (renderLevel) based on a given path
 	 *
-	 * Don't update nodesOnNodePath here - this is just navigation
-	 * nodesOnNodePath should only change on selection
+	 * Don't update nodePath here - this is just navigation
+	 * nodePath should only change on selection
 	 *
 	 * @param clickedNode - The clicked node
 	 * @return undefined
@@ -139,22 +118,25 @@ const NodeNavigator = ({
 	}, []);
 
 	/**
-	 * Handles node selection (e.g. on double-click)
+	 * Handles node selection (e.g. on double-click or Enter)
 	 * @param node
 	 */
-	const onNodeSelect = useCallback(
-		(node: Node | null) => {
-			if (node) {
-				setHighlightedNode(node);
-				// keep legacy props in sync
-				setSelectedNode(node);
-				setNodePath(node.pathLocator ?? '');
-				updateNodesOnPath(node);
-			}
-		},
-		[updateNodesOnPath],
-	);
+	const onNodeSelect = useCallback((node: Node | null) => {
+		if (node?.pathLocator) {
+			setNodePath(node.pathLocator);
+		}
+	}, []);
 
+	// Clear highlightedNodePath when navigating to a new folder
+	useEffect(() => {
+		if (!openNodePath) {
+			return;
+		}
+
+		notifyProperty(host, 'highlightedNodePath', '');
+	}, [openNodePath]);
+
+	// When nodePath changes externally, sync the view
 	useEffect(() => {
 		if (!nodesOnNodePath?.length || !tree || !opened) {
 			return;
@@ -176,6 +158,7 @@ const NodeNavigator = ({
 		setHighlightedNode(lastNode);
 	}, [nodesOnNodePath, tree, opened]);
 
+	// Notify highlightedNodePath when highlightedNode changes
 	useEffect(() => {
 		notifyProperty(
 			host,
@@ -183,28 +166,6 @@ const NodeNavigator = ({
 			highlightedNode?.pathLocator || '',
 		);
 	}, [highlightedNode]);
-
-	// Sync selectedNode to highlightedNode when selectedNode changes externally
-	useEffect(() => {
-		if (selectedNode && selectedNode !== highlightedNode) {
-			setHighlightedNode(selectedNode);
-		}
-	}, [selectedNode]);
-
-	useEffect(() => {
-		if (!(nodePath || tree)) {
-			return;
-		}
-
-		const parts = getTreePathParts(nodePath, tree);
-		setNodesOnNodePath(parts);
-
-		const last = parts.length > 0 ? parts[parts.length - 1] : null;
-
-		if (last && last !== highlightedNode) {
-			setHighlightedNode(last);
-		}
-	}, [nodePath, tree]);
 
 	const meta = useMeta<NavigatorMeta>({
 		dataPlane,
@@ -289,7 +250,6 @@ const NodeNavigator = ({
 				case 'Enter':
 					e.preventDefault();
 					if (node) {
-						host.dispatchEvent(new CustomEvent('node-dblclicked'));
 						onNodeSelect(node);
 					}
 					break;
@@ -311,12 +271,11 @@ const NodeNavigator = ({
 		return () => document.removeEventListener('keydown', handler, true);
 	}, [opened, meta, onNodeSelect]);
 
-	// update the event handler for double-click
-	const handleNodeDblClick = (node: Node) => (e: Event) => {
-		onNodeDblClicked(e, host);
-
-		// select the node that was double-clicked
-		onNodeSelect(node);
+	// Double-click handler for node selection
+	const handleNodeDblClick = () => {
+		if (highlightedNode) {
+			onNodeSelect(highlightedNode);
+		}
 	};
 
 	const renderItem = (node: Node | null, index: number) => {
@@ -340,7 +299,7 @@ const NodeNavigator = ({
 			<div
 				class=${computeRowClass('node', node, highlightedNode)}
 				@click=${() => setHighlightedNode(node)}
-				@dblclick=${handleNodeDblClick(node)}
+				@dblclick=${handleNodeDblClick}
 			>
 				<div class="name">${node[tree.searchProperty]}</div>
 				${when(
