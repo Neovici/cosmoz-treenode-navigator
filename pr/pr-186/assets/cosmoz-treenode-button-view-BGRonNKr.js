@@ -1,8 +1,8 @@
-import{c as y,u as O,b as R,d as X,e as w,f as Y,g as b,h as _,n as K,i as F,l as I}from"./tree-data-CUyYWzK_.js";import{b as p,t as l}from"./iframe-CQiKH-tD.js";const U=y`
+import{c as $,u as k,b as R,d as X,e as b,f as Y,g as y,h as _,n as K,i as F,l as I}from"./tree-data-DgBPYy1X.js";import{b as g,t as l}from"./iframe-p6FdhhoM.js";const U=$`
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-`,V=y`
+`,V=$`
 	:host {
 		display: block;
 		container-type: inline-size;
@@ -93,7 +93,7 @@ import{c as y,u as O,b as R,d as X,e as w,f as Y,g as b,h as _,n as K,i as F,l a
 		justify-content: flex-end;
 		margin: 0;
 	}
-`,q=(o,n)=>{const s=a=>{if(a.key===o&&n instanceof Function)return a.preventDefault(),n()};O(()=>(document.addEventListener("keydown",s),()=>{document.removeEventListener("keydown",s)}))},G=p`<svg
+`,q=(o,n)=>{const s=a=>{if(a.key===o&&n instanceof Function)return a.preventDefault(),n()};k(()=>(document.addEventListener("keydown",s),()=>{document.removeEventListener("keydown",s)}))},G=g`<svg
 	class="default-icon"
 	width="20"
 	height="20"
@@ -108,24 +108,24 @@ import{c as y,u as O,b as R,d as X,e as w,f as Y,g as b,h as _,n as K,i as F,l a
 	<circle cx="7" cy="7" r="2" />
 	<circle cx="17" cy="17" r="2" />
 	<path d="M7 9v3c0 1.66 1.34 3 3 3h7" />
-</svg>`,$=({tree:o,showReset:n=!1,searchMinLength:s=3,searchDebounceTimeout:a=2e3})=>{const i=X(null),[r,h]=w("nodePath",""),[k,g]=w("opened",!1),[u,z]=Y(""),c=b(()=>_(r,o),[r,o]),P=b(()=>!Array.isArray(c)||c.length===0?l("Select a node"):c.filter(t=>t).map(t=>t[o.searchProperty]).join(" / "),[c,o]),L=()=>{h("")},N=()=>{i.current?.showModal(),g(!0)},d=()=>{g(!1),i.current?.close()};q("Escape",d);const C=t=>{const e=i.current;if(!e)return;const D=t.clientX,j=t.clientY,f=e.getBoundingClientRect(),B=f.left,T=f.top,m=v=>{const A=v.clientX-D,H=v.clientY-j;e.style.left=`${B+A}px`,e.style.top=`${T+H}px`,e.style.margin="0"},x=()=>{document.removeEventListener("mousemove",m),document.removeEventListener("mouseup",x)};document.addEventListener("mousemove",m),document.addEventListener("mouseup",x)},E=t=>{t.preventDefault();const e=t.detail.value;e&&(h(e),d())},M=I(z),S=()=>{u&&(h(u),d())};return p`
+</svg>`,z=({tree:o,showReset:n=!1,searchMinLength:s=3,searchDebounceTimeout:a=2e3})=>{const i=X(null),[r,h]=b("nodePath",""),[u,f]=b("opened",!1),[p,P]=Y(""),c=y(()=>_(r,o),[r,o]),L=y(()=>!Array.isArray(c)||c.length===0?l("Select a node"):c.filter(t=>t).map(t=>t[o.searchProperty]).join(" / "),[c,o]);k(()=>{u?i.current?.showModal():i.current?.close()},[u]);const N=()=>{h("")},C=()=>f(!0),d=()=>f(!1);q("Escape",d);const E=t=>{const e=i.current;if(!e)return;const j=t.clientX,B=t.clientY,m=e.getBoundingClientRect(),T=m.left,A=m.top,x=w=>{const H=w.clientX-j,O=w.clientY-B;e.style.left=`${T+H}px`,e.style.top=`${A+O}px`,e.style.margin="0"},v=()=>{document.removeEventListener("mousemove",x),document.removeEventListener("mouseup",v)};document.addEventListener("mousemove",x),document.addEventListener("mouseup",v)},M=t=>{t.preventDefault();const e=t.detail.value;e&&(h(e),d())},S=I(P),D=()=>{p&&(h(p),d())};return g`
 		<div class="actions" part="actions">
 			<cosmoz-button
 				variant="secondary"
 				full-width
 				data-testid="open-button"
-				@click=${N}
+				@click=${C}
 				part="action-open"
 			>
 				<slot name="prefix" slot="prefix">${G}</slot>
 				<div class="path-text">
-					<span>${P}</span>
+					<span>${L}</span>
 				</div>
 				<slot name="suffix" slot="suffix"></slot>
 			</cosmoz-button>
-			${K(n&&!!r,()=>p`<cosmoz-button
+			${K(n&&!!r,()=>g`<cosmoz-button
 						variant="tertiary"
-						@click=${L}
+						@click=${N}
 						data-testid="reset-button"
 						part="action-reset"
 					>
@@ -164,7 +164,7 @@ import{c as y,u as O,b as R,d as X,e as w,f as Y,g as b,h as _,n as K,i as F,l a
 			<header
 				class="dialog-header"
 				part="header"
-				@mousedown=${C}
+				@mousedown=${E}
 			>
 				<h1 class="dialog-heading" part="heading">
 					${l("Search or navigate to chosen destination")}
@@ -175,12 +175,12 @@ import{c as y,u as O,b as R,d as X,e as w,f as Y,g as b,h as _,n as K,i as F,l a
 					id="treeNavigator"
 					class="dialog-treenode-navigator no-padding"
 					.nodePath=${r}
-					@node-path-changed=${E}
-					@highlighted-node-path-changed=${M}
+					@node-path-changed=${M}
+					@highlighted-node-path-changed=${S}
 					.searchMinLength=${s}
 					.searchDebounceTimeout=${a}
 					.tree=${o}
-					.opened=${k}
+					.opened=${u}
 				>
 					<slot></slot>
 				</cosmoz-treenode-navigator>
@@ -189,8 +189,8 @@ import{c as y,u as O,b as R,d as X,e as w,f as Y,g as b,h as _,n as K,i as F,l a
 				<div class="dialog-footer-button-container">
 					<cosmoz-button
 						variant="primary"
-						?disabled=${!u}
-						@click=${S}
+						?disabled=${!p}
+						@click=${D}
 						data-testid="select-button"
 						part="select-button"
 					>
@@ -207,4 +207,4 @@ import{c as y,u as O,b as R,d as X,e as w,f as Y,g as b,h as _,n as K,i as F,l a
 				</div>
 			</footer>
 		</dialog>
-	`};$.observedAttributes=["show-reset","search-min-length"];customElements.define("cosmoz-treenode-button-view",R($,{styleSheets:[V]}));
+	`};z.observedAttributes=["show-reset","search-min-length"];customElements.define("cosmoz-treenode-button-view",R(z,{styleSheets:[V]}));
