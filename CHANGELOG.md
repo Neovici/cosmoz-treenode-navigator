@@ -1,3 +1,9 @@
+## [7.9.1](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v7.9.0...v7.9.1) (2026-02-09)
+
+### Bug Fixes
+
+- handle invalid nodePath gracefully in helper functions ([#187](https://github.com/Neovici/cosmoz-treenode-navigator/issues/187)) ([8774da4](https://github.com/Neovici/cosmoz-treenode-navigator/commit/8774da4d14ff928f37dc2539583eb3064dc46833))
+
 # [7.9.0](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v7.8.0...v7.9.0) (2026-01-28)
 
 ### Bug Fixes
