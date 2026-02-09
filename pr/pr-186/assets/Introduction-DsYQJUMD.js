@@ -1,4 +1,4 @@
-import{j as e,M as r}from"./blocks-C-4zwliM.js";import{useMDXComponents as i}from"./index-B0NK_JaR.js";import"./preload-helper-PPVm8Dsz.js";import"./iframe-B2XSesrN.js";function o(t){const n={a:"a",code:"code",h1:"h1",h2:"h2",li:"li",p:"p",pre:"pre",ul:"ul",...i(),...t.components};return e.jsxs(e.Fragment,{children:[e.jsx(r,{title:"Introduction"}),`
+import{j as e,M as r}from"./blocks-CEi-tfFc.js";import{useMDXComponents as o}from"./index-Ddl7iwI_.js";import"./preload-helper-PPVm8Dsz.js";import"./iframe-iPBwYnbQ.js";function i(t){const n={a:"a",code:"code",h1:"h1",h2:"h2",li:"li",p:"p",pre:"pre",table:"table",tbody:"tbody",td:"td",th:"th",thead:"thead",tr:"tr",ul:"ul",...o(),...t.components};return e.jsxs(e.Fragment,{children:[e.jsx(r,{title:"Introduction"}),`
 `,e.jsx(n.h1,{id:"cosmoz-treenode-navigator",children:"Cosmoz Treenode Navigator"}),`
 `,e.jsx(n.p,{children:"A PionJS component for navigating, searching, and selecting nodes in a hierarchical tree structure."}),`
 `,e.jsx(n.h2,{id:"components",children:"Components"}),`
@@ -38,11 +38,4 @@ customElements.define('my-app', component(MyApp));
 `})}),`
 `,e.jsx(n.h2,{id:"internationalization",children:"Internationalization"}),`
 `,e.jsxs(n.p,{children:["All UI text is managed via ",e.jsx(n.code,{children:"i18next.t()"})," with English text as translation keys. Load translations with ",e.jsx(n.code,{children:"i18next.addResourceBundle()"}),":"]}),`
-`,e.jsxs(n.p,{children:[`| Key | Used in |
-|-----|---------|
-| `,e.jsx(n.code,{children:"Select a node"}),` | Button placeholder |
-| `,e.jsx(n.code,{children:"Search or navigate to chosen destination"}),` | Dialog heading |
-| `,e.jsx(n.code,{children:"Search..."}),` | Search input placeholder |
-| `,e.jsx(n.code,{children:"Click to search again but globally"}),` | Global search button |
-| `,e.jsx(n.code,{children:"Select"}),` | Confirm button |
-| `,e.jsx(n.code,{children:"Cancel"})," | Cancel button |"]})]})}function d(t={}){const{wrapper:n}={...i(),...t.components};return n?e.jsx(n,{...t,children:e.jsx(o,{...t})}):o(t)}export{d as default};
+`,e.jsxs(n.table,{children:[e.jsx(n.thead,{children:e.jsxs(n.tr,{children:[e.jsx(n.th,{children:"Key"}),e.jsx(n.th,{children:"Used in"})]})}),e.jsxs(n.tbody,{children:[e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"Select a node"})}),e.jsx(n.td,{children:"Button placeholder"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"Search or navigate to chosen destination"})}),e.jsx(n.td,{children:"Dialog heading"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"Search..."})}),e.jsx(n.td,{children:"Search input placeholder"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"Click to search again but globally"})}),e.jsx(n.td,{children:"Global search button"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"Select"})}),e.jsx(n.td,{children:"Confirm button"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"Cancel"})}),e.jsx(n.td,{children:"Cancel button"})]})]})]})]})}function a(t={}){const{wrapper:n}={...o(),...t.components};return n?e.jsx(n,{...t,children:e.jsx(i,{...t})}):i(t)}export{a as default};
