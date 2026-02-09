@@ -121,9 +121,11 @@ export const //
 		if (!tree || !pathLocator) {
 			return [];
 		}
-		return tree
-			.getPathNodes(pathLocator)
-			.filter((node): node is Node => node !== undefined);
+		const pathNodes = tree.getPathNodes(pathLocator);
+		if (!pathNodes) {
+			return [];
+		}
+		return pathNodes.filter((node): node is Node => node !== undefined);
 	},
 	/**
 	 * Returns a node based on a given path locator.
@@ -138,13 +140,20 @@ export const //
 			return null;
 		}
 
-		const node = tree.getNodeByPathLocator(pathLocator);
-		let nodes;
+		try {
+			const node = tree.getNodeByPathLocator(pathLocator);
+			if (node) {
+				return node;
+			}
 
-		if (!node) {
-			nodes = tree.getPathNodes(pathLocator).filter((n) => n != null);
+			const pathNodes = tree.getPathNodes(pathLocator);
+			if (!pathNodes || pathNodes.length === 0) {
+				return null;
+			}
+
+			const validNodes = pathNodes.filter((n) => n != null);
+			return validNodes.length > 0 ? (validNodes.pop() as Node) : null;
+		} catch {
+			return null;
 		}
-		return nodes && nodes.length > 0
-			? (nodes.pop() as Node) || null
-			: node || null;
 	};
