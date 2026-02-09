@@ -1,8 +1,8 @@
-import{c as P,u as f,b as _,d as $,e as k,f as q,g as z,h as I,n as K,i as V}from"./tree-data-CkLQyo2D.js";import{b as m,t as u}from"./iframe-b7Yf6_bs.js";const F=P`
+import{c as P,u as f,b as _,d as $,e as k,f as q,g as z,h as I,n as K,i as F}from"./tree-data-p9GyKZrO.js";import{b as m,t as u}from"./iframe-Y0AO3ZbG.js";const U=P`
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-`,U=P`
+`,V=P`
 	:host {
 		display: block;
 		container-type: inline-size;
@@ -35,7 +35,7 @@ import{c as P,u as f,b as _,d as $,e as k,f as q,g as z,h as I,n as K,i as V}fro
 	}
 
 	.path-text {
-		${F}
+		${U}
 		direction: rtl;
 		flex: 1;
 		min-width: 0;
@@ -93,7 +93,7 @@ import{c as P,u as f,b as _,d as $,e as k,f as q,g as z,h as I,n as K,i as V}fro
 		justify-content: flex-end;
 		margin: 0;
 	}
-`,Z=(n,s)=>{const a=i=>{if(i.key===n&&s instanceof Function)return i.preventDefault(),s()};f(()=>(document.addEventListener("keydown",a),()=>{document.removeEventListener("keydown",a)}))},G=m`<svg
+`,G=(n,s)=>{const a=i=>{if(i.key===n&&s instanceof Function)return i.preventDefault(),s()};f(()=>(document.addEventListener("keydown",a),()=>{document.removeEventListener("keydown",a)}))},J=m`<svg
 	class="default-icon"
 	width="20"
 	height="20"
@@ -103,11 +103,12 @@ import{c as P,u as f,b as _,d as $,e as k,f as q,g as z,h as I,n as K,i as V}fro
 	stroke-width="2"
 	stroke-linecap="round"
 	stroke-linejoin="round"
+	xmlns="http://www.w3.org/2000/svg"
 >
-	<path
-		d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"
-	/>
-</svg>`,S=({tree:n,showReset:s=!1,searchMinLength:a=3,searchDebounceTimeout:i=2e3})=>{const e=$(null),r=$(null),[c,h]=k("nodePath",""),[p,x]=k("opened",!1),[g,L]=q(""),d=z(()=>I(c,n),[c,n]),M=z(()=>!Array.isArray(d)||d.length===0?u("Select a node"):d.filter(t=>t).map(t=>t[n.searchProperty]).join(" / "),[d,n]);f(()=>{e.current&&(r.current=e.current.querySelector("cosmoz-treenode-navigator")?.shadowRoot?.querySelector("cosmoz-input"))},[e.current]),f(()=>{p?(e.current?.showModal(),setTimeout(()=>r.current?.focus(),0)):e.current?.close()},[p]);const N=()=>{h("")},C=()=>{r.current&&r.current.focus()},E=()=>{e.current?.showModal(),x(!0),setTimeout(C,0)},l=()=>{x(!1),e.current?.close()};Z("Escape",l);const D=t=>{const o=e.current;if(!o)return;const A=t.clientX,B=t.clientY,v=o.getBoundingClientRect(),H=v.left,O=v.top,w=y=>{const X=y.clientX-A,Y=y.clientY-B;o.style.left=`${H+X}px`,o.style.top=`${O+Y}px`,o.style.margin="0"},b=()=>{document.removeEventListener("mousemove",w),document.removeEventListener("mouseup",b)};document.addEventListener("mousemove",w),document.addEventListener("mouseup",b)},T=t=>{t.preventDefault();const o=t.detail.value;o&&(h(o),l())},j=t=>{L(t.detail.value)},R=()=>{g&&(h(g),l())};return m`
+	<circle cx="7" cy="7" r="2" />
+	<circle cx="17" cy="17" r="2" />
+	<path d="M7 9v3c0 1.66 1.34 3 3 3h7" />
+</svg>`,S=({tree:n,showReset:s=!1,searchMinLength:a=3,searchDebounceTimeout:i=2e3})=>{const e=$(null),r=$(null),[c,h]=k("nodePath",""),[p,x]=k("opened",!1),[g,L]=q(""),d=z(()=>I(c,n),[c,n]),M=z(()=>!Array.isArray(d)||d.length===0?u("Select a node"):d.filter(t=>t).map(t=>t[n.searchProperty]).join(" / "),[d,n]);f(()=>{e.current&&(r.current=e.current.querySelector("cosmoz-treenode-navigator")?.shadowRoot?.querySelector("cosmoz-input"))},[e.current]),f(()=>{p?(e.current?.showModal(),setTimeout(()=>r.current?.focus(),0)):e.current?.close()},[p]);const N=()=>{h("")},C=()=>{r.current&&r.current.focus()},E=()=>{e.current?.showModal(),x(!0),setTimeout(C,0)},l=()=>{x(!1),e.current?.close()};G("Escape",l);const D=t=>{const o=e.current;if(!o)return;const B=t.clientX,A=t.clientY,v=o.getBoundingClientRect(),H=v.left,O=v.top,w=b=>{const X=b.clientX-B,Y=b.clientY-A;o.style.left=`${H+X}px`,o.style.top=`${O+Y}px`,o.style.margin="0"},y=()=>{document.removeEventListener("mousemove",w),document.removeEventListener("mouseup",y)};document.addEventListener("mousemove",w),document.addEventListener("mouseup",y)},T=t=>{t.preventDefault();const o=t.detail.value;o&&(h(o),l())},j=t=>{L(t.detail.value)},R=()=>{g&&(h(g),l())};return m`
 		<div class="actions" part="actions">
 			<cosmoz-button
 				variant="secondary"
@@ -116,7 +117,7 @@ import{c as P,u as f,b as _,d as $,e as k,f as q,g as z,h as I,n as K,i as V}fro
 				@click=${E}
 				part="action-open"
 			>
-				<slot name="prefix" slot="prefix">${G}</slot>
+				<slot name="prefix" slot="prefix">${J}</slot>
 				<div class="path-text">
 					<span>${M}</span>
 				</div>
@@ -158,7 +159,7 @@ import{c as P,u as f,b as _,d as $,e as k,f as q,g as z,h as I,n as K,i as V}fro
 			class="dialog"
 			part="dialog"
 			data-testid="dialog"
-			${V(t=>{e.current=t})}
+			${F(t=>{e.current=t})}
 		>
 			<header
 				class="dialog-header"
@@ -206,4 +207,4 @@ import{c as P,u as f,b as _,d as $,e as k,f as q,g as z,h as I,n as K,i as V}fro
 				</div>
 			</footer>
 		</dialog>
-	`};S.observedAttributes=["show-reset","search-min-length"];customElements.define("cosmoz-treenode-button-view",_(S,{styleSheets:[U]}));
+	`};S.observedAttributes=["show-reset","search-min-length"];customElements.define("cosmoz-treenode-button-view",_(S,{styleSheets:[V]}));
