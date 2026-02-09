@@ -1,4 +1,4 @@
-import{c as S,u as m,b as I,d as K,e as z,f as P,g as V,h as C,i as F,j as U,n as Z,k as G}from"./tree-data-CMrbr0Lf.js";import{b as x,t as u}from"./iframe-iPBwYnbQ.js";const J=S`
+import{c as S,u as m,b as I,d as K,e as z,f as P,g as V,h as C,i as F,j as U,n as Z,k as G}from"./tree-data-BuLhcJzY.js";import{b as x,t as u}from"./iframe-Bjtw74-6.js";const J=S`
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -6,6 +6,7 @@ import{c as S,u as m,b as I,d as K,e as z,f as P,g as V,h as C,i as F,j as U,n a
 	:host {
 		display: block;
 		container-type: inline-size;
+		width: 100%;
 	}
 
 	h1,
