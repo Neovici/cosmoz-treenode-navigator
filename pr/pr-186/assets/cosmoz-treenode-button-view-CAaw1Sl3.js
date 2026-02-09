@@ -1,8 +1,8 @@
-import{c as P,u as f,b as _,d as $,e as k,f as q,g as z,h as I,n as K,i as F}from"./tree-data-p9GyKZrO.js";import{b as m,t as u}from"./iframe-Y0AO3ZbG.js";const U=P`
+import{c as y,u as O,b as R,d as X,e as w,f as Y,g as b,h as _,n as K,i as F,l as I}from"./tree-data-CUyYWzK_.js";import{b as p,t as l}from"./iframe-CQiKH-tD.js";const U=y`
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-`,V=P`
+`,V=y`
 	:host {
 		display: block;
 		container-type: inline-size;
@@ -93,7 +93,7 @@ import{c as P,u as f,b as _,d as $,e as k,f as q,g as z,h as I,n as K,i as F}fro
 		justify-content: flex-end;
 		margin: 0;
 	}
-`,G=(n,s)=>{const a=i=>{if(i.key===n&&s instanceof Function)return i.preventDefault(),s()};f(()=>(document.addEventListener("keydown",a),()=>{document.removeEventListener("keydown",a)}))},J=m`<svg
+`,q=(o,n)=>{const s=a=>{if(a.key===o&&n instanceof Function)return a.preventDefault(),n()};O(()=>(document.addEventListener("keydown",s),()=>{document.removeEventListener("keydown",s)}))},G=p`<svg
 	class="default-icon"
 	width="20"
 	height="20"
@@ -108,24 +108,24 @@ import{c as P,u as f,b as _,d as $,e as k,f as q,g as z,h as I,n as K,i as F}fro
 	<circle cx="7" cy="7" r="2" />
 	<circle cx="17" cy="17" r="2" />
 	<path d="M7 9v3c0 1.66 1.34 3 3 3h7" />
-</svg>`,S=({tree:n,showReset:s=!1,searchMinLength:a=3,searchDebounceTimeout:i=2e3})=>{const e=$(null),r=$(null),[c,h]=k("nodePath",""),[p,x]=k("opened",!1),[g,L]=q(""),d=z(()=>I(c,n),[c,n]),M=z(()=>!Array.isArray(d)||d.length===0?u("Select a node"):d.filter(t=>t).map(t=>t[n.searchProperty]).join(" / "),[d,n]);f(()=>{e.current&&(r.current=e.current.querySelector("cosmoz-treenode-navigator")?.shadowRoot?.querySelector("cosmoz-input"))},[e.current]),f(()=>{p?(e.current?.showModal(),setTimeout(()=>r.current?.focus(),0)):e.current?.close()},[p]);const N=()=>{h("")},C=()=>{r.current&&r.current.focus()},E=()=>{e.current?.showModal(),x(!0),setTimeout(C,0)},l=()=>{x(!1),e.current?.close()};G("Escape",l);const D=t=>{const o=e.current;if(!o)return;const B=t.clientX,A=t.clientY,v=o.getBoundingClientRect(),H=v.left,O=v.top,w=b=>{const X=b.clientX-B,Y=b.clientY-A;o.style.left=`${H+X}px`,o.style.top=`${O+Y}px`,o.style.margin="0"},y=()=>{document.removeEventListener("mousemove",w),document.removeEventListener("mouseup",y)};document.addEventListener("mousemove",w),document.addEventListener("mouseup",y)},T=t=>{t.preventDefault();const o=t.detail.value;o&&(h(o),l())},j=t=>{L(t.detail.value)},R=()=>{g&&(h(g),l())};return m`
+</svg>`,$=({tree:o,showReset:n=!1,searchMinLength:s=3,searchDebounceTimeout:a=2e3})=>{const i=X(null),[r,h]=w("nodePath",""),[k,g]=w("opened",!1),[u,z]=Y(""),c=b(()=>_(r,o),[r,o]),P=b(()=>!Array.isArray(c)||c.length===0?l("Select a node"):c.filter(t=>t).map(t=>t[o.searchProperty]).join(" / "),[c,o]),L=()=>{h("")},N=()=>{i.current?.showModal(),g(!0)},d=()=>{g(!1),i.current?.close()};q("Escape",d);const C=t=>{const e=i.current;if(!e)return;const D=t.clientX,j=t.clientY,f=e.getBoundingClientRect(),B=f.left,T=f.top,m=v=>{const A=v.clientX-D,H=v.clientY-j;e.style.left=`${B+A}px`,e.style.top=`${T+H}px`,e.style.margin="0"},x=()=>{document.removeEventListener("mousemove",m),document.removeEventListener("mouseup",x)};document.addEventListener("mousemove",m),document.addEventListener("mouseup",x)},E=t=>{t.preventDefault();const e=t.detail.value;e&&(h(e),d())},M=I(z),S=()=>{u&&(h(u),d())};return p`
 		<div class="actions" part="actions">
 			<cosmoz-button
 				variant="secondary"
 				full-width
 				data-testid="open-button"
-				@click=${E}
+				@click=${N}
 				part="action-open"
 			>
-				<slot name="prefix" slot="prefix">${J}</slot>
+				<slot name="prefix" slot="prefix">${G}</slot>
 				<div class="path-text">
-					<span>${M}</span>
+					<span>${P}</span>
 				</div>
 				<slot name="suffix" slot="suffix"></slot>
 			</cosmoz-button>
-			${K(s&&!!c,()=>m`<cosmoz-button
+			${K(n&&!!r,()=>p`<cosmoz-button
 						variant="tertiary"
-						@click=${N}
+						@click=${L}
 						data-testid="reset-button"
 						part="action-reset"
 					>
@@ -159,28 +159,28 @@ import{c as P,u as f,b as _,d as $,e as k,f as q,g as z,h as I,n as K,i as F}fro
 			class="dialog"
 			part="dialog"
 			data-testid="dialog"
-			${F(t=>{e.current=t})}
+			${F(t=>{i.current=t})}
 		>
 			<header
 				class="dialog-header"
 				part="header"
-				@mousedown=${D}
+				@mousedown=${C}
 			>
 				<h1 class="dialog-heading" part="heading">
-					${u("Search or navigate to chosen destination")}
+					${l("Search or navigate to chosen destination")}
 				</h1>
 			</header>
 			<main class="dialog-main" part="main">
 				<cosmoz-treenode-navigator
 					id="treeNavigator"
 					class="dialog-treenode-navigator no-padding"
-					.nodePath=${c}
-					@node-path-changed=${T}
-					@highlighted-node-path-changed=${j}
-					.searchMinLength=${a}
-					.searchDebounceTimeout=${i}
-					.tree=${n}
-					.opened=${p}
+					.nodePath=${r}
+					@node-path-changed=${E}
+					@highlighted-node-path-changed=${M}
+					.searchMinLength=${s}
+					.searchDebounceTimeout=${a}
+					.tree=${o}
+					.opened=${k}
 				>
 					<slot></slot>
 				</cosmoz-treenode-navigator>
@@ -189,22 +189,22 @@ import{c as P,u as f,b as _,d as $,e as k,f as q,g as z,h as I,n as K,i as F}fro
 				<div class="dialog-footer-button-container">
 					<cosmoz-button
 						variant="primary"
-						?disabled=${!g}
-						@click=${R}
+						?disabled=${!u}
+						@click=${S}
 						data-testid="select-button"
 						part="select-button"
 					>
-						${u("Select")}
+						${l("Select")}
 					</cosmoz-button>
 					<cosmoz-button
 						variant="secondary"
-						@click=${l}
+						@click=${d}
 						data-testid="cancel-button"
 						part="cancel-button"
 					>
-						${u("Cancel")}
+						${l("Cancel")}
 					</cosmoz-button>
 				</div>
 			</footer>
 		</dialog>
-	`};S.observedAttributes=["show-reset","search-min-length"];customElements.define("cosmoz-treenode-button-view",_(S,{styleSheets:[V]}));
+	`};$.observedAttributes=["show-reset","search-min-length"];customElements.define("cosmoz-treenode-button-view",R($,{styleSheets:[V]}));
