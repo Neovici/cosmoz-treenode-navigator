@@ -1,119 +1,101 @@
-import{T as B,a as E}from"./tree-data-DE2Mnvr3.js";import{j as h,x as p,N as c,D as $}from"./iframe-Bi-5sFBH.js";import"./preload-helper-PPVm8Dsz.js";const{expect:t,userEvent:w,waitFor:i}=__STORYBOOK_MODULE_TEST__,u=new B(E),L={title:"Components/CosmozTreenodeNavigator",component:"cosmoz-treenode-navigator",tags:["autodocs"],argTypes:{searchPlaceholder:{control:"text"},searchGlobalPlaceholder:{control:"text"},searchMinLength:{control:"number"},searchDebounceTimeout:{control:"number"},opened:{control:"boolean"},nodePath:{control:"text"}},args:{searchPlaceholder:"Search...",searchGlobalPlaceholder:"Click to search again but globally",searchMinLength:3,searchDebounceTimeout:2e3,opened:!0,nodePath:""}},g={render:e=>p`
+import{T as I,a as C}from"./tree-data-Zvs6QyQO.js";import{j as l,b as p,N as i,D as B}from"./iframe-BIk5bAqv.js";import"./preload-helper-PPVm8Dsz.js";const{expect:a,userEvent:w,waitFor:c}=__STORYBOOK_MODULE_TEST__,u=new I(C),D={title:"Components/CosmozTreenodeNavigator",component:"cosmoz-treenode-navigator",tags:["autodocs"],argTypes:{searchMinLength:{control:"number"},searchDebounceTimeout:{control:"number"},opened:{control:"boolean"},nodePath:{control:"text"}},args:{searchMinLength:3,searchDebounceTimeout:2e3,opened:!0,nodePath:""}},g={render:e=>p`
         <div
             style="height: 400px; width: 500px; border: 1px solid #ccc; padding: 10px;"
         >
             <cosmoz-treenode-navigator
                 .tree=${u}
-                .searchPlaceholder=${e.searchPlaceholder}
-                .searchGlobalPlaceholder=${e.searchGlobalPlaceholder}
                 .searchMinLength=${e.searchMinLength}
                 .searchDebounceTimeout=${e.searchDebounceTimeout}
                 .opened=${e.opened}
             ></cosmoz-treenode-navigator>
         </div>
-    `,play:async({canvasElement:e,step:o})=>{const n=e.querySelector("cosmoz-treenode-navigator");await o("Instantiates the element",async()=>{t(n.tagName).toBe("COSMOZ-TREENODE-NAVIGATOR")}),await o("Sets proper search placeholder",async()=>{await i(async()=>{const a=(await h(n,"search-input")).shadowRoot?.querySelector("input");t(a?.placeholder).toBe("Search...")})})}},y={args:{searchPlaceholder:"Enter search term...",searchGlobalPlaceholder:"Search in the entire tree",searchMinLength:2,searchDebounceTimeout:1e3,opened:!0},render:e=>p`
+    `,play:async({canvasElement:e,step:o})=>{const n=e.querySelector("cosmoz-treenode-navigator");await o("Instantiates the element",async()=>{a(n.tagName).toBe("COSMOZ-TREENODE-NAVIGATOR")}),await o("Sets proper search placeholder",async()=>{await c(async()=>{const t=(await l(n,"search-input")).shadowRoot?.querySelector("input");a(t?.placeholder).toBe("Search...")})})}},y={args:{searchMinLength:2,searchDebounceTimeout:1e3,opened:!0},render:e=>p`
         <div
             style="height: 400px; width: 500px; border: 1px solid #ccc; padding: 10px;"
         >
             <cosmoz-treenode-navigator
                 .tree=${u}
-                .searchPlaceholder=${e.searchPlaceholder}
-                .searchGlobalPlaceholder=${e.searchGlobalPlaceholder}
                 .searchMinLength=${e.searchMinLength}
                 .searchDebounceTimeout=${e.searchDebounceTimeout}
                 .opened=${e.opened}
             ></cosmoz-treenode-navigator>
         </div>
-    `,play:async({canvasElement:e,step:o})=>{const n=e.querySelector("cosmoz-treenode-navigator");await o("Sets custom search placeholder",async()=>{await i(async()=>{const a=(await h(n,"search-input")).shadowRoot?.querySelector("input");t(a?.placeholder).toBe("Enter search term...")})})}},b={args:{searchPlaceholder:"Search...",searchMinLength:3,searchDebounceTimeout:100,opened:!0},render:e=>p`
+    `,play:async({canvasElement:e,step:o})=>{const n=e.querySelector("cosmoz-treenode-navigator");await o("Sets search placeholder via i18next",async()=>{await c(async()=>{const t=(await l(n,"search-input")).shadowRoot?.querySelector("input");a(t?.placeholder).toBe("Search...")})})}},v={args:{searchMinLength:3,searchDebounceTimeout:100,opened:!0},render:e=>p`
         <div
             style="height: 400px; width: 500px; border: 1px solid #ccc; padding: 10px;"
         >
             <cosmoz-treenode-navigator
                 .tree=${u}
-                .searchPlaceholder=${e.searchPlaceholder}
-                .searchGlobalPlaceholder=${e.searchGlobalPlaceholder}
                 .searchMinLength=${e.searchMinLength}
                 .searchDebounceTimeout=${e.searchDebounceTimeout}
                 .opened=${e.opened}
             ></cosmoz-treenode-navigator>
         </div>
-    `,play:async({canvasElement:e,step:o})=>{const n=e.querySelector("cosmoz-treenode-navigator"),s=async()=>(await h(n,"search-input")).shadowRoot?.querySelector("input");await o("Shows all root nodes initially",async()=>{await i(async()=>{const a=await c(n,"node");t(a.length).toBe(2)})}),await o("Type search term and verify filtering",async()=>{const a=await s();a.focus(),a.value="John",a.dispatchEvent(new Event("input",{bubbles:!0,composed:!0})),await i(async()=>{const r=await c(n,"node");t(r.length).toBe(2)},{timeout:500})}),await o("Clear search restores full list",async()=>{const a=await s();a.value="",a.dispatchEvent(new Event("input",{bubbles:!0,composed:!0})),await i(async()=>{const r=await c(n,"node");t(r.length).toBe(2)},{timeout:500})})}},v={args:{searchPlaceholder:"Search (min 3 chars)...",searchMinLength:3,searchDebounceTimeout:100,opened:!0},render:e=>p`
+    `,play:async({canvasElement:e,step:o})=>{const n=e.querySelector("cosmoz-treenode-navigator"),s=async()=>(await l(n,"search-input")).shadowRoot?.querySelector("input");await o("Shows all root nodes initially",async()=>{await c(async()=>{const t=await i(n,"node");a(t.length).toBe(2)})}),await o("Type search term and verify filtering",async()=>{const t=await s();t.focus(),t.value="John",t.dispatchEvent(new Event("input",{bubbles:!0,composed:!0})),await c(async()=>{const r=await i(n,"node");a(r.length).toBe(2)},{timeout:500})}),await o("Clear search restores full list",async()=>{const t=await s();t.value="",t.dispatchEvent(new Event("input",{bubbles:!0,composed:!0})),await c(async()=>{const r=await i(n,"node");a(r.length).toBe(2)},{timeout:500})})}},b={args:{searchMinLength:3,searchDebounceTimeout:100,opened:!0},render:e=>p`
         <div
             style="height: 400px; width: 500px; border: 1px solid #ccc; padding: 10px;"
         >
             <cosmoz-treenode-navigator
                 .tree=${u}
-                .searchPlaceholder=${e.searchPlaceholder}
-                .searchGlobalPlaceholder=${e.searchGlobalPlaceholder}
                 .searchMinLength=${e.searchMinLength}
                 .searchDebounceTimeout=${e.searchDebounceTimeout}
                 .opened=${e.opened}
             ></cosmoz-treenode-navigator>
         </div>
-    `,play:async({canvasElement:e,step:o})=>{const n=e.querySelector("cosmoz-treenode-navigator"),s=async()=>(await h(n,"search-input")).shadowRoot?.querySelector("input");await o("Type less than minLength - no filtering",async()=>{const a=await s();a.focus(),a.value="Jo",a.dispatchEvent(new Event("input",{bubbles:!0,composed:!0})),await new Promise(l=>setTimeout(l,200));const r=await c(n,"node");t(r.length).toBe(2)}),await o("Type exactly minLength - triggers filtering",async()=>{const a=await s();a.value="Joh",a.dispatchEvent(new Event("input",{bubbles:!0,composed:!0})),await i(async()=>{const r=await c(n,"node");t(r.length).toBe(2)},{timeout:500})})}},x={args:{searchPlaceholder:"Search...",searchGlobalPlaceholder:"Click to search globally",searchMinLength:3,searchDebounceTimeout:100,opened:!0},render:e=>p`
+    `,play:async({canvasElement:e,step:o})=>{const n=e.querySelector("cosmoz-treenode-navigator"),s=async()=>(await l(n,"search-input")).shadowRoot?.querySelector("input");await o("Type less than minLength - no filtering",async()=>{const t=await s();t.focus(),t.value="Jo",t.dispatchEvent(new Event("input",{bubbles:!0,composed:!0})),await new Promise(d=>setTimeout(d,200));const r=await i(n,"node");a(r.length).toBe(2)}),await o("Type exactly minLength - triggers filtering",async()=>{const t=await s();t.value="Joh",t.dispatchEvent(new Event("input",{bubbles:!0,composed:!0})),await c(async()=>{const r=await i(n,"node");a(r.length).toBe(2)},{timeout:500})})}},x={args:{searchMinLength:3,searchDebounceTimeout:100,opened:!0},render:e=>p`
         <div
             style="height: 400px; width: 500px; border: 1px solid #ccc; padding: 10px;"
         >
             <cosmoz-treenode-navigator
                 .tree=${u}
-                .searchPlaceholder=${e.searchPlaceholder}
-                .searchGlobalPlaceholder=${e.searchGlobalPlaceholder}
                 .searchMinLength=${e.searchMinLength}
                 .searchDebounceTimeout=${e.searchDebounceTimeout}
                 .opened=${e.opened}
             ></cosmoz-treenode-navigator>
         </div>
-    `,play:async({canvasElement:e,step:o})=>{const n=e.querySelector("cosmoz-treenode-navigator"),s=async()=>(await c(n,"node-name")).map(r=>r.textContent?.trim());await o("Navigate into C: > Users folder",async()=>{await i(async()=>{const d=await c(n,"node");t(d.length).toBe(2)});const a=await c(n,"node-arrow");await w.click(a[0]),await i(async()=>{const d=await s();t(d).toContain("Users"),t(d.length).toBe(3)});const r=await c(n,"node"),m=(await c(n,"node-name")).findIndex(d=>d.textContent?.trim()==="Users"),N=r[m]?.querySelector('[data-testid="node-arrow"]');await w.click(N),await i(async()=>{const d=await s();t(d).toContain("John"),t(d.length).toBe(3)})}),await o('Local search for "John" returns 1 result (only in C:/Users)',async()=>{const r=(await h(n,"search-input")).shadowRoot?.querySelector("input");r.focus(),r.value="John",r.dispatchEvent(new Event("input",{bubbles:!0,composed:!0})),await i(async()=>{const l=await s();t(l.length).toBe(1),t(l[0]).toBe("John");const m=await h(n,"global-search-button");t(m).toBeTruthy(),t(m?.textContent).toContain("Click to search globally")},{timeout:1e3})}),await o('Global search for "John" returns 2 results (C:/Users/John and D:/Data/John)',async()=>{const a=await h(n,"global-search-button");await w.click(a),await i(async()=>{const r=await s();t(r.length).toBe(2),t(r.every(m=>m==="John")).toBe(!0);const l=$(n,"global-search-button");t(l).toBeNull()},{timeout:500})})}},P={args:{nodePath:"",opened:!0},render:e=>p`
+    `,play:async({canvasElement:e,step:o})=>{const n=e.querySelector("cosmoz-treenode-navigator"),s=async()=>(await i(n,"node-name")).map(r=>r.textContent?.trim());await o("Navigate into C: > Users folder",async()=>{await c(async()=>{const h=await i(n,"node");a(h.length).toBe(2)});const t=await i(n,"node-arrow");await w.click(t[0]),await c(async()=>{const h=await s();a(h).toContain("Users"),a(h.length).toBe(3)});const r=await i(n,"node"),m=(await i(n,"node-name")).findIndex(h=>h.textContent?.trim()==="Users"),E=r[m]?.querySelector('[data-testid="node-arrow"]');await w.click(E),await c(async()=>{const h=await s();a(h).toContain("John"),a(h.length).toBe(3)})}),await o('Local search for "John" returns 1 result (only in C:/Users)',async()=>{const r=(await l(n,"search-input")).shadowRoot?.querySelector("input");r.focus(),r.value="John",r.dispatchEvent(new Event("input",{bubbles:!0,composed:!0})),await c(async()=>{const d=await s();a(d.length).toBe(1),a(d[0]).toBe("John");const m=await l(n,"global-search-button");a(m).toBeTruthy(),a(m?.textContent).toContain("Click to search again but globally")},{timeout:1e3})}),await o('Global search for "John" returns 2 results (C:/Users/John and D:/Data/John)',async()=>{const t=await l(n,"global-search-button");await w.click(t),await c(async()=>{const r=await s();a(r.length).toBe(2),a(r.every(m=>m==="John")).toBe(!0);const d=B(n,"global-search-button");a(d).toBeNull()},{timeout:500})})}},T={args:{nodePath:"",opened:!0},render:e=>p`
         <div
             style="height: 400px; width: 500px; border: 1px solid #ccc; padding: 10px;"
         >
             <cosmoz-treenode-navigator
                 .tree=${u}
                 .nodePath=${e.nodePath}
-                .searchPlaceholder=${e.searchPlaceholder}
-                .searchGlobalPlaceholder=${e.searchGlobalPlaceholder}
                 .searchMinLength=${e.searchMinLength}
                 .searchDebounceTimeout=${e.searchDebounceTimeout}
                 .opened=${e.opened}
             ></cosmoz-treenode-navigator>
         </div>
-    `,play:async({canvasElement:e,step:o})=>{const n=e.querySelector("cosmoz-treenode-navigator");await o("Shows root nodes with empty nodePath",async()=>{await i(async()=>{const s=await c(n,"node");t(s.length).toBe(2)})}),await o("No node is highlighted",async()=>{const s=$(n,"highlighted-node");t(s).toBeNull()})}},T={args:{nodePath:"999.888.777",opened:!0},render:e=>p`
+    `,play:async({canvasElement:e,step:o})=>{const n=e.querySelector("cosmoz-treenode-navigator");await o("Shows root nodes with empty nodePath",async()=>{await c(async()=>{const s=await i(n,"node");a(s.length).toBe(2)})}),await o("No node is highlighted",async()=>{const s=B(n,"highlighted-node");a(s).toBeNull()})}},N={args:{nodePath:"999.888.777",opened:!0},render:e=>p`
         <div
             style="height: 400px; width: 500px; border: 1px solid #ccc; padding: 10px;"
         >
             <cosmoz-treenode-navigator
                 .tree=${u}
                 .nodePath=${e.nodePath}
-                .searchPlaceholder=${e.searchPlaceholder}
-                .searchGlobalPlaceholder=${e.searchGlobalPlaceholder}
                 .searchMinLength=${e.searchMinLength}
                 .searchDebounceTimeout=${e.searchDebounceTimeout}
                 .opened=${e.opened}
             ></cosmoz-treenode-navigator>
         </div>
-    `,play:async({canvasElement:e,step:o})=>{const n=e.querySelector("cosmoz-treenode-navigator");await o("Component renders without crashing",async()=>{t(n.tagName).toBe("COSMOZ-TREENODE-NAVIGATOR")}),await o("Falls back to showing root nodes",async()=>{await i(async()=>{const s=await c(n,"node");t(s.length).toBe(2)})}),await o("Navigation still works",async()=>{const s=await c(n,"node-arrow");await w.click(s[0]),await i(async()=>{const r=(await c(n,"node-name")).map(l=>l.textContent?.trim());t(r).toContain("Windows"),t(r.length).toBe(3)})})}},S={args:{nodePath:"1.2.999",opened:!0},render:e=>p`
+    `,play:async({canvasElement:e,step:o})=>{const n=e.querySelector("cosmoz-treenode-navigator");await o("Component renders without crashing",async()=>{a(n.tagName).toBe("COSMOZ-TREENODE-NAVIGATOR")}),await o("Falls back to showing root nodes",async()=>{await c(async()=>{const s=await i(n,"node");a(s.length).toBe(2)})}),await o("Navigation still works",async()=>{const s=await i(n,"node-arrow");await w.click(s[0]),await c(async()=>{const r=(await i(n,"node-name")).map(d=>d.textContent?.trim());a(r).toContain("Windows"),a(r.length).toBe(3)})})}},S={args:{nodePath:"1.2.999",opened:!0},render:e=>p`
         <div
             style="height: 400px; width: 500px; border: 1px solid #ccc; padding: 10px;"
         >
             <cosmoz-treenode-navigator
                 .tree=${u}
                 .nodePath=${e.nodePath}
-                .searchPlaceholder=${e.searchPlaceholder}
-                .searchGlobalPlaceholder=${e.searchGlobalPlaceholder}
                 .searchMinLength=${e.searchMinLength}
                 .searchDebounceTimeout=${e.searchDebounceTimeout}
                 .opened=${e.opened}
             ></cosmoz-treenode-navigator>
         </div>
-    `,play:async({canvasElement:e,step:o})=>{const n=e.querySelector("cosmoz-treenode-navigator");await o("Component renders without crashing",async()=>{t(n.tagName).toBe("COSMOZ-TREENODE-NAVIGATOR")}),await o("Opens to last valid parent (C:/Windows) and shows its children",async()=>{await i(async()=>{const a=(await c(n,"node-name")).map(r=>r.textContent?.trim());t(a).toContain("System")})}),await o("Breadcrumb shows C: / Windows path",async()=>{await i(async()=>{const s=await h(n,"home-icon");t(s).toBeTruthy();const a=n.shadowRoot?.querySelector(".path");t(a?.textContent).toContain("C:"),t(a?.textContent).toContain("Windows")})}),await o("Can click on a node to highlight it",async()=>{const s=await c(n,"node");await w.click(s[0]),await i(async()=>{const a=await c(n,"node");t(a.length).toBeGreaterThan(0)})})}};g.parameters={...g.parameters,docs:{...g.parameters?.docs,source:{originalSource:`{
+    `,play:async({canvasElement:e,step:o})=>{const n=e.querySelector("cosmoz-treenode-navigator");await o("Component renders without crashing",async()=>{a(n.tagName).toBe("COSMOZ-TREENODE-NAVIGATOR")}),await o("Opens to last valid parent (C:/Windows) and shows its children",async()=>{await c(async()=>{const t=(await i(n,"node-name")).map(r=>r.textContent?.trim());a(t).toContain("System")})}),await o("Breadcrumb shows C: / Windows path",async()=>{await c(async()=>{const s=await l(n,"home-icon");a(s).toBeTruthy();const t=n.shadowRoot?.querySelector(".path");a(t?.textContent).toContain("C:"),a(t?.textContent).toContain("Windows")})}),await o("Can click on a node to highlight it",async()=>{const s=await i(n,"node");await w.click(s[0]),await c(async()=>{const t=await i(n,"node");a(t.length).toBeGreaterThan(0)})})}};g.parameters={...g.parameters,docs:{...g.parameters?.docs,source:{originalSource:`{
   render: args => html\`
         <div
             style="height: 400px; width: 500px; border: 1px solid #ccc; padding: 10px;"
         >
             <cosmoz-treenode-navigator
                 .tree=\${tree}
-                .searchPlaceholder=\${args.searchPlaceholder}
-                .searchGlobalPlaceholder=\${args.searchGlobalPlaceholder}
                 .searchMinLength=\${args.searchMinLength}
                 .searchDebounceTimeout=\${args.searchDebounceTimeout}
                 .opened=\${args.opened}
@@ -138,8 +120,6 @@ import{T as B,a as E}from"./tree-data-DE2Mnvr3.js";import{j as h,x as p,N as c,D
   }
 }`,...g.parameters?.docs?.source}}};y.parameters={...y.parameters,docs:{...y.parameters?.docs,source:{originalSource:`{
   args: {
-    searchPlaceholder: 'Enter search term...',
-    searchGlobalPlaceholder: 'Search in the entire tree',
     searchMinLength: 2,
     searchDebounceTimeout: 1000,
     opened: true
@@ -150,8 +130,6 @@ import{T as B,a as E}from"./tree-data-DE2Mnvr3.js";import{j as h,x as p,N as c,D
         >
             <cosmoz-treenode-navigator
                 .tree=\${tree}
-                .searchPlaceholder=\${args.searchPlaceholder}
-                .searchGlobalPlaceholder=\${args.searchGlobalPlaceholder}
                 .searchMinLength=\${args.searchMinLength}
                 .searchDebounceTimeout=\${args.searchDebounceTimeout}
                 .opened=\${args.opened}
@@ -163,17 +141,16 @@ import{T as B,a as E}from"./tree-data-DE2Mnvr3.js";import{j as h,x as p,N as c,D
     step
   }) => {
     const el = canvasElement.querySelector('cosmoz-treenode-navigator') as HTMLElement;
-    await step('Sets custom search placeholder', async () => {
+    await step('Sets search placeholder via i18next', async () => {
       await waitFor(async () => {
         const searchInput = await findByShadowTestId(el, 'search-input');
         const input = searchInput.shadowRoot?.querySelector('input');
-        expect(input?.placeholder).toBe('Enter search term...');
+        expect(input?.placeholder).toBe('Search...');
       });
     });
   }
-}`,...y.parameters?.docs?.source}}};b.parameters={...b.parameters,docs:{...b.parameters?.docs,source:{originalSource:`{
+}`,...y.parameters?.docs?.source}}};v.parameters={...v.parameters,docs:{...v.parameters?.docs,source:{originalSource:`{
   args: {
-    searchPlaceholder: 'Search...',
     searchMinLength: 3,
     searchDebounceTimeout: 100,
     // Short debounce for faster tests
@@ -185,8 +162,6 @@ import{T as B,a as E}from"./tree-data-DE2Mnvr3.js";import{j as h,x as p,N as c,D
         >
             <cosmoz-treenode-navigator
                 .tree=\${tree}
-                .searchPlaceholder=\${args.searchPlaceholder}
-                .searchGlobalPlaceholder=\${args.searchGlobalPlaceholder}
                 .searchMinLength=\${args.searchMinLength}
                 .searchDebounceTimeout=\${args.searchDebounceTimeout}
                 .opened=\${args.opened}
@@ -242,9 +217,8 @@ import{T as B,a as E}from"./tree-data-DE2Mnvr3.js";import{j as h,x as p,N as c,D
       });
     });
   }
-}`,...b.parameters?.docs?.source}}};v.parameters={...v.parameters,docs:{...v.parameters?.docs,source:{originalSource:`{
+}`,...v.parameters?.docs?.source}}};b.parameters={...b.parameters,docs:{...b.parameters?.docs,source:{originalSource:`{
   args: {
-    searchPlaceholder: 'Search (min 3 chars)...',
     searchMinLength: 3,
     searchDebounceTimeout: 100,
     opened: true
@@ -255,8 +229,6 @@ import{T as B,a as E}from"./tree-data-DE2Mnvr3.js";import{j as h,x as p,N as c,D
         >
             <cosmoz-treenode-navigator
                 .tree=\${tree}
-                .searchPlaceholder=\${args.searchPlaceholder}
-                .searchGlobalPlaceholder=\${args.searchGlobalPlaceholder}
                 .searchMinLength=\${args.searchMinLength}
                 .searchDebounceTimeout=\${args.searchDebounceTimeout}
                 .opened=\${args.opened}
@@ -303,10 +275,8 @@ import{T as B,a as E}from"./tree-data-DE2Mnvr3.js";import{j as h,x as p,N as c,D
       });
     });
   }
-}`,...v.parameters?.docs?.source}}};x.parameters={...x.parameters,docs:{...x.parameters?.docs,source:{originalSource:`{
+}`,...b.parameters?.docs?.source}}};x.parameters={...x.parameters,docs:{...x.parameters?.docs,source:{originalSource:`{
   args: {
-    searchPlaceholder: 'Search...',
-    searchGlobalPlaceholder: 'Click to search globally',
     searchMinLength: 3,
     searchDebounceTimeout: 100,
     opened: true
@@ -317,8 +287,6 @@ import{T as B,a as E}from"./tree-data-DE2Mnvr3.js";import{j as h,x as p,N as c,D
         >
             <cosmoz-treenode-navigator
                 .tree=\${tree}
-                .searchPlaceholder=\${args.searchPlaceholder}
-                .searchGlobalPlaceholder=\${args.searchGlobalPlaceholder}
                 .searchMinLength=\${args.searchMinLength}
                 .searchDebounceTimeout=\${args.searchDebounceTimeout}
                 .opened=\${args.opened}
@@ -383,7 +351,7 @@ import{T as B,a as E}from"./tree-data-DE2Mnvr3.js";import{j as h,x as p,N as c,D
         // Global search button should be visible
         const globalBtn = await findByShadowTestId(el, 'global-search-button');
         expect(globalBtn).toBeTruthy();
-        expect(globalBtn?.textContent).toContain('Click to search globally');
+        expect(globalBtn?.textContent).toContain('Click to search again but globally');
       }, {
         timeout: 1000
       });
@@ -405,7 +373,7 @@ import{T as B,a as E}from"./tree-data-DE2Mnvr3.js";import{j as h,x as p,N as c,D
       });
     });
   }
-}`,...x.parameters?.docs?.source}}};P.parameters={...P.parameters,docs:{...P.parameters?.docs,source:{originalSource:`{
+}`,...x.parameters?.docs?.source}}};T.parameters={...T.parameters,docs:{...T.parameters?.docs,source:{originalSource:`{
   args: {
     nodePath: '',
     opened: true
@@ -417,8 +385,6 @@ import{T as B,a as E}from"./tree-data-DE2Mnvr3.js";import{j as h,x as p,N as c,D
             <cosmoz-treenode-navigator
                 .tree=\${tree}
                 .nodePath=\${args.nodePath}
-                .searchPlaceholder=\${args.searchPlaceholder}
-                .searchGlobalPlaceholder=\${args.searchGlobalPlaceholder}
                 .searchMinLength=\${args.searchMinLength}
                 .searchDebounceTimeout=\${args.searchDebounceTimeout}
                 .opened=\${args.opened}
@@ -442,7 +408,7 @@ import{T as B,a as E}from"./tree-data-DE2Mnvr3.js";import{j as h,x as p,N as c,D
       expect(highlightedNode).toBeNull();
     });
   }
-}`,...P.parameters?.docs?.source}}};T.parameters={...T.parameters,docs:{...T.parameters?.docs,source:{originalSource:`{
+}`,...T.parameters?.docs?.source}}};N.parameters={...N.parameters,docs:{...N.parameters?.docs,source:{originalSource:`{
   args: {
     nodePath: '999.888.777',
     opened: true
@@ -454,8 +420,6 @@ import{T as B,a as E}from"./tree-data-DE2Mnvr3.js";import{j as h,x as p,N as c,D
             <cosmoz-treenode-navigator
                 .tree=\${tree}
                 .nodePath=\${args.nodePath}
-                .searchPlaceholder=\${args.searchPlaceholder}
-                .searchGlobalPlaceholder=\${args.searchGlobalPlaceholder}
                 .searchMinLength=\${args.searchMinLength}
                 .searchDebounceTimeout=\${args.searchDebounceTimeout}
                 .opened=\${args.opened}
@@ -489,7 +453,7 @@ import{T as B,a as E}from"./tree-data-DE2Mnvr3.js";import{j as h,x as p,N as c,D
       });
     });
   }
-}`,...T.parameters?.docs?.source}}};S.parameters={...S.parameters,docs:{...S.parameters?.docs,source:{originalSource:`{
+}`,...N.parameters?.docs?.source}}};S.parameters={...S.parameters,docs:{...S.parameters?.docs,source:{originalSource:`{
   args: {
     nodePath: '1.2.999',
     // C:/Windows valid, .999 invalid
@@ -502,8 +466,6 @@ import{T as B,a as E}from"./tree-data-DE2Mnvr3.js";import{j as h,x as p,N as c,D
             <cosmoz-treenode-navigator
                 .tree=\${tree}
                 .nodePath=\${args.nodePath}
-                .searchPlaceholder=\${args.searchPlaceholder}
-                .searchGlobalPlaceholder=\${args.searchGlobalPlaceholder}
                 .searchMinLength=\${args.searchMinLength}
                 .searchDebounceTimeout=\${args.searchDebounceTimeout}
                 .opened=\${args.opened}
@@ -546,4 +508,4 @@ import{T as B,a as E}from"./tree-data-DE2Mnvr3.js";import{j as h,x as p,N as c,D
       });
     });
   }
-}`,...S.parameters?.docs?.source}}};const M=["Default","WithCustomPlaceholders","SearchFiltering","SearchMinLength","GlobalSearchButton","WithEmptyNodePath","WithInvalidNodePath","WithPartiallyValidNodePath"];export{g as Default,x as GlobalSearchButton,b as SearchFiltering,v as SearchMinLength,y as WithCustomPlaceholders,P as WithEmptyNodePath,T as WithInvalidNodePath,S as WithPartiallyValidNodePath,M as __namedExportsOrder,L as default};
+}`,...S.parameters?.docs?.source}}};const z=["Default","WithCustomSearchMinLength","SearchFiltering","SearchMinLength","GlobalSearchButton","WithEmptyNodePath","WithInvalidNodePath","WithPartiallyValidNodePath"];export{g as Default,x as GlobalSearchButton,v as SearchFiltering,b as SearchMinLength,y as WithCustomSearchMinLength,T as WithEmptyNodePath,N as WithInvalidNodePath,S as WithPartiallyValidNodePath,z as __namedExportsOrder,D as default};
