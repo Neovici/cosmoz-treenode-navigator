@@ -1,10 +1,26 @@
-import { html } from 'lit-html';
 import { DefaultTree } from '@neovici/cosmoz-tree/cosmoz-default-tree';
+import type { Meta, StoryObj } from '@storybook/web-components';
+import { html } from 'lit-html';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { expect, waitFor } from 'storybook/test';
 import '../src/cosmoz-treenode-button-view';
 import { adminFilesTree } from './data/tree-data';
 
-export default {
-	title: 'Components/CosmozTreenodeButtonView',
+interface StoryArgs {
+	buttonTextPlaceholder: string;
+	dialogText: string;
+	searchPlaceholder: string;
+	searchGlobalPlaceholder: string;
+	searchMinLength: number;
+	searchDebounceTimeout: number;
+	noReset: boolean;
+	nodePath: string;
+}
+
+const tree = new DefaultTree(adminFilesTree);
+
+const meta: Meta<StoryArgs> = {
+	title: 'CosmozTreenodeButtonView',
 	component: 'cosmoz-treenode-button-view',
 	tags: ['autodocs'],
 	argTypes: {
@@ -15,113 +31,359 @@ export default {
 		searchMinLength: { control: 'number' },
 		searchDebounceTimeout: { control: 'number' },
 		noReset: { control: 'boolean' },
-		multiSelection: { control: 'boolean' },
+		nodePath: { control: 'text' },
+	},
+	args: {
+		buttonTextPlaceholder: 'Select a node',
+		dialogText: 'Search or navigate to chosen destination',
+		searchPlaceholder: 'Search...',
+		searchGlobalPlaceholder: 'Click to search again but globally',
+		searchMinLength: 3,
+		searchDebounceTimeout: 2000,
+		noReset: false,
+		nodePath: '',
 	},
 };
 
-const Template = (args) => {
-	const tree = new DefaultTree(adminFilesTree);
-	return html`
+export default meta;
+
+type Story = StoryObj<StoryArgs>;
+
+export const Default: Story = {
+	render: (args) => html`
 		<div style="padding: 20px;">
 			<cosmoz-treenode-button-view
 				.tree=${tree}
+				node-path=${ifDefined(args.nodePath || undefined)}
 				button-text-placeholder=${args.buttonTextPlaceholder}
 				dialog-text=${args.dialogText}
 				search-placeholder=${args.searchPlaceholder}
 				search-global-placeholder=${args.searchGlobalPlaceholder}
 				.searchMinLength=${args.searchMinLength}
 				.searchDebounceTimeout=${args.searchDebounceTimeout}
-				.noReset=${args.noReset}
-				.multiSelection=${args.multiSelection}
+				?no-reset=${args.noReset}
 			></cosmoz-treenode-button-view>
 		</div>
-	`;
+	`,
+	play: async ({ canvasElement, step }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-button-view',
+		) as HTMLElement & { nodePath: string };
+
+		await step('Renders with placeholder text', async () => {
+			const button = el.shadowRoot?.querySelector('button.action-open');
+			expect(button).toBeTruthy();
+			expect(button?.textContent?.trim()).toContain('Select a node');
+		});
+	},
 };
 
-export const Default = Template.bind({});
-Default.args! = {
-	buttonTextPlaceholder: 'Select a node',
-	dialogText: 'Search or navigate to chosen destination',
-	searchPlaceholder: 'Search...',
-	searchGlobalPlaceholder: 'Click to search again but globally',
-	searchMinLength: 3,
-	searchDebounceTimeout: 2000,
-	noReset: false,
-	multiSelection: false,
-};
-
-export const WithMultiSelection = Template.bind({});
-WithMultiSelection.args! = {
-	buttonTextPlaceholder: 'Select multiple nodes',
-	dialogText: 'Search or navigate to chosen destination',
-	searchPlaceholder: 'Search...',
-	searchGlobalPlaceholder: 'Click to search again but globally',
-	searchMinLength: 3,
-	searchDebounceTimeout: 2000,
-	noReset: false,
-	multiSelection: true,
-};
-
-export const WithNoReset = Template.bind({});
-WithNoReset.args! = {
-	buttonTextPlaceholder: 'Select a node (no reset)',
-	dialogText: 'Search or navigate to chosen destination',
-	searchPlaceholder: 'Search...',
-	searchGlobalPlaceholder: 'Click to search again but globally',
-	searchMinLength: 3,
-	searchDebounceTimeout: 2000,
-	noReset: true,
-	multiSelection: false,
-};
-
-const TemplateWithPreselection = (args) => {
-	const tree = new DefaultTree(adminFilesTree);
-	return html`
+export const WithPreselectedNode: Story = {
+	args: {
+		nodePath: '1.2.3',
+	},
+	render: (args) => html`
 		<div style="padding: 20px;">
-			<h3>Testing Navigation Behavior</h3>
-			<p>
-				This story demonstrates that the selected node path should remain
-				visible even when navigating through the tree dialog.
-			</p>
-			<ol>
-				<li>
-					The button shows a pre-selected path: "C: / Program Files / Git"
-				</li>
-				<li>Click the button to open the dialog</li>
-				<li>Click on folders or arrows to navigate around</li>
-				<li>
-					<strong>Expected:</strong> The button text should remain "C: / Program
-					Files / Git"
-				</li>
-				<li>
-					<strong>Bug (if present):</strong> The button text changes to "Select
-					a node"
-				</li>
-			</ol>
 			<cosmoz-treenode-button-view
 				.tree=${tree}
+				node-path=${ifDefined(args.nodePath || undefined)}
 				button-text-placeholder=${args.buttonTextPlaceholder}
 				dialog-text=${args.dialogText}
 				search-placeholder=${args.searchPlaceholder}
 				search-global-placeholder=${args.searchGlobalPlaceholder}
 				.searchMinLength=${args.searchMinLength}
 				.searchDebounceTimeout=${args.searchDebounceTimeout}
-				.noReset=${args.noReset}
-				.multiSelection=${args.multiSelection}
-				node-path="1.5.7"
+				?no-reset=${args.noReset}
 			></cosmoz-treenode-button-view>
 		</div>
-	`;
+	`,
+	play: async ({ canvasElement, step }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-button-view',
+		) as HTMLElement;
+
+		await step('Button renders selected path', async () => {
+			await waitFor(() => {
+				const button = el.shadowRoot?.querySelector('button.action-open');
+				// nodePath '1.2.3' corresponds to 'C: / Windows / System' in the tree
+				expect(button?.textContent?.trim()).toContain('C: / Windows / System');
+			});
+		});
+	},
 };
 
-export const WithPreselectedNode = TemplateWithPreselection.bind({});
-WithPreselectedNode.args! = {
-	buttonTextPlaceholder: 'Select a node',
-	dialogText: 'Search or navigate to chosen destination',
-	searchPlaceholder: 'Search...',
-	searchGlobalPlaceholder: 'Click to search again but globally',
-	searchMinLength: 3,
-	searchDebounceTimeout: 2000,
-	noReset: false,
-	multiSelection: false,
+export const WithNoReset: Story = {
+	args: {
+		noReset: true,
+		nodePath: '1.2.3',
+	},
+	render: (args) => html`
+		<div style="padding: 20px;">
+			<cosmoz-treenode-button-view
+				.tree=${tree}
+				node-path=${ifDefined(args.nodePath || undefined)}
+				button-text-placeholder=${args.buttonTextPlaceholder}
+				dialog-text=${args.dialogText}
+				search-placeholder=${args.searchPlaceholder}
+				search-global-placeholder=${args.searchGlobalPlaceholder}
+				.searchMinLength=${args.searchMinLength}
+				.searchDebounceTimeout=${args.searchDebounceTimeout}
+				?no-reset=${args.noReset}
+			></cosmoz-treenode-button-view>
+		</div>
+	`,
+	play: async ({ canvasElement, step }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-button-view',
+		) as HTMLElement;
+
+		await step('Reset button is hidden when noReset is true', async () => {
+			await waitFor(() => {
+				const resetButton = el.shadowRoot?.querySelector('button.action-reset');
+				expect(resetButton).toBeNull();
+			});
+		});
+	},
+};
+
+export const DialogInteraction: Story = {
+	render: (args) => html`
+		<div style="padding: 20px;">
+			<cosmoz-treenode-button-view
+				.tree=${tree}
+				node-path=${ifDefined(args.nodePath || undefined)}
+				button-text-placeholder=${args.buttonTextPlaceholder}
+				dialog-text=${args.dialogText}
+				search-placeholder=${args.searchPlaceholder}
+				search-global-placeholder=${args.searchGlobalPlaceholder}
+				.searchMinLength=${args.searchMinLength}
+				.searchDebounceTimeout=${args.searchDebounceTimeout}
+				?no-reset=${args.noReset}
+			></cosmoz-treenode-button-view>
+		</div>
+	`,
+	play: async ({ canvasElement, step, userEvent }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-button-view',
+		) as HTMLElement;
+
+		await step('Opens dialog on button click', async () => {
+			const openButton = el.shadowRoot?.querySelector(
+				'button.action-open',
+			) as HTMLElement;
+			await userEvent.click(openButton);
+
+			await waitFor(() => {
+				const dialog = el.shadowRoot?.querySelector(
+					'dialog',
+				) as HTMLDialogElement;
+				expect(dialog.open).toBe(true);
+			});
+		});
+
+		await step('Closes dialog on cancel button click', async () => {
+			const dialog = el.shadowRoot?.querySelector(
+				'dialog',
+			) as HTMLDialogElement;
+			const cancelButton = dialog.querySelector(
+				'button[part="cancel-button"]',
+			) as HTMLElement;
+			await userEvent.click(cancelButton);
+
+			await waitFor(() => {
+				expect(dialog.open).toBe(false);
+			});
+		});
+	},
+};
+
+export const SelectButtonInteraction: Story = {
+	render: (args) => html`
+		<div style="padding: 20px;">
+			<cosmoz-treenode-button-view
+				.tree=${tree}
+				node-path=${ifDefined(args.nodePath || undefined)}
+				button-text-placeholder=${args.buttonTextPlaceholder}
+				dialog-text=${args.dialogText}
+				search-placeholder=${args.searchPlaceholder}
+				search-global-placeholder=${args.searchGlobalPlaceholder}
+				.searchMinLength=${args.searchMinLength}
+				.searchDebounceTimeout=${args.searchDebounceTimeout}
+				?no-reset=${args.noReset}
+			></cosmoz-treenode-button-view>
+		</div>
+	`,
+	play: async ({ canvasElement, step, userEvent }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-button-view',
+		) as HTMLElement & { nodePath: string };
+
+		const openDialog = async () => {
+			const openButton = el.shadowRoot?.querySelector(
+				'button.action-open',
+			) as HTMLElement;
+			await userEvent.click(openButton);
+			await waitFor(() => {
+				const dialog = el.shadowRoot?.querySelector(
+					'dialog',
+				) as HTMLDialogElement;
+				expect(dialog.open).toBe(true);
+			});
+		};
+
+		const getNavigator = () =>
+			el.shadowRoot?.querySelector('cosmoz-treenode-navigator') as HTMLElement;
+
+		const getSelectButton = () =>
+			el.shadowRoot
+				?.querySelector('dialog')
+				?.querySelector('button[part="select-button"]') as HTMLButtonElement;
+
+		const getCancelButton = () =>
+			el.shadowRoot
+				?.querySelector('dialog')
+				?.querySelector('button[part="cancel-button"]') as HTMLElement;
+
+		await step('Select button is initially disabled', async () => {
+			await openDialog();
+
+			await waitFor(() => {
+				const selectButton = getSelectButton();
+				expect(selectButton).toBeTruthy();
+				expect(selectButton.disabled).toBe(true);
+			});
+		});
+
+		await step('Single-clicking a node enables the Select button', async () => {
+			const navigator = getNavigator();
+
+			// Wait for nodes to render and click the first one
+			await waitFor(() => {
+				const nodes = navigator.shadowRoot?.querySelectorAll('.node');
+				expect(nodes?.length).toBeGreaterThan(0);
+			});
+
+			const firstNode = navigator.shadowRoot?.querySelector(
+				'.node',
+			) as HTMLElement;
+			await userEvent.click(firstNode);
+
+			await waitFor(() => {
+				const selectButton = getSelectButton();
+				expect(selectButton.disabled).toBe(false);
+			});
+		});
+
+		await step(
+			'Clicking Select confirms selection and closes dialog',
+			async () => {
+				const selectButton = getSelectButton();
+				await userEvent.click(selectButton);
+
+				await waitFor(() => {
+					const dialog = el.shadowRoot?.querySelector(
+						'dialog',
+					) as HTMLDialogElement;
+					expect(dialog.open).toBe(false);
+					// nodePath should be updated (C: drive has path '1')
+					expect(el.nodePath).toBe('1');
+				});
+			},
+		);
+
+		await step(
+			'Cancel after highlighting does not change nodePath',
+			async () => {
+				// Store current nodePath
+				const previousNodePath = el.nodePath;
+
+				await openDialog();
+
+				const navigator = getNavigator();
+
+				// Navigate into C: drive first to see children
+				await waitFor(() => {
+					const nodes = navigator.shadowRoot?.querySelectorAll('.node');
+					expect(nodes?.length).toBeGreaterThan(0);
+				});
+
+				// Click arrow to navigate into C: drive
+				const cDriveArrow = navigator.shadowRoot?.querySelector(
+					'.node .icon',
+				) as HTMLElement;
+				await userEvent.click(cDriveArrow);
+
+				// Wait for children to render and highlight a different node
+				await waitFor(() => {
+					const nodes = navigator.shadowRoot?.querySelectorAll('.node');
+					expect(nodes?.length).toBeGreaterThan(0);
+				});
+
+				const childNode = navigator.shadowRoot?.querySelector(
+					'.node',
+				) as HTMLElement;
+				await userEvent.click(childNode);
+
+				// Verify Select button is enabled
+				await waitFor(() => {
+					const selectButton = getSelectButton();
+					expect(selectButton.disabled).toBe(false);
+				});
+
+				// Click Cancel
+				const cancelButton = getCancelButton();
+				await userEvent.click(cancelButton);
+
+				await waitFor(() => {
+					const dialog = el.shadowRoot?.querySelector(
+						'dialog',
+					) as HTMLDialogElement;
+					expect(dialog.open).toBe(false);
+					// nodePath should remain unchanged
+					expect(el.nodePath).toBe(previousNodePath);
+				});
+			},
+		);
+
+		await step(
+			'Double-click on a node selects it and closes dialog',
+			async () => {
+				await openDialog();
+
+				const navigator = getNavigator();
+
+				// Navigate into C: drive first
+				await waitFor(() => {
+					const nodes = navigator.shadowRoot?.querySelectorAll('.node');
+					expect(nodes?.length).toBeGreaterThan(0);
+				});
+
+				// Click arrow to navigate into C: drive
+				const cDriveArrow = navigator.shadowRoot?.querySelector(
+					'.node .icon',
+				) as HTMLElement;
+				await userEvent.click(cDriveArrow);
+
+				// Wait for children and double-click a node (e.g., Windows folder)
+				await waitFor(() => {
+					const nodes = navigator.shadowRoot?.querySelectorAll('.node');
+					expect(nodes?.length).toBeGreaterThan(0);
+				});
+
+				const childNode = navigator.shadowRoot?.querySelector(
+					'.node',
+				) as HTMLElement;
+				await userEvent.dblClick(childNode);
+
+				await waitFor(() => {
+					const dialog = el.shadowRoot?.querySelector(
+						'dialog',
+					) as HTMLDialogElement;
+					expect(dialog.open).toBe(false);
+					// nodePath should be updated to the double-clicked node
+					expect(el.nodePath).not.toBe('1'); // Changed from initial C: selection
+				});
+			},
+		);
+	},
 };
