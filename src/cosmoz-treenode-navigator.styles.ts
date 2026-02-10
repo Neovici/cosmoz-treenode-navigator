@@ -101,19 +101,6 @@ export default css`
 		transition: color 0.8s ease-out;
 	}
 
-	.btn-ghost {
-		background: transparent;
-		border: none;
-		cursor: pointer;
-		margin: 0 20px;
-		padding: 0.7em 0.57em;
-		width: calc(100% - 50px);
-		border: solid 1px #a4abae;
-		border-radius: 16px;
-		font-size: 14px;
-		font-family: inherit;
-	}
-
 	.path > .pointer:hover,
 	.path > .pointer:has(~ .pointer:hover) {
 		text-decoration: underline;

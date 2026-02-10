@@ -1,4 +1,8 @@
+import '@neovici/cosmoz-tokens';
+import i18next from 'i18next';
 import { within as withinShadow } from 'shadow-dom-testing-library';
+
+i18next.init({ lng: 'en', resources: {} });
 
 export default {
 	parameters: {
