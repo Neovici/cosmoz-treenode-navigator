@@ -1,7 +1,6 @@
-import { useHost } from '@neovici/cosmoz-utils/hooks/use-host';
 import {
 	component,
-	useCallback,
+	lift,
 	useEffect,
 	useMemo,
 	useProperty,
@@ -43,10 +42,11 @@ const defaultIcon = html`<svg
 	stroke-width="2"
 	stroke-linecap="round"
 	stroke-linejoin="round"
+	xmlns="http://www.w3.org/2000/svg"
 >
-	<path
-		d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"
-	/>
+	<circle cx="7" cy="7" r="2" />
+	<circle cx="17" cy="17" r="2" />
+	<path d="M7 9v3c0 1.66 1.34 3 3 3h7" />
 </svg>`;
 
 const CosmozNodeButtonView = ({
@@ -55,9 +55,7 @@ const CosmozNodeButtonView = ({
 	searchMinLength = 3,
 	searchDebounceTimeout = 2000,
 }: ButtonViewProps) => {
-	const host = useHost();
 	const dialogRef = useRef<ButtonViewDialog | null>(null);
-	const searchInputRef = useRef<HTMLInputElement | null>(null);
 
 	// nodePath is the single source of truth - external two-way binding
 	const [nodePath, setNodePath] = useProperty<string>('nodePath', '');
@@ -86,28 +84,10 @@ const CosmozNodeButtonView = ({
 			.join(' / ');
 	}, [nodesOnNodePath, tree]);
 
-	const onPrefixSlotChange = useCallback(
-		(e: Event) => {
-			const slot = e.target as HTMLSlotElement;
-			const hasContent = slot.assignedNodes().length > 0;
-			host.toggleAttribute('has-prefix', hasContent);
-		},
-		[host],
-	);
-
-	useEffect(() => {
-		if (dialogRef.current) {
-			searchInputRef.current = dialogRef.current
-				.querySelector('cosmoz-treenode-navigator')
-				?.shadowRoot?.querySelector('cosmoz-input') as HTMLInputElement | null;
-		}
-	}, [dialogRef.current]);
-
-	// Sync dialog open state with opened property
+	// Sync dialog DOM state with opened property
 	useEffect(() => {
 		if (opened) {
 			dialogRef.current?.showModal();
-			setTimeout(() => searchInputRef.current?.focus(), 0);
 		} else {
 			dialogRef.current?.close();
 		}
@@ -117,22 +97,9 @@ const CosmozNodeButtonView = ({
 		setNodePath('');
 	};
 
-	const focusSearch = () => {
-		if (searchInputRef.current) {
-			searchInputRef.current.focus();
-		}
-	};
+	const onOpen = () => setOpened(true);
 
-	const onOpen = () => {
-		dialogRef.current?.showModal();
-		setOpened(true);
-		setTimeout(focusSearch, 0);
-	};
-
-	const onClose = () => {
-		setOpened(false);
-		dialogRef.current?.close();
-	};
+	const onClose = () => setOpened(false);
 
 	useKeyDown('Escape', onClose);
 
@@ -176,9 +143,7 @@ const CosmozNodeButtonView = ({
 	};
 
 	// Handle highlighted-node-path-changed from navigator
-	const onHighlightedNodePathChanged = (e: CustomEvent<{ value: string }>) => {
-		setHighlightedNodePath(e.detail.value);
-	};
+	const onHighlightedNodePathChanged = lift(setHighlightedNodePath);
 
 	// Handle Select button click
 	const onSelect = () => {
@@ -197,14 +162,11 @@ const CosmozNodeButtonView = ({
 				@click=${onOpen}
 				part="action-open"
 			>
-				<span slot="prefix">
-					<slot name="button-before" @slotchange=${onPrefixSlotChange}></slot>
-					${defaultIcon}
-				</span>
+				<slot name="prefix" slot="prefix">${defaultIcon}</slot>
 				<div class="path-text">
 					<span>${buttonLabel}</span>
 				</div>
-				<slot name="button-after" slot="suffix"></slot>
+				<slot name="suffix" slot="suffix"></slot>
 			</cosmoz-button>
 			${when(
 				showReset && !!nodePath,

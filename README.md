@@ -113,11 +113,11 @@ A trigger button that opens a dialog containing the tree navigator. This is the 
 
 #### Slots
 
-| Slot            | Description                                                        |
-| --------------- | ------------------------------------------------------------------ |
-| `button-before` | Content before the button label (replaces the default folder icon) |
-| `button-after`  | Content after the button label                                     |
-| _(default)_     | Passed through to the inner `<cosmoz-treenode-navigator>`          |
+| Slot        | Description                                                  |
+| ----------- | ------------------------------------------------------------ |
+| `prefix`    | Button icon (defaults to folder icon, override to customize) |
+| `suffix`    | Content after the button label                               |
+| _(default)_ | Passed through to the inner `<cosmoz-treenode-navigator>`    |
 
 #### CSS Parts
 
@@ -260,6 +260,13 @@ All buttons have been converted to `cosmoz-button` components. Update any CSS se
 | `button[part="select-button"]` | `cosmoz-button[part="select-button"]` |
 | `button[part="cancel-button"]` | `cosmoz-button[part="cancel-button"]` |
 | `button.btn-ghost`             | `cosmoz-button[variant="link"]`       |
+
+### Slot Changes
+
+| Before          | After    | Notes                                                      |
+| --------------- | -------- | ---------------------------------------------------------- |
+| `button-before` | `prefix` | Now uses default slot content instead of JS-based toggling |
+| `button-after`  | `suffix` | Renamed for consistency                                    |
 
 ## Development
 

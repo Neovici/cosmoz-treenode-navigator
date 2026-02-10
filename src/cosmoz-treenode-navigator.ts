@@ -357,6 +357,7 @@ const NodeNavigator = ({
 				)}
 			</h3>
 			<cosmoz-input
+				autofocus
 				tabindex="0"
 				data-testid="search-input"
 				.value=${searchValue}

@@ -33,10 +33,6 @@ export default css`
 		flex-shrink: 0;
 	}
 
-	:host([has-prefix]) .default-icon {
-		display: none;
-	}
-
 	.path-text {
 		${truncate}
 		direction: rtl;

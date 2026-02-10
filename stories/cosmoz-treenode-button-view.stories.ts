@@ -62,6 +62,35 @@ export const Default: Story = {
 	},
 };
 
+export const WithCustomIcon: Story = {
+	render: (args) => html`
+		<div style="padding: 20px;">
+			<cosmoz-treenode-button-view
+				.tree=${tree}
+				.nodePath=${args.nodePath || ''}
+				.searchMinLength=${args.searchMinLength}
+				.searchDebounceTimeout=${args.searchDebounceTimeout}
+				?show-reset=${args.showReset}
+			>
+				<svg
+					slot="prefix"
+					width="20"
+					height="20"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<circle cx="11" cy="11" r="8" />
+					<line x1="21" y1="21" x2="16.65" y2="16.65" />
+				</svg>
+			</cosmoz-treenode-button-view>
+		</div>
+	`,
+};
+
 export const WithPreselectedNode: Story = {
 	args: {
 		nodePath: '1.2.3',

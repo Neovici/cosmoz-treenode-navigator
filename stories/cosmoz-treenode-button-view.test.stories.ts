@@ -290,6 +290,65 @@ export const SelectButtonInteraction: Story = {
 	},
 };
 
+export const ExternalDialogControl: Story = {
+	render: () => html`
+		<div style="padding: 20px;">
+			<cosmoz-treenode-button-view
+				.tree=${tree}
+				.opened=${true}
+			></cosmoz-treenode-button-view>
+		</div>
+	`,
+	play: async ({ canvasElement, step }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-button-view',
+		) as HTMLElement & { opened: boolean };
+
+		await step(
+			'Dialog opens when opened property is set externally',
+			async () => {
+				await waitFor(async () => {
+					const dialog = (await findByShadowTestId(
+						el,
+						'dialog',
+					)) as HTMLDialogElement;
+					expect(dialog.open).toBe(true);
+				});
+			},
+		);
+
+		await step(
+			'Dialog closes when opened property is set to false externally',
+			async () => {
+				el.opened = false;
+
+				await waitFor(async () => {
+					const dialog = (await findByShadowTestId(
+						el,
+						'dialog',
+					)) as HTMLDialogElement;
+					expect(dialog.open).toBe(false);
+				});
+			},
+		);
+
+		await step(
+			'Dialog re-opens when opened property is set to true again',
+			async () => {
+				el.opened = true;
+
+				await waitFor(async () => {
+					const dialog = (await findByShadowTestId(
+						el,
+						'dialog',
+					)) as HTMLDialogElement;
+					expect(dialog.open).toBe(true);
+				});
+			},
+		);
+	},
+};
+
 export const WithInvalidNodePath: Story = {
 	render: () => html`
 		<div style="padding: 20px;">
