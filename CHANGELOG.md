@@ -1,3 +1,28 @@
+## [8.0.0](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v7.9.1...v8.0.0) (2026-02-10)
+
+### ⚠ BREAKING CHANGES
+
+* cosmoz-treenode-button-view: removed properties
+dialogText, buttonTextPlaceholder, searchPlaceholder,
+searchGlobalPlaceholder, selectedNode, multiSelection, nodesOnNodePath,
+highlightedNode. noReset replaced by showReset (inverted logic). opened
+changed from internal useState to external useProperty. Slots renamed:
+button-before to prefix, button-after to suffix. Native button elements
+replaced by cosmoz-button. Removed CSS custom properties for button
+styling.
+* cosmoz-treenode-navigator: removed properties
+searchPlaceholder, searchGlobalPlaceholder, selectedNode,
+nodesOnNodePath, highlightedNode (use highlightedNodePath string).
+Removed node-dblclicked event. Ghost buttons replaced by
+cosmoz-button variant=link.
+* @neovici/cosmoz-i18next removed, i18next@^23.12.2
+added as direct dependency. @neovici/cosmoz-button@^1.0.0 and
+@neovici/cosmoz-tokens@^3.2.1 added. @pionjs/pion minimum bumped to ^2.12.0.
+
+### Features
+
+* simplify state management and add container query support ([#186](https://github.com/Neovici/cosmoz-treenode-navigator/issues/186)) ([5080b0a](https://github.com/Neovici/cosmoz-treenode-navigator/commit/5080b0a2cbd535bc965f7aee481d128734767417))
+
 ## [7.9.1](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v7.9.0...v7.9.1) (2026-02-09)
 
 ### Bug Fixes
