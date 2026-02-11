@@ -27,7 +27,7 @@ const meta: Meta<StoryArgs> = {
 	},
 	args: {
 		searchMinLength: 3,
-		searchDebounceTimeout: 2000,
+		searchDebounceTimeout: 500,
 		opened: true,
 		nodePath: '',
 	},

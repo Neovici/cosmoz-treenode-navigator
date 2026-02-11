@@ -55,7 +55,7 @@ const CosmozNodeButtonView = ({
 	tree,
 	showReset = false,
 	searchMinLength = 3,
-	searchDebounceTimeout = 2000,
+	searchDebounceTimeout = 500,
 }: ButtonViewProps) => {
 	const dialogRef = useRef<ButtonViewDialog | null>(null);
 

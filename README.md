@@ -102,7 +102,7 @@ A trigger button that opens a dialog containing the tree navigator. This is the 
 | `opened`                | --                  | `boolean` | `false` | Whether the dialog is open (two-way bindable)   |
 | `showReset`             | `show-reset`        | `boolean` | `false` | Show the reset/clear button                     |
 | `searchMinLength`       | `search-min-length` | `number`  | `3`     | Minimum characters to trigger search            |
-| `searchDebounceTimeout` | --                  | `number`  | `2000`  | Debounce timeout (ms) before search triggers    |
+| `searchDebounceTimeout` | --                  | `number`  | `500`   | Debounce timeout (ms) before search triggers    |
 
 #### Events
 
@@ -166,7 +166,7 @@ The inner navigator component that provides tree browsing, search, and keyboard 
 | `highlightedNodePath`   | `string`  | `''`        | Currently highlighted node's path (notify only) |
 | `opened`                | `boolean` | `undefined` | Controls keyboard listeners and scroll behavior |
 | `searchMinLength`       | `number`  | `3`         | Minimum characters to trigger search            |
-| `searchDebounceTimeout` | `number`  | `2000`      | Debounce timeout (ms) before search triggers    |
+| `searchDebounceTimeout` | `number`  | `500`       | Debounce timeout (ms) before search triggers    |
 
 #### Events
 

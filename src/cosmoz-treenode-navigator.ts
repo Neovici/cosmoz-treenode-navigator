@@ -53,7 +53,7 @@ const NodeNavigator = ({
 	 */
 	searchMinLength = 3,
 	opened,
-	searchDebounceTimeout = 2000,
+	searchDebounceTimeout = 500,
 }: TreenodeNavigatorProps) => {
 	const listRef = useRef<HTMLElement>();
 	const host = useHost();
