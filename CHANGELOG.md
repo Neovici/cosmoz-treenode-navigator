@@ -1,3 +1,9 @@
+## [8.1.2](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v8.1.1...v8.1.2) (2026-02-11)
+
+### Bug Fixes
+
+* add margin-block to global search button ([#192](https://github.com/Neovici/cosmoz-treenode-navigator/issues/192)) ([fe97f39](https://github.com/Neovici/cosmoz-treenode-navigator/commit/fe97f39758ac9a8ca4a920f2b7a2cbade9cefd79))
+
 ## [8.1.1](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v8.1.0...v8.1.1) (2026-02-11)
 
 ### Bug Fixes
