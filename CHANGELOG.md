@@ -1,3 +1,9 @@
+## [8.1.0](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v8.0.0...v8.1.0) (2026-02-11)
+
+### Features
+
+* add tooltip to treenode-button-view showing full node path ([#189](https://github.com/Neovici/cosmoz-treenode-navigator/issues/189)) ([67cbe57](https://github.com/Neovici/cosmoz-treenode-navigator/commit/67cbe5740521745ed27eb7d7def845774818e1ce))
+
 ## [8.0.0](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v7.9.1...v8.0.0) (2026-02-10)
 
 ### ⚠ BREAKING CHANGES
