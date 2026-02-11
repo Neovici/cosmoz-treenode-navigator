@@ -12,17 +12,22 @@ export default css`
 		font-weight: 500;
 	}
 
-	.actions {
+	nav {
 		display: flex;
 		gap: 8px;
 	}
 
-	.actions > cosmoz-button:first-child {
+	cosmoz-tooltip {
+		display: block;
 		flex: 1;
 		min-width: 0;
 	}
 
-	.actions > cosmoz-button:first-child::part(button) {
+	cosmoz-tooltip > cosmoz-button {
+		min-width: 50px;
+	}
+
+	cosmoz-tooltip > cosmoz-button::part(button) {
 		justify-content: flex-start;
 	}
 
@@ -46,34 +51,25 @@ export default css`
 		}
 	}
 
-	/* Safari only css fix */
-
-	_:matches(x),
-	_:lang(x) + _:-webkit-full-screen-document,
-	.pathToNode span {
-		display: inline-block;
-	}
-
-	.dialog {
+	dialog {
 		width: 550px;
 		min-width: 250px;
-
 		padding: 0;
 		border-radius: 10px;
 		border: none;
 	}
 
-	.dialog::backdrop {
+	dialog::backdrop {
 		background: rgba(0, 0, 0, 0.5);
 	}
 
-	.dialog-header {
+	dialog > header {
 		padding: 10px 10px 0 10px;
 		cursor: move;
 		user-select: none;
 	}
 
-	.dialog-heading {
+	dialog h1 {
 		margin-bottom: 2rem;
 		padding: 0 8px;
 		font-size: 1.25rem;
@@ -81,12 +77,12 @@ export default css`
 		color: var(--cz-text-color, inherit);
 	}
 
-	.dialog-footer {
+	dialog > footer {
 		padding: 0 10px 10px 10px;
 		text-align: right;
 	}
 
-	.dialog-footer-button-container {
+	dialog > footer > div {
 		display: flex;
 		gap: 8px;
 		justify-content: flex-end;

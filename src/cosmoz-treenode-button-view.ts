@@ -12,6 +12,7 @@ import { ref } from 'lit/directives/ref.js';
 import style from './cosmoz-treenode-button-view.styles';
 
 import '@neovici/cosmoz-button/cosmoz-button';
+import { xIcon } from '@neovici/cosmoz-icons/untitled';
 import '@neovici/cosmoz-tooltip';
 import type { Tree } from '@neovici/cosmoz-tree';
 import { t } from 'i18next';
@@ -155,12 +156,12 @@ const CosmozNodeButtonView = ({
 	};
 
 	return html`
-		<cosmoz-tooltip
-			placement="right"
-			.description=${buttonLabel}
-			.delay=${1000}
-		>
-			<div class="actions" part="actions">
+		<nav part="actions">
+			<cosmoz-tooltip
+				placement="right"
+				.description=${buttonLabel}
+				.delay=${1000}
+			>
 				<cosmoz-button
 					variant="secondary"
 					full-width
@@ -174,64 +175,34 @@ const CosmozNodeButtonView = ({
 					</div>
 					<slot name="suffix" slot="suffix"></slot>
 				</cosmoz-button>
-				${when(
-					showReset && !!nodePath,
-					() =>
-						html`<cosmoz-button
-							variant="tertiary"
-							@click=${reset}
-							data-testid="reset-button"
-							part="action-reset"
-						>
-							<svg
-								slot="prefix"
-								width="10"
-								height="9"
-								viewBox="0 0 10 9"
-								stroke="currentColor"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<line
-									x1="8.53033"
-									y1="0.53033"
-									x2="1.53033"
-									y2="7.53033"
-									stroke-width="1.5"
-								></line>
-								<line
-									x1="8.46967"
-									y1="7.53033"
-									x2="1.46967"
-									y2="0.530331"
-									stroke-width="1.5"
-								></line>
-							</svg>
-						</cosmoz-button>`,
-				)}
-			</div>
-		</cosmoz-tooltip>
+			</cosmoz-tooltip>
+			${when(
+				showReset && !!nodePath,
+				() =>
+					html`<cosmoz-button
+						variant="tertiary"
+						@click=${reset}
+						data-testid="reset-button"
+						part="action-reset"
+					>
+						${xIcon({ slot: 'prefix' })}
+					</cosmoz-button>`,
+			)}
+		</nav>
 
 		<dialog
-			class="dialog"
 			part="dialog"
 			data-testid="dialog"
 			${ref((el) => {
 				dialogRef.current = el as ButtonViewDialog;
 			})}
 		>
-			<header
-				class="dialog-header"
-				part="header"
-				@mousedown=${onHeaderMouseDown}
-			>
-				<h1 class="dialog-heading" part="heading">
-					${t('Search or navigate to chosen destination')}
-				</h1>
+			<header part="header" @mousedown=${onHeaderMouseDown}>
+				<h1 part="heading">${t('Search or navigate to chosen destination')}</h1>
 			</header>
-			<main class="dialog-main" part="main">
+			<main part="main">
 				<cosmoz-treenode-navigator
 					id="treeNavigator"
-					class="dialog-treenode-navigator no-padding"
 					.nodePath=${nodePath}
 					@node-path-changed=${onNodePathChanged}
 					@highlighted-node-path-changed=${onHighlightedNodePathChanged}
@@ -243,8 +214,8 @@ const CosmozNodeButtonView = ({
 					<slot></slot>
 				</cosmoz-treenode-navigator>
 			</main>
-			<footer class="dialog-footer" part="footer">
-				<div class="dialog-footer-button-container">
+			<footer part="footer">
+				<div>
 					<cosmoz-button
 						variant="primary"
 						?disabled=${!highlightedNodePath}
