@@ -50,6 +50,7 @@ export default css`
 	}
 
 	.pointer {
+		cursor: pointer;
 	}
 
 	.items {
@@ -61,10 +62,6 @@ export default css`
 	.section {
 		background-color: var(--cz-bg-color, #f5f5f5);
 		padding: 5px;
-	}
-
-	.pointer {
-		cursor: pointer;
 	}
 
 	.item {

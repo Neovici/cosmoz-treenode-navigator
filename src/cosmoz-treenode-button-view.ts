@@ -156,7 +156,7 @@ const CosmozNodeButtonView = ({
 	};
 
 	return html`
-		<div class="actions" part="actions">
+		<nav part="actions">
 			<cosmoz-tooltip
 				placement="right"
 				.description=${buttonLabel}
@@ -188,29 +188,21 @@ const CosmozNodeButtonView = ({
 						${xIcon({ slot: 'prefix' })}
 					</cosmoz-button>`,
 			)}
-		</div>
+		</nav>
 
 		<dialog
-			class="dialog"
 			part="dialog"
 			data-testid="dialog"
 			${ref((el) => {
 				dialogRef.current = el as ButtonViewDialog;
 			})}
 		>
-			<header
-				class="dialog-header"
-				part="header"
-				@mousedown=${onHeaderMouseDown}
-			>
-				<h1 class="dialog-heading" part="heading">
-					${t('Search or navigate to chosen destination')}
-				</h1>
+			<header part="header" @mousedown=${onHeaderMouseDown}>
+				<h1 part="heading">${t('Search or navigate to chosen destination')}</h1>
 			</header>
-			<main class="dialog-main" part="main">
+			<main part="main">
 				<cosmoz-treenode-navigator
 					id="treeNavigator"
-					class="dialog-treenode-navigator no-padding"
 					.nodePath=${nodePath}
 					@node-path-changed=${onNodePathChanged}
 					@highlighted-node-path-changed=${onHighlightedNodePathChanged}
@@ -222,8 +214,8 @@ const CosmozNodeButtonView = ({
 					<slot></slot>
 				</cosmoz-treenode-navigator>
 			</main>
-			<footer class="dialog-footer" part="footer">
-				<div class="dialog-footer-button-container">
+			<footer part="footer">
+				<div>
 					<cosmoz-button
 						variant="primary"
 						?disabled=${!highlightedNodePath}
