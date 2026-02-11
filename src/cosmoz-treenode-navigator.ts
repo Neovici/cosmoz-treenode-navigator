@@ -385,6 +385,7 @@ const NodeNavigator = ({
 			search && openNodePath,
 			() => html`
 				<cosmoz-button
+					class="global-search"
 					variant="link"
 					full-width
 					data-testid="global-search-button"
