@@ -156,12 +156,12 @@ const CosmozNodeButtonView = ({
 	};
 
 	return html`
-		<cosmoz-tooltip
-			placement="right"
-			.description=${buttonLabel}
-			.delay=${1000}
-		>
-			<div class="actions" part="actions">
+		<div class="actions" part="actions">
+			<cosmoz-tooltip
+				placement="right"
+				.description=${buttonLabel}
+				.delay=${1000}
+			>
 				<cosmoz-button
 					variant="secondary"
 					full-width
@@ -175,20 +175,20 @@ const CosmozNodeButtonView = ({
 					</div>
 					<slot name="suffix" slot="suffix"></slot>
 				</cosmoz-button>
-				${when(
-					showReset && !!nodePath,
-					() =>
-						html`<cosmoz-button
-							variant="tertiary"
-							@click=${reset}
-							data-testid="reset-button"
-							part="action-reset"
-						>
-							${xIcon({ slot: 'prefix' })}
-						</cosmoz-button>`,
-				)}
-			</div>
-		</cosmoz-tooltip>
+			</cosmoz-tooltip>
+			${when(
+				showReset && !!nodePath,
+				() =>
+					html`<cosmoz-button
+						variant="tertiary"
+						@click=${reset}
+						data-testid="reset-button"
+						part="action-reset"
+					>
+						${xIcon({ slot: 'prefix' })}
+					</cosmoz-button>`,
+			)}
+		</div>
 
 		<dialog
 			class="dialog"

@@ -12,21 +12,22 @@ export default css`
 		font-weight: 500;
 	}
 
-	cosmoz-tooltip {
-		display: block;
-	}
-
 	.actions {
 		display: flex;
 		gap: 8px;
 	}
 
-	.actions > cosmoz-button:first-child {
+	.actions > cosmoz-tooltip {
+		display: block;
 		flex: 1;
 		min-width: 0;
 	}
 
-	.actions > cosmoz-button:first-child::part(button) {
+	.actions > cosmoz-tooltip > cosmoz-button {
+		min-width: 50px;
+	}
+
+	.actions > cosmoz-tooltip > cosmoz-button::part(button) {
 		justify-content: flex-start;
 	}
 
