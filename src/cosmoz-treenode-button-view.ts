@@ -12,6 +12,7 @@ import { ref } from 'lit/directives/ref.js';
 import style from './cosmoz-treenode-button-view.styles';
 
 import '@neovici/cosmoz-button/cosmoz-button';
+import { xIcon } from '@neovici/cosmoz-icons/untitled';
 import '@neovici/cosmoz-tooltip';
 import type { Tree } from '@neovici/cosmoz-tree';
 import { t } from 'i18next';
@@ -183,29 +184,7 @@ const CosmozNodeButtonView = ({
 							data-testid="reset-button"
 							part="action-reset"
 						>
-							<svg
-								slot="prefix"
-								width="10"
-								height="9"
-								viewBox="0 0 10 9"
-								stroke="currentColor"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<line
-									x1="8.53033"
-									y1="0.53033"
-									x2="1.53033"
-									y2="7.53033"
-									stroke-width="1.5"
-								></line>
-								<line
-									x1="8.46967"
-									y1="7.53033"
-									x2="1.46967"
-									y2="0.530331"
-									stroke-width="1.5"
-								></line>
-							</svg>
+							${xIcon({ slot: 'prefix' })}
 						</cosmoz-button>`,
 				)}
 			</div>

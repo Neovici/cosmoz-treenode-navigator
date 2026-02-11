@@ -12,6 +12,10 @@ export default css`
 		font-weight: 500;
 	}
 
+	cosmoz-tooltip {
+		display: block;
+	}
+
 	.actions {
 		display: flex;
 		gap: 8px;
