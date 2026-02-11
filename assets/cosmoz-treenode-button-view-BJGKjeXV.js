@@ -1,4 +1,4 @@
-import{c as x,o as D,n as g,b as A,d as H,s as G,u as L,e as T,f as Y,g as I,h as R,i as J,j as F,k as Q,l as W}from"./tree-data-CWq1TC-e.js";import{w as Z,b as p,e as _,t as E}from"./iframe-C19U6lpl.js";const tt=x`
+import{c as x,o as D,n as g,b as A,d as H,s as G,u as L,e as T,f as Y,g as I,h as R,i as J,j as F,k as Q,l as W}from"./tree-data-CsK4X_jX.js";import{w as Z,b as p,e as _,t as E}from"./iframe-BEu3tBQ_.js";const tt=x`
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -232,7 +232,7 @@ import{c as x,o as D,n as g,b as A,d as H,s as G,u as L,e as T,f as Y,g as I,h a
 	<circle cx="7" cy="7" r="2" />
 	<circle cx="17" cy="17" r="2" />
 	<path d="M7 9v3c0 1.66 1.34 3 3 3h7" />
-</svg>`,O=({tree:n,showReset:s=!1,searchMinLength:o=3,searchDebounceTimeout:a=2e3})=>{const c=L(null),[l,u]=R("nodePath",""),[d,r]=R("opened",!1),[m,i]=J(""),h=F(()=>Q(l,n),[l,n]),y=F(()=>!Array.isArray(h)||h.length===0?E("Select a node"):h.filter(t=>t).map(t=>t[n.searchProperty]).join(" / "),[h,n]);T(()=>{d?c.current?.showModal():c.current?.close()},[d]);const v=()=>{u("")},$=()=>r(!0),f=()=>r(!1);at("Escape",f);const w=t=>{const e=c.current;if(!e)return;const P=t.clientX,X=t.clientY,M=e.getBoundingClientRect(),K=M.left,U=M.top,C=j=>{const V=j.clientX-P,q=j.clientY-X;e.style.left=`${K+V}px`,e.style.top=`${U+q}px`,e.style.margin="0"},N=()=>{document.removeEventListener("mousemove",C),document.removeEventListener("mouseup",N)};document.addEventListener("mousemove",C),document.addEventListener("mouseup",N)},z=t=>{t.preventDefault();const e=t.detail.value;e&&(u(e),f())},b=W(i),k=()=>{m&&(u(m),f())};return p`
+</svg>`,O=({tree:n,showReset:s=!1,searchMinLength:o=3,searchDebounceTimeout:a=500})=>{const c=L(null),[l,u]=R("nodePath",""),[d,r]=R("opened",!1),[m,i]=J(""),h=F(()=>Q(l,n),[l,n]),y=F(()=>!Array.isArray(h)||h.length===0?E("Select a node"):h.filter(t=>t).map(t=>t[n.searchProperty]).join(" / "),[h,n]);T(()=>{d?c.current?.showModal():c.current?.close()},[d]);const v=()=>{u("")},$=()=>r(!0),f=()=>r(!1);at("Escape",f);const w=t=>{const e=c.current;if(!e)return;const P=t.clientX,X=t.clientY,M=e.getBoundingClientRect(),K=M.left,U=M.top,C=j=>{const V=j.clientX-P,q=j.clientY-X;e.style.left=`${K+V}px`,e.style.top=`${U+q}px`,e.style.margin="0"},N=()=>{document.removeEventListener("mousemove",C),document.removeEventListener("mouseup",N)};document.addEventListener("mousemove",C),document.addEventListener("mouseup",N)},z=t=>{t.preventDefault();const e=t.detail.value;e&&(u(e),f())},b=W(i),k=()=>{m&&(u(m),f())};return p`
 		<nav part="actions">
 			<cosmoz-tooltip
 				placement="right"
