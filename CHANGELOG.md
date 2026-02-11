@@ -1,3 +1,9 @@
+## [8.1.1](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v8.1.0...v8.1.1) (2026-02-11)
+
+### Bug Fixes
+
+* replace reset icon with xIcon and clean up CSS ([#190](https://github.com/Neovici/cosmoz-treenode-navigator/issues/190)) ([22a8428](https://github.com/Neovici/cosmoz-treenode-navigator/commit/22a84285fb612eca3c2bab907bbdd295bdde1d45))
+
 ## [8.1.0](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v8.0.0...v8.1.0) (2026-02-11)
 
 ### Features
