@@ -102,4 +102,8 @@ export default css`
 	.path > .pointer:has(~ .pointer:hover) {
 		text-decoration: underline;
 	}
+
+	.global-search {
+		margin-block: calc(var(--cz-spacing) * 4);
+	}
 `;
