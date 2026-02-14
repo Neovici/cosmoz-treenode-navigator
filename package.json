@@ -91,7 +91,7 @@
 		"@neovici/cosmoz-icons": "^1.5.0",
 		"@neovici/cosmoz-input": "^5.0.0",
 		"@neovici/cosmoz-tokens": "^3.2.1",
-		"@neovici/cosmoz-tooltip": "^1.0.0",
+		"@neovici/cosmoz-tooltip": "^1.0.2",
 		"@neovici/cosmoz-tree": "^3.6.1",
 		"@neovici/cosmoz-utils": "^6.8.1",
 		"@pionjs/pion": "^2.12.0",
