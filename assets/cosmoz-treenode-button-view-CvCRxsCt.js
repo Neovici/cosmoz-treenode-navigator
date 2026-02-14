@@ -1,8 +1,8 @@
-import{c as x,o as D,n as g,b as A,d as H,s as G,u as L,e as T,f as Y,g as I,h as R,i as J,j as F,k as Q,l as W}from"./tree-data-CHHMP18D.js";import{w as Z,b as p,e as _,t as E}from"./iframe-D4sLbvzO.js";const tt=x`
+import{c as w,o as D,n as y,b as S,d as O,s as G,u as T,e as x,f as Y,g as H,h as R,i as J,j as F,k as Q,l as W}from"./tree-data-DDm-bA3t.js";import{w as Z,b as u,e as _,A as tt,t as L}from"./iframe-BGNqpGwE.js";const et=w`
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-`,ot=x`
+`,ot=w`
 	:host {
 		display: block;
 		container-type: inline-size;
@@ -40,7 +40,7 @@ import{c as x,o as D,n as g,b as A,d as H,s as G,u as L,e as T,f as Y,g as I,h a
 	}
 
 	.path-text {
-		${tt}
+		${et}
 		direction: rtl;
 		flex: 1;
 		min-width: 0;
@@ -89,9 +89,9 @@ import{c as x,o as D,n as g,b as A,d as H,s as G,u as L,e as T,f as Y,g as I,h a
 		justify-content: flex-end;
 		margin: 0;
 	}
-`,et=({slot:n,title:s,className:o,width:a="24",height:c="24",styles:l}={})=>p`
+`,nt=({slot:t,title:i,className:o,width:a="24",height:c="24",styles:l}={})=>u`
   <svg
-    slot=${D(n)}
+    slot=${D(t)}
     class=${`x-icon ${o??""}`}
     viewBox="0 0 24 24"
     preserveAspectRatio="xMidYMid meet"
@@ -105,10 +105,10 @@ import{c as x,o as D,n as g,b as A,d as H,s as G,u as L,e as T,f as Y,g as I,h a
     height=${c}
     style=${D(l)}
   >
-    ${g(s,()=>Z`<title>${s}</title>`)}
+    ${y(i,()=>Z`<title>${i}</title>`)}
     <path d="M17 7 7 17M7 7l10 10" />
   </svg>
-`,nt=x`
+`,st=w`
 	:host {
 		display: flex;
 		flex-direction: column;
@@ -127,11 +127,11 @@ import{c as x,o as D,n as g,b as A,d as H,s as G,u as L,e as T,f as Y,g as I,h a
 		margin: 0;
 		color: var(--cz-color-gray-300);
 	}
-`;customElements.define("cosmoz-tooltip-content",A(()=>p`
+`;customElements.define("cosmoz-tooltip-content",S(()=>u`
 			<slot name="heading"></slot>
 			<slot name="description"></slot>
 			<slot></slot>
-		`,{styleSheets:[H,nt]}));const S=G(x`
+		`,{styleSheets:[O,st]}));const A=G(w`
 	.cosmoz-tooltip-popover {
 		position: fixed;
 		inset: unset;
@@ -180,10 +180,10 @@ import{c as x,o as D,n as g,b as A,d as H,s as G,u as L,e as T,f as Y,g as I,h a
 			transition: none;
 		}
 	}
-`),B=(n,s,o)=>_(p`<cosmoz-tooltip-content>
-			${g(s,()=>p`<strong slot="heading">${s}</strong>`)}
-			${g(o,()=>p`<p slot="description">${o}</p>`)}
-		</cosmoz-tooltip-content>`,n),st=(n,s)=>{const{for:o,heading:a,description:c,placement:l="top",delay:u=300}=s,d=L();T(()=>{if(!o)return;const r=n.getRootNode(),m=r.adoptedStyleSheets??[];m.includes(S)||(r.adoptedStyleSheets=[...m,S]);const i=document.createElement("div");i.setAttribute("popover","manual"),i.setAttribute("role","tooltip"),i.classList.add("cosmoz-tooltip-popover"),n.after(i),d.current=i,B(i,a,c);const h=`[name="${o}"]`,y=`--tooltip-anchor-${o}`;let v;const $=t=>{clearTimeout(v),t.style.anchorName=y,i.style.positionAnchor=y,i.style.positionArea=l,v=window.setTimeout(()=>i.showPopover(),u)},f=()=>{clearTimeout(v),i.hidePopover()},w=t=>{const e=t.target.closest?.(h);e&&$(e)},z=t=>{const e=t.target.closest?.(h);if(!e)return;const P=t.relatedTarget;P&&e.contains(P)||f()},b=t=>{const e=t.target.closest?.(h);e&&$(e)},k=t=>{t.target.closest?.(h)&&f()};return r.addEventListener("pointerover",w),r.addEventListener("pointerout",z),r.addEventListener("focusin",b),r.addEventListener("focusout",k),()=>{clearTimeout(v),r.removeEventListener("pointerover",w),r.removeEventListener("pointerout",z),r.removeEventListener("focusin",b),r.removeEventListener("focusout",k),i.hidePopover(),i.remove(),d.current=void 0}},[o,l,u]),T(()=>{!o||!d.current||B(d.current,a,c)},[a,c,o])},rt=x`
+`),B=(t,i,o)=>_(u`<cosmoz-tooltip-content>
+			${y(i,()=>u`<strong slot="heading">${i}</strong>`)}
+			${y(o,()=>u`<p slot="description">${o}</p>`)}
+		</cosmoz-tooltip-content>`,t),rt=(t,i)=>{const{for:o,heading:a,description:c,placement:l="top",delay:m=300}=i,d=T();x(()=>{if(!o)return;const s=t.getRootNode(),h=s.adoptedStyleSheets??[];h.includes(A)||(s.adoptedStyleSheets=[...h,A]);const n=document.createElement("div");n.setAttribute("popover","manual"),n.setAttribute("role","tooltip"),n.classList.add("cosmoz-tooltip-popover"),t.after(n),d.current=n,B(n,a,c);const p=`[name="${o}"]`,f=`--tooltip-anchor-${o}`;let g;const z=e=>{clearTimeout(g),e.style.anchorName=f,n.style.positionAnchor=f,n.style.positionArea=l,g=window.setTimeout(()=>n.showPopover(),m)},v=()=>{clearTimeout(g),n.hidePopover()},$=e=>{const r=e.target.closest?.(p);r&&z(r)},b=e=>{const r=e.target.closest?.(p);if(!r)return;const P=e.relatedTarget;P&&r.contains(P)||v()},k=e=>{const r=e.target.closest?.(p);r&&z(r)},E=e=>{e.target.closest?.(p)&&v()};return s.addEventListener("pointerover",$),s.addEventListener("pointerout",b),s.addEventListener("focusin",k),s.addEventListener("focusout",E),()=>{clearTimeout(g),s.removeEventListener("pointerover",$),s.removeEventListener("pointerout",b),s.removeEventListener("focusin",k),s.removeEventListener("focusout",E),n.hidePopover(),n.remove(),d.current=void 0}},[o,l,m]),x(()=>{!o||!d.current||B(d.current,a,c)},[a,c,o])},it=w`
 	:host {
 		display: inline-block;
 		anchor-name: --tooltip-anchor;
@@ -197,27 +197,22 @@ import{c as x,o as D,n as g,b as A,d as H,s as G,u as L,e as T,f as Y,g as I,h a
 	.cosmoz-tooltip-popover {
 		position-anchor: --tooltip-anchor;
 	}
-`,it=n=>{const{heading:s,description:o,for:a,placement:c="top",delay:l=300}=n,u=L(),d=L(),r=Y(()=>{clearTimeout(d.current),d.current=window.setTimeout(()=>{u.current?.showPopover()},l)},[l]),m=Y(()=>{clearTimeout(d.current),u.current?.hidePopover()},[]);return st(n,{for:a,heading:s,description:o,placement:c,delay:l}),a?p``:p`
-		<slot
-			@pointerenter=${r}
-			@pointerleave=${m}
-			@focusin=${r}
-			@focusout=${m}
-		></slot>
+`,at=t=>{const{heading:i,description:o,for:a,placement:c="top",delay:l=300}=t,m=T(),d=T(),s=Y(()=>{clearTimeout(d.current),d.current=window.setTimeout(()=>{m.current?.showPopover()},l)},[l]),h=Y(()=>{clearTimeout(d.current),m.current?.hidePopover()},[]);return x(()=>{if(a)return;const n=p=>{const f=p.relatedTarget;f&&t.contains(f)||h()};return t.addEventListener("pointerover",s),t.addEventListener("pointerout",n),()=>{t.removeEventListener("pointerover",s),t.removeEventListener("pointerout",n)}},[a,s,h]),rt(t,{for:a,heading:i,description:o,placement:c,delay:l}),a?tt:u`
+		<slot @focusin=${s} @focusout=${h}></slot>
 		<div
 			class="cosmoz-tooltip-popover"
 			popover="manual"
 			role="tooltip"
 			style="position-area: ${c}"
-			${I(i=>{u.current=i})}
+			${H(n=>{m.current=n})}
 		>
 			<cosmoz-tooltip-content>
-				${g(s,()=>p`<strong slot="heading">${s}</strong>`)}
-				${g(o,()=>p`<p slot="description">${o}</p>`)}
+				${y(i,()=>u`<strong slot="heading">${i}</strong>`)}
+				${y(o,()=>u`<p slot="description">${o}</p>`)}
 				<slot name="content"></slot>
 			</cosmoz-tooltip-content>
 		</div>
-	`};customElements.define("cosmoz-tooltip",A(it,{styleSheets:[H,S,rt],observedAttributes:["heading","description","for","placement","delay"]}));const at=(n,s)=>{const o=a=>{if(a.key===n&&s instanceof Function)return a.preventDefault(),s()};T(()=>(document.addEventListener("keydown",o),()=>{document.removeEventListener("keydown",o)}))},ct=p`<svg
+	`};customElements.define("cosmoz-tooltip",S(at,{styleSheets:[O,A,it],observedAttributes:["heading","description","for","placement","delay"]}));const ct=(t,i)=>{const o=a=>{if(a.key===t&&i instanceof Function)return a.preventDefault(),i()};x(()=>(document.addEventListener("keydown",o),()=>{document.removeEventListener("keydown",o)}))},lt=u`<svg
 	class="default-icon"
 	width="20"
 	height="20"
@@ -232,54 +227,54 @@ import{c as x,o as D,n as g,b as A,d as H,s as G,u as L,e as T,f as Y,g as I,h a
 	<circle cx="7" cy="7" r="2" />
 	<circle cx="17" cy="17" r="2" />
 	<path d="M7 9v3c0 1.66 1.34 3 3 3h7" />
-</svg>`,O=({tree:n,showReset:s=!1,searchMinLength:o=3,searchDebounceTimeout:a=500})=>{const c=L(null),[l,u]=R("nodePath",""),[d,r]=R("opened",!1),[m,i]=J(""),h=F(()=>Q(l,n),[l,n]),y=F(()=>!Array.isArray(h)||h.length===0?E("Select a node"):h.filter(t=>t).map(t=>t[n.searchProperty]).join(" / "),[h,n]);T(()=>{d?c.current?.showModal():c.current?.close()},[d]);const v=()=>{u("")},$=()=>r(!0),f=()=>r(!1);at("Escape",f);const w=t=>{const e=c.current;if(!e)return;const P=t.clientX,X=t.clientY,M=e.getBoundingClientRect(),K=M.left,U=M.top,C=j=>{const V=j.clientX-P,q=j.clientY-X;e.style.left=`${K+V}px`,e.style.top=`${U+q}px`,e.style.margin="0"},N=()=>{document.removeEventListener("mousemove",C),document.removeEventListener("mouseup",N)};document.addEventListener("mousemove",C),document.addEventListener("mouseup",N)},z=t=>{t.preventDefault();const e=t.detail.value;e&&(u(e),f())},b=W(i),k=()=>{m&&(u(m),f())};return p`
+</svg>`,I=({tree:t,showReset:i=!1,searchMinLength:o=3,searchDebounceTimeout:a=500})=>{const c=T(null),[l,m]=R("nodePath",""),[d,s]=R("opened",!1),[h,n]=J(""),p=F(()=>Q(l,t),[l,t]),f=F(()=>!Array.isArray(p)||p.length===0?L("Select a node"):p.filter(e=>e).map(e=>e[t.searchProperty]).join(" / "),[p,t]);x(()=>{d?c.current?.showModal():c.current?.close()},[d]);const g=()=>{m("")},z=()=>s(!0),v=()=>s(!1);ct("Escape",v);const $=e=>{const r=c.current;if(!r)return;const P=e.clientX,X=e.clientY,M=r.getBoundingClientRect(),K=M.left,U=M.top,C=j=>{const V=j.clientX-P,q=j.clientY-X;r.style.left=`${K+V}px`,r.style.top=`${U+q}px`,r.style.margin="0"},N=()=>{document.removeEventListener("mousemove",C),document.removeEventListener("mouseup",N)};document.addEventListener("mousemove",C),document.addEventListener("mouseup",N)},b=e=>{e.preventDefault();const r=e.detail.value;r&&(m(r),v())},k=W(n),E=()=>{h&&(m(h),v())};return u`
 		<nav part="actions">
 			<cosmoz-tooltip
 				placement="right"
-				.description=${y}
+				.description=${f}
 				.delay=${1e3}
 			>
 				<cosmoz-button
 					variant="secondary"
 					full-width
 					data-testid="open-button"
-					@click=${$}
+					@click=${z}
 					part="action-open"
 				>
-					<slot name="prefix" slot="prefix">${ct}</slot>
+					<slot name="prefix" slot="prefix">${lt}</slot>
 					<div class="path-text">
-						<span>${y}</span>
+						<span>${f}</span>
 					</div>
 					<slot name="suffix" slot="suffix"></slot>
 				</cosmoz-button>
 			</cosmoz-tooltip>
-			${g(s&&!!l,()=>p`<cosmoz-button
+			${y(i&&!!l,()=>u`<cosmoz-button
 						variant="tertiary"
-						@click=${v}
+						@click=${g}
 						data-testid="reset-button"
 						part="action-reset"
 					>
-						${et({slot:"prefix"})}
+						${nt({slot:"prefix"})}
 					</cosmoz-button>`)}
 		</nav>
 
 		<dialog
 			part="dialog"
 			data-testid="dialog"
-			${I(t=>{c.current=t})}
+			${H(e=>{c.current=e})}
 		>
-			<header part="header" @mousedown=${w}>
-				<h1 part="heading">${E("Search or navigate to chosen destination")}</h1>
+			<header part="header" @mousedown=${$}>
+				<h1 part="heading">${L("Search or navigate to chosen destination")}</h1>
 			</header>
 			<main part="main">
 				<cosmoz-treenode-navigator
 					id="treeNavigator"
 					.nodePath=${l}
-					@node-path-changed=${z}
-					@highlighted-node-path-changed=${b}
+					@node-path-changed=${b}
+					@highlighted-node-path-changed=${k}
 					.searchMinLength=${o}
 					.searchDebounceTimeout=${a}
-					.tree=${n}
+					.tree=${t}
 					.opened=${d}
 				>
 					<slot></slot>
@@ -289,22 +284,22 @@ import{c as x,o as D,n as g,b as A,d as H,s as G,u as L,e as T,f as Y,g as I,h a
 				<div>
 					<cosmoz-button
 						variant="primary"
-						?disabled=${!m}
-						@click=${k}
+						?disabled=${!h}
+						@click=${E}
 						data-testid="select-button"
 						part="select-button"
 					>
-						${E("Select")}
+						${L("Select")}
 					</cosmoz-button>
 					<cosmoz-button
 						variant="secondary"
-						@click=${f}
+						@click=${v}
 						data-testid="cancel-button"
 						part="cancel-button"
 					>
-						${E("Cancel")}
+						${L("Cancel")}
 					</cosmoz-button>
 				</div>
 			</footer>
 		</dialog>
-	`};O.observedAttributes=["show-reset","search-min-length"];customElements.define("cosmoz-treenode-button-view",A(O,{styleSheets:[ot]}));
+	`};I.observedAttributes=["show-reset","search-min-length"];customElements.define("cosmoz-treenode-button-view",S(I,{styleSheets:[ot]}));
