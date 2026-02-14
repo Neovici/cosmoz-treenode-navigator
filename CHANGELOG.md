@@ -1,3 +1,9 @@
+## [8.1.3](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v8.1.2...v8.1.3) (2026-02-14)
+
+### Bug Fixes
+
+* update cosmoz-tooltip to ^1.0.2 ([#194](https://github.com/Neovici/cosmoz-treenode-navigator/issues/194)) ([d8c32fd](https://github.com/Neovici/cosmoz-treenode-navigator/commit/d8c32fda6e575f8dc142dc9cff96e943b7f734c2))
+
 ## [8.1.2](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v8.1.1...v8.1.2) (2026-02-11)
 
 ### Bug Fixes
