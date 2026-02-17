@@ -58,6 +58,7 @@ const CosmozNodeButtonView = ({
 	searchDebounceTimeout = 500,
 }: ButtonViewProps) => {
 	const dialogRef = useRef<ButtonViewDialog | null>(null);
+	const tooltipTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
 	// nodePath is the single source of truth - external two-way binding
 	const [nodePath, setNodePath] = useProperty<string>('nodePath', '');
@@ -67,6 +68,10 @@ const CosmozNodeButtonView = ({
 
 	// Track highlighted node path from navigator for Select button
 	const [highlightedNodePath, setHighlightedNodePath] = useState<string>('');
+
+	// Temporarily suppress tooltip after dialog close to prevent
+	// it from showing when focus returns to the button
+	const [tooltipDisabled, setTooltipDisabled] = useState(false);
 
 	// nodesOnNodePath derived from nodePath + tree
 	const nodesOnNodePath = useMemo(
@@ -101,7 +106,15 @@ const CosmozNodeButtonView = ({
 
 	const onOpen = () => setOpened(true);
 
-	const onClose = () => setOpened(false);
+	const onClose = () => {
+		setOpened(false);
+		setTooltipDisabled(true);
+		clearTimeout(tooltipTimeoutRef.current);
+		tooltipTimeoutRef.current = setTimeout(
+			() => setTooltipDisabled(false),
+			500,
+		);
+	};
 
 	useKeyDown('Escape', onClose);
 
@@ -161,6 +174,7 @@ const CosmozNodeButtonView = ({
 				placement="right"
 				.description=${buttonLabel}
 				.delay=${1000}
+				.disabled=${tooltipDisabled}
 			>
 				<cosmoz-button
 					variant="secondary"
