@@ -1,3 +1,9 @@
+## [8.1.5](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v8.1.4...v8.1.5) (2026-02-17)
+
+### Bug Fixes
+
+* suppress tooltip on dialog close to prevent unwanted tooltip flash ([#196](https://github.com/Neovici/cosmoz-treenode-navigator/issues/196)) ([51ebcf7](https://github.com/Neovici/cosmoz-treenode-navigator/commit/51ebcf79f727f41c90653589fabe2ff742acf35a))
+
 ## [8.1.4](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v8.1.3...v8.1.4) (2026-02-17)
 
 ### Bug Fixes
