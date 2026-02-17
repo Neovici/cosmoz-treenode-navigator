@@ -195,7 +195,6 @@ const NodeNavigator = ({
 			const {
 				dataPlane: items,
 				highlightedNode: node,
-				onNodeClick: open,
 			} = meta;
 
 			const vlist = getVlist();
@@ -245,13 +244,6 @@ const NodeNavigator = ({
 					}
 					break;
 
-				case 'Right':
-				case 'ArrowRight':
-					e.preventDefault();
-					if (node && tree.hasChildren(node)) {
-						open(node);
-					}
-					break;
 				default:
 					break;
 			}
