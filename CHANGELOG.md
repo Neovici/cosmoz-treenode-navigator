@@ -1,3 +1,9 @@
+## [8.1.4](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v8.1.3...v8.1.4) (2026-02-17)
+
+### Bug Fixes
+
+* remove ArrowRight key handler that blocks cursor movement in search field ([#195](https://github.com/Neovici/cosmoz-treenode-navigator/issues/195)) ([4cdd006](https://github.com/Neovici/cosmoz-treenode-navigator/commit/4cdd0067dacececb794de1d9c3dba0c418c73ca4))
+
 ## [8.1.3](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v8.1.2...v8.1.3) (2026-02-14)
 
 ### Bug Fixes
