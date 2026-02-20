@@ -1,3 +1,9 @@
+## [8.1.6](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v8.1.5...v8.1.6) (2026-02-20)
+
+### Bug Fixes
+
+* unhandled exception when parent node is missing ([#197](https://github.com/Neovici/cosmoz-treenode-navigator/issues/197)) ([c98f471](https://github.com/Neovici/cosmoz-treenode-navigator/commit/c98f471ec3bbaf043a019ec68d2b311d969845b8))
+
 ## [8.1.5](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v8.1.4...v8.1.5) (2026-02-17)
 
 ### Bug Fixes
