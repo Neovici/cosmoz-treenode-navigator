@@ -144,8 +144,8 @@ const NodeNavigator = ({
 		}
 
 		const parentPath = getParentPath(tree, lastNode);
-
-		setOpenNodePath(parentPath);
+		// Make sure the parent node exists, otherwise fall back to displaying the roots
+		setOpenNodePath(tree.getNodeByPathLocator(parentPath)?.pathLocator ?? '');
 		setHighlightedNode(lastNode);
 	}, [nodesOnNodePath, tree, opened]);
 
@@ -192,10 +192,7 @@ const NodeNavigator = ({
 				return;
 			}
 
-			const {
-				dataPlane: items,
-				highlightedNode: node,
-			} = meta;
+			const { dataPlane: items, highlightedNode: node } = meta;
 
 			const vlist = getVlist();
 			if (!vlist) return;
