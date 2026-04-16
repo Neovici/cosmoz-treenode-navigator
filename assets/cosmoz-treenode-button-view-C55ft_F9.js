@@ -1,4 +1,4 @@
-import{c as P,o as Y,n as $,b as C,d as X,s as Z,u as k,e as w,f as F,g as K,h as B,i as O,j as H,k as _,l as tt}from"./tree-data-E1VurGUZ.js";import{w as et,b as h,e as ot,A as nt,t as S}from"./iframe-C76jLTYg.js";const rt=P`
+import{c as P,o as Y,n as $,b as C,d as X,s as Z,u as k,e as w,f as F,g as K,h as B,i as O,j as H,k as _,l as tt}from"./tree-data-BIJET6qj.js";import{w as et,b as h,e as ot,A as nt,t as S}from"./iframe-1atdA9Oc.js";const rt=P`
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -89,7 +89,7 @@ import{c as P,o as Y,n as $,b as C,d as X,s as Z,u as k,e as w,f as F,g as K,h a
 		justify-content: flex-end;
 		margin: 0;
 	}
-`,it=({slot:t,title:r,className:e,width:s="24",height:c="24",styles:u}={})=>h`
+`,it=({slot:t,title:r,className:e,width:i="24",height:c="24",styles:u}={})=>h`
   <svg
     slot=${Y(t)}
     class=${`x-icon ${e??""}`}
@@ -101,7 +101,7 @@ import{c as P,o as Y,n as $,b as C,d as X,s as Z,u as k,e as w,f as F,g as K,h a
     stroke-width="2"
     stroke-linecap="round"
     stroke-linejoin="round"
-    width=${s}
+    width=${i}
     height=${c}
     style=${Y(u)}
   >
@@ -183,7 +183,7 @@ import{c as P,o as Y,n as $,b as C,d as X,s as Z,u as k,e as w,f as F,g as K,h a
 `),I=(t,r,e)=>ot(h`<cosmoz-tooltip-content>
 			${$(r,()=>h`<strong slot="heading">${r}</strong>`)}
 			${$(e,()=>h`<p slot="description">${e}</p>`)}
-		</cosmoz-tooltip-content>`,t),ct=(t,r)=>{const{for:e,heading:s,description:c,placement:u="top",delay:l=300,disabled:d=!1}=r,i=k();w(()=>{if(!e)return;const n=t.getRootNode(),f=n.adoptedStyleSheets??[];f.includes(M)||(n.adoptedStyleSheets=[...f,M]);const o=document.createElement("div");o.setAttribute("popover","manual"),o.setAttribute("role","tooltip"),o.classList.add("cosmoz-tooltip-popover"),t.after(o),i.current=o,I(o,s,c);const g=`[name="${e}"]`,y=`--tooltip-anchor-${e}`;let v;const z=p=>{d||(clearTimeout(v),p.style.anchorName=y,o.style.positionAnchor=y,o.style.positionArea=u,v=window.setTimeout(()=>o.showPopover(),l))},E=()=>{clearTimeout(v),o.hidePopover()},L=p=>{const m=p.target.closest?.(g);m&&z(m)},b=p=>{const m=p.target.closest?.(g);if(!m)return;const a=p.relatedTarget;a&&m.contains(a)||E()},T=p=>{const m=p.target.closest?.(g);m&&z(m)},A=p=>{p.target.closest?.(g)&&E()};return n.addEventListener("pointerover",L),n.addEventListener("pointerout",b),n.addEventListener("focusin",T),n.addEventListener("focusout",A),()=>{clearTimeout(v),n.removeEventListener("pointerover",L),n.removeEventListener("pointerout",b),n.removeEventListener("focusin",T),n.removeEventListener("focusout",A),o.hidePopover(),o.remove(),i.current=void 0}},[e,u,l,d]),w(()=>{!e||!i.current||I(i.current,s,c)},[s,c,e]),w(()=>{!d||!i.current||i.current.hidePopover()},[d])},lt=P`
+		</cosmoz-tooltip-content>`,t),ct=(t,r)=>{const{for:e,heading:i,description:c,placement:u="top",delay:l=300,disabled:d=!1}=r,s=k();w(()=>{if(!e)return;const n=t.getRootNode(),f=n.adoptedStyleSheets??[];f.includes(M)||(n.adoptedStyleSheets=[...f,M]);const o=document.createElement("div");o.setAttribute("popover","manual"),o.setAttribute("role","tooltip"),o.classList.add("cosmoz-tooltip-popover"),t.after(o),s.current=o,I(o,i,c);const g=`[name="${e}"]`,y=`--tooltip-anchor-${e}`;let v;const z=p=>{d||(clearTimeout(v),p.style.anchorName=y,o.style.positionAnchor=y,o.style.positionArea=u,v=window.setTimeout(()=>o.showPopover(),l))},E=()=>{clearTimeout(v),o.hidePopover()},L=p=>{const m=p.target.closest?.(g);m&&z(m)},b=p=>{const m=p.target.closest?.(g);if(!m)return;const a=p.relatedTarget;a&&m.contains(a)||E()},T=p=>{const m=p.target.closest?.(g);m&&z(m)},A=p=>{p.target.closest?.(g)&&E()};return n.addEventListener("pointerover",L),n.addEventListener("pointerout",b),n.addEventListener("focusin",T),n.addEventListener("focusout",A),()=>{clearTimeout(v),n.removeEventListener("pointerover",L),n.removeEventListener("pointerout",b),n.removeEventListener("focusin",T),n.removeEventListener("focusout",A),o.hidePopover(),o.remove(),s.current=void 0}},[e,u,l,d]),w(()=>{!e||!s.current||I(s.current,i,c)},[i,c,e]),w(()=>{!d||!s.current||s.current.hidePopover()},[d])},lt=P`
 	:host {
 		display: inline-block;
 		anchor-name: --tooltip-anchor;
@@ -197,7 +197,7 @@ import{c as P,o as Y,n as $,b as C,d as X,s as Z,u as k,e as w,f as F,g as K,h a
 	.cosmoz-tooltip-popover {
 		position-anchor: --tooltip-anchor;
 	}
-`,dt=t=>{const{heading:r,description:e,for:s,placement:c="top",delay:u=300,disabled:l=!1}=t,d=k(),i=k(),n=F(()=>{l||(clearTimeout(i.current),i.current=window.setTimeout(()=>{d.current?.showPopover()},u))},[u,l]);w(()=>{l&&(clearTimeout(i.current),d.current?.hidePopover())},[l]);const f=F(()=>{clearTimeout(i.current),d.current?.hidePopover()},[]);return w(()=>{if(s)return;const o=g=>{const y=g.relatedTarget;y&&t.contains(y)||f()};return t.addEventListener("pointerover",n),t.addEventListener("pointerout",o),()=>{t.removeEventListener("pointerover",n),t.removeEventListener("pointerout",o)}},[s,n,f]),ct(t,{for:s,heading:r,description:e,placement:c,delay:u,disabled:l}),s?nt:h`
+`,dt=t=>{const{heading:r,description:e,for:i,placement:c="top",delay:u=300,disabled:l=!1}=t,d=k(),s=k(),n=F(()=>{l||(clearTimeout(s.current),s.current=window.setTimeout(()=>{d.current?.showPopover()},u))},[u,l]);w(()=>{l&&(clearTimeout(s.current),d.current?.hidePopover())},[l]);const f=F(()=>{clearTimeout(s.current),d.current?.hidePopover()},[]);return w(()=>{if(i)return;const o=g=>{const y=g.relatedTarget;y&&t.contains(y)||f()};return t.addEventListener("pointerover",n),t.addEventListener("pointerout",o),()=>{t.removeEventListener("pointerover",n),t.removeEventListener("pointerout",o)}},[i,n,f]),ct(t,{for:i,heading:r,description:e,placement:c,delay:u,disabled:l}),i?nt:h`
 		<slot @focusin=${n} @focusout=${f}></slot>
 		<div
 			class="cosmoz-tooltip-popover"
@@ -212,7 +212,7 @@ import{c as P,o as Y,n as $,b as C,d as X,s as Z,u as k,e as w,f as F,g as K,h a
 				<slot name="content"></slot>
 			</cosmoz-tooltip-content>
 		</div>
-	`};customElements.define("cosmoz-tooltip",C(dt,{styleSheets:[X,M,lt],observedAttributes:["heading","description","for","placement","delay","disabled"]}));const pt=(t,r)=>{const e=s=>{if(s.key===t&&r instanceof Function)return s.preventDefault(),r()};w(()=>(document.addEventListener("keydown",e),()=>{document.removeEventListener("keydown",e)}))},ut=h`<svg
+	`};customElements.define("cosmoz-tooltip",C(dt,{styleSheets:[X,M,lt],observedAttributes:["heading","description","for","placement","delay","disabled"]}));const pt=(t,r)=>{const e=i=>{if(i.key===t&&r instanceof Function)return i.preventDefault(),r()};w(()=>(document.addEventListener("keydown",e),()=>{document.removeEventListener("keydown",e)}))},ut=h`<svg
 	class="default-icon"
 	width="20"
 	height="20"
@@ -227,7 +227,7 @@ import{c as P,o as Y,n as $,b as C,d as X,s as Z,u as k,e as w,f as F,g as K,h a
 	<circle cx="7" cy="7" r="2" />
 	<circle cx="17" cy="17" r="2" />
 	<path d="M7 9v3c0 1.66 1.34 3 3 3h7" />
-</svg>`,U=({tree:t,showReset:r=!1,searchMinLength:e=3,searchDebounceTimeout:s=500})=>{const c=k(null),u=k(),[l,d]=B("nodePath",""),[i,n]=B("opened",!1),[f,o]=O(""),[g,y]=O(!1),v=H(()=>_(l,t),[l,t]),z=H(()=>!Array.isArray(v)||v.length===0?S("Select a node"):v.filter(a=>a).map(a=>a[t.searchProperty]).join(" / "),[v,t]);w(()=>{i?c.current?.showModal():c.current?.close()},[i]);const E=()=>{d("")},L=()=>n(!0),b=()=>{n(!1),y(!0),clearTimeout(u.current),u.current=setTimeout(()=>y(!1),500)};pt("Escape",b);const T=a=>{const x=c.current;if(!x)return;const V=a.clientX,q=a.clientY,N=x.getBoundingClientRect(),G=N.left,J=N.top,D=R=>{const Q=R.clientX-V,W=R.clientY-q;x.style.left=`${G+Q}px`,x.style.top=`${J+W}px`,x.style.margin="0"},j=()=>{document.removeEventListener("mousemove",D),document.removeEventListener("mouseup",j)};document.addEventListener("mousemove",D),document.addEventListener("mouseup",j)},A=a=>{a.preventDefault();const x=a.detail.value;x&&(d(x),b())},p=tt(o),m=()=>{f&&(d(f),b())};return h`
+</svg>`,U=({tree:t,showReset:r=!1,searchMinLength:e=3,searchDebounceTimeout:i=500})=>{const c=k(null),u=k(),[l,d]=B("nodePath",""),[s,n]=B("opened",!1),[f,o]=O(""),[g,y]=O(!1),v=H(()=>_(l,t),[l,t]),z=H(()=>!Array.isArray(v)||v.length===0?S("Select a node"):v.filter(a=>a).map(a=>a[t.searchProperty]).join(" / "),[v,t]);w(()=>{s?c.current?.showModal():c.current?.close()},[s]);const E=()=>{d("")},L=()=>n(!0),b=()=>{n(!1),y(!0),clearTimeout(u.current),u.current=setTimeout(()=>y(!1),500)};pt("Escape",s?b:void 0);const T=a=>{const x=c.current;if(!x)return;const V=a.clientX,q=a.clientY,N=x.getBoundingClientRect(),G=N.left,J=N.top,D=R=>{const Q=R.clientX-V,W=R.clientY-q;x.style.left=`${G+Q}px`,x.style.top=`${J+W}px`,x.style.margin="0"},j=()=>{document.removeEventListener("mousemove",D),document.removeEventListener("mouseup",j)};document.addEventListener("mousemove",D),document.addEventListener("mouseup",j)},A=a=>{a.preventDefault();const x=a.detail.value;x&&(d(x),b())},p=tt(o),m=()=>{f&&(d(f),b())};return h`
 		<nav part="actions">
 			<cosmoz-tooltip
 				placement="right"
@@ -274,9 +274,9 @@ import{c as P,o as Y,n as $,b as C,d as X,s as Z,u as k,e as w,f as F,g as K,h a
 					@node-path-changed=${A}
 					@highlighted-node-path-changed=${p}
 					.searchMinLength=${e}
-					.searchDebounceTimeout=${s}
+					.searchDebounceTimeout=${i}
 					.tree=${t}
-					.opened=${i}
+					.opened=${s}
 				>
 					<slot></slot>
 				</cosmoz-treenode-navigator>
