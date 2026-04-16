@@ -1,6 +1,9 @@
 import { useEffect } from '@pionjs/pion';
 
-export const useKeyDown = (key: string, callback: () => void): void => {
+export const useKeyDown = (
+	key: string,
+	callback: (() => void) | undefined,
+): void => {
 	const onKeyDown = (e: KeyboardEvent): void => {
 		if (e.key === key && callback instanceof Function) {
 			e.preventDefault();

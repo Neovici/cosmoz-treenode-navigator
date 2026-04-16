@@ -116,7 +116,10 @@ const CosmozNodeButtonView = ({
 		);
 	};
 
-	useKeyDown('Escape', onClose);
+	// Only register Escape handler when dialog is open
+	// When closed, pass undefined to prevent useKeyDown from calling preventDefault()
+	// and blocking the native dialog's Escape close behavior
+	useKeyDown('Escape', opened ? onClose : undefined);
 
 	// Dialog dragging support
 	const onHeaderMouseDown = (e: MouseEvent) => {
