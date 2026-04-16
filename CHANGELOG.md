@@ -1,3 +1,9 @@
+## [8.1.7](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v8.1.6...v8.1.7) (2026-04-16)
+
+### Bug Fixes
+
+* don't block native dialog Escape when not open ([b232fd4](https://github.com/Neovici/cosmoz-treenode-navigator/commit/b232fd45fb1b52a4ec349d586467bc91f2a80de6)), closes [#146](https://github.com/Neovici/cosmoz-treenode-navigator/issues/146)
+
 ## [8.1.6](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v8.1.5...v8.1.6) (2026-02-20)
 
 ### Bug Fixes
