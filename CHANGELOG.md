@@ -1,3 +1,9 @@
+## [8.2.0](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v8.1.7...v8.2.0) (2026-05-07)
+
+### Features
+
+* expand i18next range to >=23.0.0 <27.0.0 ([#215](https://github.com/Neovici/cosmoz-treenode-navigator/issues/215)) ([33b092c](https://github.com/Neovici/cosmoz-treenode-navigator/commit/33b092c74b42519d6e44513c32bad65dd1369f26))
+
 ## [8.1.7](https://github.com/Neovici/cosmoz-treenode-navigator/compare/v8.1.6...v8.1.7) (2026-04-16)
 
 ### Bug Fixes
