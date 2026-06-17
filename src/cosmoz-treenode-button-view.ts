@@ -21,14 +21,22 @@ import './cosmoz-treenode-navigator';
 import { useKeyDown } from './hooks/useKeyDown';
 import { getTreePathParts } from './util/helpers';
 
+type ButtonVariant =
+	| 'primary'
+	| 'secondary'
+	| 'tertiary'
+	| 'destructive'
+	| 'link';
+
 type ButtonViewProps = {
 	tree: Tree;
 	showReset?: boolean;
 	searchMinLength?: number;
 	searchDebounceTimeout: number;
+	variant?: ButtonVariant;
 };
 
-type ObservedAttributes = 'show-reset' | 'search-min-length';
+type ObservedAttributes = 'show-reset' | 'search-min-length' | 'variant';
 
 type ButtonViewDialog = HTMLDialogElement & {
 	fit: () => void;
@@ -56,6 +64,7 @@ const CosmozNodeButtonView = ({
 	showReset = false,
 	searchMinLength = 3,
 	searchDebounceTimeout = 500,
+	variant = 'secondary',
 }: ButtonViewProps) => {
 	const dialogRef = useRef<ButtonViewDialog | null>(null);
 	const tooltipTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
@@ -180,7 +189,7 @@ const CosmozNodeButtonView = ({
 				.disabled=${tooltipDisabled}
 			>
 				<cosmoz-button
-					variant="secondary"
+					variant=${variant}
 					full-width
 					data-testid="open-button"
 					@click=${onOpen}
@@ -259,6 +268,7 @@ const CosmozNodeButtonView = ({
 CosmozNodeButtonView.observedAttributes = [
 	'show-reset',
 	'search-min-length',
+	'variant',
 ] as readonly ObservedAttributes[];
 
 customElements.define(
