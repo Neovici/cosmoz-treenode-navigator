@@ -1,7 +1,6 @@
 # cosmoz-treenode-navigator
 
-[![Build Status](https://github.com/Neovici/cosmoz-treenode-navigator/workflows/Github%20CI/badge.svg)](https://github.com/Neovici/cosmoz-treenode-navigator/actions?workflow=Github+CI)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![Build Status](https://github.com/Neovici/cosmoz-treenode-navigator/workflows/CI/badge.svg)](https://github.com/Neovici/cosmoz-treenode-navigator/actions?workflow=CI)
 
 A [PionJS](https://github.com/nicholaspmccracken/pion)-based web component for navigating, searching, and selecting nodes in a hierarchical tree structure.
 
@@ -95,14 +94,15 @@ A trigger button that opens a dialog containing the tree navigator. This is the 
 
 #### Properties / Attributes
 
-| Property                | Attribute           | Type      | Default | Description                                     |
-| ----------------------- | ------------------- | --------- | ------- | ----------------------------------------------- |
-| `tree`                  | --                  | `Tree`    | --      | The tree data structure (set via JS)            |
-| `nodePath`              | --                  | `string`  | `''`    | Selected node's path locator (two-way bindable) |
-| `opened`                | --                  | `boolean` | `false` | Whether the dialog is open (two-way bindable)   |
-| `showReset`             | `show-reset`        | `boolean` | `false` | Show the reset/clear button                     |
-| `searchMinLength`       | `search-min-length` | `number`  | `3`     | Minimum characters to trigger search            |
-| `searchDebounceTimeout` | --                  | `number`  | `500`   | Debounce timeout (ms) before search triggers    |
+| Property                | Attribute           | Type      | Default       | Description                                                                                               |
+| ----------------------- | ------------------- | --------- | ------------- | --------------------------------------------------------------------------------------------------------- |
+| `tree`                  | --                  | `Tree`    | --            | The tree data structure (set via JS)                                                                      |
+| `nodePath`              | --                  | `string`  | `''`          | Selected node's path locator (two-way bindable)                                                           |
+| `opened`                | --                  | `boolean` | `false`       | Whether the dialog is open (two-way bindable)                                                             |
+| `variant`               | `variant`           | `string`  | `'secondary'` | Button variant for the open trigger (`'primary'`, `'secondary'`, `'tertiary'`, `'destructive'`, `'link'`) |
+| `showReset`             | `show-reset`        | `boolean` | `false`       | Show the reset/clear button                                                                               |
+| `searchMinLength`       | `search-min-length` | `number`  | `3`           | Minimum characters to trigger search                                                                      |
+| `searchDebounceTimeout` | --                  | `number`  | `500`         | Debounce timeout (ms) before search triggers                                                              |
 
 #### Events
 
@@ -279,6 +279,7 @@ All buttons have been converted to `cosmoz-button` components. Update any CSS se
 | `npm run test:watch`      | Run tests in watch mode                            |
 | `npm run lint`            | Lint with ESLint                                   |
 | `npm run build`           | Compile TypeScript                                 |
+| `npm run changeset`       | Create a changeset for version bump                |
 | `npm run storybook:build` | Build static Storybook                             |
 
 Tests use [Vitest](https://vitest.dev/) with two projects: `unit` (jsdom) for helper function tests, and `storybook` (Playwright browser mode) for component interaction tests via Storybook play functions.
