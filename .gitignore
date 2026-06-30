@@ -10,6 +10,11 @@ yarn-error.log
 .eslintcache
 .idea/
 /web-dev-server.config.mjs
+
+# Codecov uploader artifacts
+codecov
+codecov.SHA256SUM
+codecov.SHA256SUM.sig
 codecov
 codecov.SHA256SUM
 codecov.SHA256SUM.sig
