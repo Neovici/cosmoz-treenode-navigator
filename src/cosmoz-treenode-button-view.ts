@@ -194,6 +194,7 @@ const CosmozNodeButtonView = ({
 					data-testid="open-button"
 					@click=${onOpen}
 					part="action-open"
+					exportparts="button:action-open-button"
 				>
 					<slot name="prefix" slot="prefix">${defaultIcon}</slot>
 					<div class="path-text">
