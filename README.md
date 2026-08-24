@@ -134,6 +134,14 @@ A trigger button that opens a dialog containing the tree navigator. This is the 
 | `select-button` | The "Select" confirmation button                                               |
 | `cancel-button` | The "Cancel" button                                                            |
 
+The open button also exports the inner `cosmoz-button`'s `button` part as `action-open-button`, allowing consumers to style the native button element through the component boundary:
+
+```css
+cosmoz-treenode-button-view::part(action-open-button) {
+	/* styles applied to the open button's inner button part */
+}
+```
+
 #### Container Query Support
 
 The host element is declared as a CSS container (`container-type: inline-size`). When the component's width shrinks to 80px or less, the selected node path text is automatically hidden, leaving only the icon. This allows graceful degradation in narrow layouts without media queries.
