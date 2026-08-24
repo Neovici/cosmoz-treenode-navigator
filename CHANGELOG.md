@@ -1,5 +1,11 @@
 # Changelog
 
+## 8.3.1
+
+### Patch Changes
+
+- 37ff083: Document the exported `action-open-button` part for styling the open button's inner button element.
+
 ## 8.3.0
 
 ### Minor Changes
