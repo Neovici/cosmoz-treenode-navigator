@@ -86,6 +86,34 @@ The data is a nested object keyed by node IDs:
 
 The property names `name` and `children` are configurable via `DefaultTree` options (`searchProperty`, `childProperty`). The `pathLocatorSeparator` defaults to `"."`.
 
+## Loading nodes on demand
+
+A `Tree` holds the whole hierarchy in memory, which stops being an option once it is a few hundred thousand nodes. Pass a `source` instead and the components ask for one level at a time. Every method may answer synchronously or with a promise.
+
+```js
+import type { NodeSource } from '@neovici/cosmoz-treenode-navigator/source';
+
+const source: NodeSource = {
+	getLevel: (pathLocator) => fetchChildren(pathLocator), // roots when empty
+	getPath: (pathLocator) => fetchAncestors(pathLocator), // outermost first
+	search: (query, scope) => fetchMatches(query),
+	hasChildren: () => undefined, // undefined renders the arrow anyway
+	label: (node) => node.name,
+	pathLabel: () => undefined, // heading above a group of search results
+	parentOf: (node) => node.pathLocator.slice(0, node.pathLocator.lastIndexOf('.')),
+	scopedSearch: false, // true if `search` honours `scope`
+};
+
+html`<cosmoz-treenode-button-view .source=${source}></cosmoz-treenode-button-view>`;
+```
+
+Two things are worth getting right:
+
+- `search` results are rendered in the order they arrive. A server that ranks its matches has already decided which one the user meant, and re-sorting throws that away.
+- `scopedSearch: false` hides the "search again but globally" button, which has nothing to offer when the search was global to begin with.
+
+`tree` keeps working on its own — it is served through the built-in `treeSource` adapter, which is also exported if you want to wrap one yourself.
+
 ## Components
 
 ### `<cosmoz-treenode-button-view>`
