@@ -23,10 +23,6 @@ export default css`
 		min-width: 0;
 	}
 
-	cosmoz-tooltip > cosmoz-button {
-		min-width: 50px;
-	}
-
 	cosmoz-tooltip > cosmoz-button::part(button) {
 		justify-content: flex-start;
 	}
@@ -45,9 +41,15 @@ export default css`
 		min-width: 0;
 	}
 
+	/* Too narrow for the label: the icon alone, centred, however narrow the
+	   container gets — a 44px sidebar rail included. */
 	@container (max-width: 80px) {
 		.path-text {
 			display: none;
+		}
+		cosmoz-tooltip > cosmoz-button::part(button) {
+			justify-content: center;
+			padding-inline: 0;
 		}
 	}
 
