@@ -106,4 +106,10 @@ export default css`
 	.global-search {
 		margin-block: calc(var(--cz-spacing) * 4);
 	}
+
+	.status {
+		padding: 6px 16px;
+		color: var(--cosmoz-treenode-navigator-status-color, #757575);
+		font-size: 13px;
+	}
 `;

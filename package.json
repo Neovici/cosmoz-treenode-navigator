@@ -60,6 +60,10 @@
 		"./cosmoz-treenode-button-view": {
 			"types": "./dist/cosmoz-treenode-button-view.d.ts",
 			"default": "./dist/cosmoz-treenode-button-view.js"
+		},
+		"./source": {
+			"types": "./dist/util/source.d.ts",
+			"default": "./dist/util/source.js"
 		}
 	},
 	"dependencies": {
