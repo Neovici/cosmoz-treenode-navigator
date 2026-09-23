@@ -17,6 +17,8 @@ export default {
 			},
 		},
 		'@storybook/addon-vitest',
+		// Keeps light-dark() intact through vite's CSS minifier (tokens v4).
+		'@neovici/cfg/storybook/preset.mjs',
 	],
 	framework: {
 		name: '@storybook/web-components-vite',
