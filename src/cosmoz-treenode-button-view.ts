@@ -16,6 +16,7 @@ import { xIcon } from '@neovici/cosmoz-icons/untitled';
 import '@neovici/cosmoz-tooltip';
 import type { Tree } from '@neovici/cosmoz-tree';
 import { t } from 'i18next';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { when } from 'lit-html/directives/when.js';
 import './cosmoz-treenode-navigator';
 import { useKeyDown } from './hooks/useKeyDown';
@@ -28,15 +29,23 @@ type ButtonVariant =
 	| 'destructive'
 	| 'link';
 
+type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
+
 type ButtonViewProps = {
 	tree: Tree;
 	showReset?: boolean;
 	searchMinLength?: number;
 	searchDebounceTimeout: number;
 	variant?: ButtonVariant;
+	/** Passed to the trigger button; cosmoz-button's default when unset. */
+	size?: ButtonSize;
 };
 
-type ObservedAttributes = 'show-reset' | 'search-min-length' | 'variant';
+type ObservedAttributes =
+	| 'show-reset'
+	| 'search-min-length'
+	| 'variant'
+	| 'size';
 
 type ButtonViewDialog = HTMLDialogElement & {
 	fit: () => void;
@@ -65,6 +74,7 @@ const CosmozNodeButtonView = ({
 	searchMinLength = 3,
 	searchDebounceTimeout = 500,
 	variant = 'secondary',
+	size,
 }: ButtonViewProps) => {
 	const dialogRef = useRef<ButtonViewDialog | null>(null);
 	const tooltipTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
@@ -190,6 +200,7 @@ const CosmozNodeButtonView = ({
 			>
 				<cosmoz-button
 					variant=${variant}
+					size=${ifDefined(size)}
 					full-width
 					data-testid="open-button"
 					@click=${onOpen}
@@ -270,6 +281,7 @@ CosmozNodeButtonView.observedAttributes = [
 	'show-reset',
 	'search-min-length',
 	'variant',
+	'size',
 ] as readonly ObservedAttributes[];
 
 customElements.define(
