@@ -2,108 +2,65 @@ import { css } from '@pionjs/pion';
 
 export default css`
 	:host {
-		--cosmoz-treenode-navigator-select-node-icon-color: var(
-			--primary-color,
-			#3a91e2
-		);
-		--cosmoz-treenode-navigator-list-item-focused-color: #f0f8ff;
+		display: flex;
+		flex-direction: column;
+		gap: calc(var(--cz-spacing) * 2);
 	}
 
 	.header {
+		display: flex;
+		flex-direction: column;
+		gap: calc(var(--cz-spacing) * 2);
 		margin: 0 16px;
-		color: var(--cz-text-color, inherit);
-	}
-
-	.header a {
-		text-decoration: none;
-		color: inherit;
-	}
-
-	.icon {
-		display: inline-block;
-		position: relative;
-		padding: 8px;
-		outline: none;
-		user-select: none;
-		cursor: pointer;
-		z-index: 0;
-		line-height: 1;
-		width: 40px;
-		height: 40px;
-		box-sizing: border-box;
-		color: var(--cosmoz-treenode-navigator-icon-color, currentColor);
-	}
-
-	.icon svg {
-		fill: currentColor;
 	}
 
 	.path {
 		display: flex;
-		align-items: center;
 		flex-wrap: wrap;
-		margin: 0;
+		align-items: center;
+		gap: 2px;
+		min-height: var(--cz-text-sm-line-height);
+		font-size: var(--cz-text-sm);
+		line-height: var(--cz-text-sm-line-height);
+		color: var(--cz-color-text-tertiary);
 	}
 
 	.slash {
-		margin: 0 2px;
+		color: var(--cz-color-text-quaternary);
 	}
 
-	.pointer {
+	.crumb {
+		all: unset;
 		cursor: pointer;
+		padding: 0 4px;
+		border-radius: var(--cz-radius-xs);
+		font-weight: var(--cz-font-weight-medium);
+	}
+
+	.crumb:hover {
+		color: var(--cz-color-text-secondary-hover);
+		background: var(--cz-color-bg-primary-hover);
+	}
+
+	.crumb:focus-visible {
+		box-shadow: var(--cz-focus-ring);
+	}
+
+	.crumb[aria-current] {
+		color: var(--cz-color-text-primary);
+		font-weight: var(--cz-font-weight-semibold);
 	}
 
 	.items {
 		height: var(--cosmoz-treenode-navigator-list-height, 50vh);
-		width: 100%;
-		overflow-y: auto;
+		margin: 0 8px;
 	}
 
-	.section {
-		background-color: var(--cz-bg-color, #f5f5f5);
-		padding: 5px;
-	}
-
-	.item {
-		width: 100%;
-	}
-
-	.node {
-		align-items: center;
-		display: flex;
-		font-family: 'Roboto', 'Noto', sans-serif;
-		font-size: 16px;
-		font-weight: 400;
-		color: var(--cz-text-color, inherit);
-		height: 40px;
-		line-height: 24px;
-		padding: 6px 12px 6px 16px;
-		cursor: pointer;
-	}
-
-	.name {
-		flex: auto;
-	}
-
-	.node.selected {
-		background-color: var(
-			--cosmoz-listbox-active-color,
-			var(--cosmoz-selection-color, rgba(58, 145, 226, 0.1))
-		);
-		transition: background-color 0.2s ease-out;
-	}
-
-	.node.selected .icon svg {
-		fill: var(--cosmoz-treenode-navigator-select-node-icon-color);
-		transition: color 0.8s ease-out;
-	}
-
-	.path > .pointer:hover,
-	.path > .pointer:has(~ .pointer:hover) {
-		text-decoration: underline;
-	}
-
-	.global-search {
-		margin-block: calc(var(--cz-spacing) * 4);
+	.empty {
+		margin: 0 16px;
+		padding-block: calc(var(--cz-spacing) * 4);
+		color: var(--cz-color-text-tertiary);
+		font-size: var(--cz-text-sm);
+		text-align: center;
 	}
 `;

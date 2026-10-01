@@ -1,4 +1,3 @@
-import { virtualize } from '@lit-labs/virtualizer/virtualize.js';
 import {
 	component,
 	useCallback,
@@ -8,26 +7,26 @@ import {
 	useRef,
 	useState,
 } from '@pionjs/pion';
-import { html, nothing, type TemplateResult } from 'lit-html';
-import { guard } from 'lit-html/directives/guard.js';
+import { html, nothing } from 'lit-html';
 import { ref } from 'lit-html/directives/ref.js';
 import { when } from 'lit-html/directives/when.js';
 
-import '@neovici/cosmoz-button/cosmoz-button';
 import '@neovici/cosmoz-input';
-import { useMeta } from '@neovici/cosmoz-utils/hooks/use-meta';
+import type { TreeViewApi } from '@neovici/cosmoz-tree-view';
+import '@neovici/cosmoz-tree-view/cosmoz-tree-view';
 import { t } from 'i18next';
 
 import type { Node, Tree } from '@neovici/cosmoz-tree';
 import { useHost } from '@neovici/cosmoz-utils/hooks/use-host';
 import { notifyProperty } from '@neovici/cosmoz-utils/hooks/use-notify-property';
 import style from './cosmoz-treenode-navigator.styles';
+import { getTreePathParts } from './util/helpers';
 import {
-	computeDataPlane,
-	computeRowClass,
-	getParentPath,
-	getTreePathParts,
-} from './util/helpers';
+	ancestorPaths,
+	searchView,
+	sortedChildren,
+	sortedRoots,
+} from './util/tree-model';
 
 type TreenodeNavigatorProps = {
 	tree: Tree;
@@ -36,13 +35,80 @@ type TreenodeNavigatorProps = {
 	searchDebounceTimeout: number;
 };
 
-type NavigatorMeta = {
-	dataPlane: Node[];
-	highlightedNode: Node | null;
-	onNodeClick: (node: Node | null) => void;
+const useDebouncedSearch = (
+	value: string,
+	minLength: number,
+	timeout: number,
+) => {
+	const [search, setSearch] = useState('');
+	useEffect(() => {
+		const id = setTimeout(() => {
+			const trimmed = value.trim();
+			if (trimmed.length > 0 && trimmed.length < minLength) return;
+			setSearch(trimmed);
+		}, timeout);
+		return () => clearTimeout(id);
+	}, [value]);
+	return search;
 };
 
-// eslint-disable-next-line max-statements
+/**
+ * What the tree shows: the whole tree, sorted, or — while searching — only
+ * the matches and their ancestors, all expanded.
+ *
+ * The sorted children are cached per tree and rebuilt on every open, so a
+ * new tree — or nodes added to the same tree in place — show up the next
+ * time the navigator opens. Sorting is lazy, per expanded node.
+ */
+const useTreeModel = (
+	tree: Tree | undefined,
+	search: string,
+	opened?: boolean,
+) => {
+	const getChildren = useMemo(
+		() => (tree && opened !== false ? sortedChildren(tree) : undefined),
+		[tree, opened],
+	);
+	const roots = useMemo(() => sortedRoots(tree), [tree, opened]);
+	const found = useMemo(
+		() =>
+			tree && search && getChildren
+				? searchView(tree, search, getChildren)
+				: undefined,
+		[tree, search, getChildren],
+	);
+	return { getChildren, roots, found };
+};
+
+/**
+ * Where the highlighted node sits, root first, so the reader keeps their
+ * bearings while scrolling a deep tree. Each step selects that ancestor.
+ */
+const renderPath = (
+	tree: Tree | undefined,
+	path: string,
+	select: (path: string) => void,
+) => {
+	const nodes = tree && path ? getTreePathParts(path, tree) : [];
+	if (!nodes.length) return nothing;
+	const last = nodes.length - 1;
+	return html`<nav class="path" data-testid="path" aria-label=${t('Path')}>
+		${nodes.map(
+			(node, i) =>
+				html`${i > 0
+						? html`<span class="slash" aria-hidden="true">/</span>`
+						: nothing}<button
+						type="button"
+						class="crumb"
+						aria-current=${i === last ? 'location' : nothing}
+						@click=${() => select(node.pathLocator)}
+					>
+						${node[tree!.searchProperty]}
+					</button>`,
+		)}
+	</nav>`;
+};
+
 const NodeNavigator = ({
 	/**
 	 * The main node structure
@@ -55,334 +121,104 @@ const NodeNavigator = ({
 	opened,
 	searchDebounceTimeout = 500,
 }: TreenodeNavigatorProps) => {
-	const listRef = useRef<HTMLElement>();
 	const host = useHost();
+	const treeViewRef = useRef<(HTMLElement & TreeViewApi) | undefined>(
+		undefined,
+	);
 
 	// nodePath is the single source of truth - external two-way binding
 	const [nodePath, setNodePath] = useProperty<string>('nodePath', '');
-
-	// highlightedNode is internal navigation state only
-	const [highlightedNode, setHighlightedNode] = useState<Node | null>(null);
-
-	const [search, setSearch] = useState<string>('');
-	const [searchValue, setSearchValue] = useState<string>('');
-	const [openNodePath, setOpenNodePath] = useState<string>('');
-
-	// nodesOnNodePath derived from nodePath + tree
-	const nodesOnNodePath = useMemo(
-		() => getTreePathParts(nodePath, tree),
-		[nodePath, tree],
+	// The node the reader has picked out but not confirmed yet.
+	const [highlighted, setHighlighted] = useState<string>('');
+	const [expanded, setExpanded] = useState<readonly string[]>([]);
+	const [searchExpanded, setSearchExpanded] = useState<readonly string[]>([]);
+	const [searchValue, setSearchValue] = useState('');
+	const search = useDebouncedSearch(
+		searchValue,
+		searchMinLength,
+		searchDebounceTimeout,
 	);
+	const { getChildren, roots, found } = useTreeModel(tree, search, opened);
+
+	// On open, show where the reader is: the current node selected, its
+	// ancestors expanded, and — like opening a folder — its own children.
+	// A path that is only partly valid opens its last valid node; with no
+	// current node, the roots are opened.
+	useEffect(() => {
+		if (!opened || !tree) return;
+		const parts = getTreePathParts(nodePath, tree);
+		const current = parts[parts.length - 1]?.pathLocator;
+		const own = current ? [current] : roots.map((n) => n.pathLocator);
+		setExpanded([...ancestorPaths(tree, current), ...own]);
+		setHighlighted(current === nodePath ? nodePath : '');
+	}, [opened, nodePath, tree, roots]);
+
+	useEffect(() => setSearchExpanded(found?.expanded ?? []), [found]);
 
 	useEffect(() => {
-		const timeoutId = setTimeout(() => {
-			const searchLength = searchValue.trim().length;
+		notifyProperty(host, 'highlightedNodePath', highlighted);
+	}, [highlighted]);
 
-			if (searchLength > 0 && searchLength < searchMinLength) {
-				return;
-			}
-
-			setSearch(searchValue.trim());
-		}, searchDebounceTimeout);
-
-		return () => clearTimeout(timeoutId);
-	}, [searchValue]);
-
-	const dataPlane = useMemo(
-		() => computeDataPlane(tree, search, openNodePath),
-		[tree, search, openNodePath],
-	);
-
-	/**
-	 * Opens a node (renderLevel) based on a given path
-	 *
-	 * Don't update nodePath here - this is just navigation
-	 * nodePath should only change on selection
-	 *
-	 * @param clickedNode - The clicked node
-	 * @return undefined
-	 */
-	const onNodeClick = useCallback((clickedNode?: Node | null) => {
-		setOpenNodePath(clickedNode?.pathLocator || '');
-		setSearchValue('');
-		setHighlightedNode(null);
+	const confirm = useCallback((path?: string) => {
+		if (path) setNodePath(path);
 	}, []);
 
-	/**
-	 * Handles node selection (e.g. on double-click or Enter)
-	 * @param node
-	 */
-	const onNodeSelect = useCallback((node: Node | null) => {
-		if (node?.pathLocator) {
-			setNodePath(node.pathLocator);
+	const onSearchKeyDown = (e: KeyboardEvent) => {
+		if (e.key === 'ArrowDown') {
+			e.preventDefault();
+			treeViewRef.current?.focusActiveItem();
+		} else if (e.key === 'Enter') {
+			e.preventDefault();
+			confirm(highlighted);
 		}
-	}, []);
-
-	// Clear highlightedNodePath when navigating to a new folder
-	useEffect(() => {
-		if (!openNodePath) {
-			return;
-		}
-
-		notifyProperty(host, 'highlightedNodePath', '');
-	}, [openNodePath]);
-
-	// When nodePath changes externally, sync the view
-	useEffect(() => {
-		if (!nodesOnNodePath?.length || !tree || !opened) {
-			return;
-		}
-
-		const lastNode = nodesOnNodePath[nodesOnNodePath.length - 1];
-		if (!lastNode?.pathLocator) {
-			return;
-		}
-
-		if (tree.hasChildren(lastNode)) {
-			setOpenNodePath(lastNode.pathLocator);
-			return;
-		}
-
-		const parentPath = getParentPath(tree, lastNode);
-		// Make sure the parent node exists, otherwise fall back to displaying the roots
-		setOpenNodePath(tree.getNodeByPathLocator(parentPath)?.pathLocator ?? '');
-		setHighlightedNode(lastNode);
-	}, [nodesOnNodePath, tree, opened]);
-
-	// Notify highlightedNodePath when highlightedNode changes
-	useEffect(() => {
-		notifyProperty(
-			host,
-			'highlightedNodePath',
-			highlightedNode?.pathLocator || '',
-		);
-	}, [highlightedNode]);
-
-	const meta = useMeta<NavigatorMeta>({
-		dataPlane,
-		highlightedNode: highlightedNode ?? null,
-		onNodeClick,
-	});
-
-	useEffect(() => {
-		if (!opened) {
-			return;
-		}
-
-		const getVlist = () => {
-			const list = listRef.current;
-			if (!list) return null;
-			return list[Object.getOwnPropertySymbols(list)[0]];
-		};
-
-		const vlist = getVlist();
-		if (vlist && meta.highlightedNode) {
-			const index = meta.dataPlane?.indexOf(meta.highlightedNode);
-			if (index !== undefined && index >= 0) {
-				vlist.scrollToIndex = {
-					index,
-					position: 'center',
-				};
-			}
-		}
-
-		// eslint-disable-next-line max-statements
-		const handler = (e: KeyboardEvent) => {
-			if ((e.ctrlKey && e.altKey) || e.defaultPrevented) {
-				return;
-			}
-
-			const { dataPlane: items, highlightedNode: node } = meta;
-
-			const vlist = getVlist();
-			if (!vlist) return;
-
-			const currentIndex = items.findIndex(
-				(i) => i.pathLocator === node?.pathLocator,
-			);
-
-			const navigateToIndex = (newIndex: number, position: string) => {
-				if (newIndex >= 0 && newIndex < items.length) {
-					setHighlightedNode(items[newIndex]);
-
-					const needsScroll =
-						position === 'start'
-							? newIndex < vlist._firstVisible
-							: newIndex > vlist._lastVisible;
-
-					if (needsScroll) {
-						vlist.scrollToIndex = { index: newIndex, position };
-					}
-
-					return true;
-				}
-				return false;
-			};
-
-			switch (e.key) {
-				case 'Up':
-				case 'ArrowUp': {
-					e.preventDefault();
-					navigateToIndex(Math.max(currentIndex - 1, 0), 'start');
-					break;
-				}
-				case 'Down':
-				case 'ArrowDown': {
-					e.preventDefault();
-					if (currentIndex < items.length - 1) {
-						navigateToIndex(currentIndex + 1, 'end');
-					}
-					break;
-				}
-				case 'Enter':
-					e.preventDefault();
-					if (node) {
-						onNodeSelect(node);
-					}
-					break;
-
-				default:
-					break;
-			}
-		};
-
-		document.addEventListener('keydown', handler, true);
-
-		return () => document.removeEventListener('keydown', handler, true);
-	}, [opened, meta, onNodeSelect]);
-
-	// Double-click handler for node selection
-	const handleNodeDblClick = () => {
-		if (highlightedNode) {
-			onNodeSelect(highlightedNode);
-		}
-	};
-
-	const renderItem = (node: Node | null, index: number) => {
-		if (!node) {
-			return nothing as unknown as TemplateResult<1>;
-		}
-
-		return html` <div class="item">
-			${when(search, () => {
-				const parentPath = getParentPath(tree, node);
-				return when(
-					index === 0 ||
-						parentPath !== getParentPath(tree, dataPlane[index - 1]),
-					() => html`
-						<div class="section">
-							${tree.getPathString(parentPath, tree.searchProperty)}
-						</div>
-					`,
-				);
-			})}
-			<div
-				class=${computeRowClass('node', node, highlightedNode)}
-				data-testid="node"
-				@click=${() => setHighlightedNode(node)}
-				@dblclick=${handleNodeDblClick}
-			>
-				<div class="name" data-testid="node-name">
-					${node[tree.searchProperty]}
-				</div>
-				${when(
-					tree.hasChildren(node),
-					() => html`
-						<span
-							class="icon"
-							data-testid="node-arrow"
-							@click=${() => onNodeClick(node)}
-						>
-							<svg
-								viewBox="0 0 24 24"
-								preserveAspectRatio="xMidYMid meet"
-								focusable="false"
-								style="pointer-events: none; display: block; width: 100%; height: 100%;"
-							>
-								<g>
-									<path
-										d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-									></path>
-								</g>
-							</svg>
-						</span>
-					`,
-				)}
-			</div>
-		</div>`;
 	};
 
 	return html`
 		<div class="header">
-			<h3 class="path">
-				<span
-					class="icon"
-					data-testid="home-icon"
-					@click=${() => onNodeClick()}
-				>
-					<svg
-						viewBox="0 0 24 24"
-						preserveAspectRatio="xMidYMid meet"
-						focusable="false"
-						style="pointer-events: none; display: block; width: 100%; height: 100%;"
-					>
-						<g><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></g>
-					</svg>
-				</span>
-				${guard([tree, openNodePath], () =>
-					((openNodePath && tree?.getPathNodes(openNodePath)) || [])
-						.filter((node): node is Node => node !== undefined)
-						.map(
-							(node) => html`
-								<span class="slash">/</span>
-								<span
-									class="pointer"
-									tabindex="0"
-									@click=${() => onNodeClick(node)}
-									>${node[tree.searchProperty]}</span
-								>
-							`,
-						),
-				)}
-			</h3>
+			${renderPath(tree, highlighted, setHighlighted)}
 			<cosmoz-input
 				autofocus
-				tabindex="0"
 				data-testid="search-input"
 				.value=${searchValue}
 				.placeholder=${t('Search...')}
 				@input=${(e: Event) =>
 					setSearchValue((e.target as HTMLInputElement).value)}
-			/>
+				@keydown=${onSearchKeyDown}
+			></cosmoz-input>
 		</div>
 		${when(
-			tree,
+			tree && opened !== false,
 			() =>
-				html` <div
+				html`<cosmoz-tree-view
 					class="items"
-					${ref((el) => (listRef.current = el as HTMLElement))}
-				>
-					<div virtualizer-sizer></div>
-					${virtualize({
-						items: dataPlane,
-						renderItem,
-						scroller: true,
-					})}
-				</div>`,
+					data-testid="tree"
+					label=${t('Nodes')}
+					.items=${found?.roots ?? roots}
+					.getChildren=${found?.getChildren ?? getChildren}
+					.getId=${(node: Node) => node.pathLocator}
+					.getLabel=${(node: Node) => node[tree.searchProperty]}
+					.expanded=${found ? searchExpanded : expanded}
+					.selected=${highlighted || undefined}
+					@expanded-changed=${(e: CustomEvent<{ value: string[] }>) => {
+						e.preventDefault();
+						(found ? setSearchExpanded : setExpanded)(e.detail.value);
+					}}
+					@selected-changed=${(e: CustomEvent<{ value: string }>) => {
+						e.preventDefault();
+						setHighlighted(e.detail.value);
+					}}
+					@activate=${(e: CustomEvent<{ id: string }>) => confirm(e.detail.id)}
+					${ref(
+						(el) => (treeViewRef.current = el as HTMLElement & TreeViewApi),
+					)}
+				></cosmoz-tree-view>`,
 		)}
 		${when(
-			search && openNodePath,
-			() => html`
-				<cosmoz-button
-					class="global-search"
-					variant="link"
-					full-width
-					data-testid="global-search-button"
-					@click=${() => setOpenNodePath('')}
-				>
-					${t('Click to search again but globally')}
-				</cosmoz-button>
-			`,
+			found && found.matches === 0,
+			() =>
+				html`<div class="empty" data-testid="no-results">
+					${t('No nodes match the search')}
+				</div>`,
 		)}
 	`;
 };
