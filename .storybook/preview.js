@@ -1,3 +1,4 @@
+import '@fontsource-variable/geist';
 import '@neovici/cosmoz-tokens';
 import i18next from 'i18next';
 import { within as withinShadow } from 'shadow-dom-testing-library';
