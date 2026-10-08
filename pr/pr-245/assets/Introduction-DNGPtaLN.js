@@ -1,4 +1,4 @@
-import{j as e,M as r}from"./blocks-B_JxHNpw.js";import{useMDXComponents as o}from"./index-kQ7Pby8i.js";import"./preload-helper-PPVm8Dsz.js";import"./iframe-0DuE9EzL.js";function i(t){const n={a:"a",code:"code",h1:"h1",h2:"h2",li:"li",p:"p",pre:"pre",table:"table",tbody:"tbody",td:"td",th:"th",thead:"thead",tr:"tr",ul:"ul",...o(),...t.components};return e.jsxs(e.Fragment,{children:[e.jsx(r,{title:"Introduction"}),`
+import{j as e,M as r}from"./blocks-CoQEl_r7.js";import{useMDXComponents as o}from"./index-lAv7lVj5.js";import"./preload-helper-PPVm8Dsz.js";import"./iframe-BT-O1z1x.js";function i(t){const n={a:"a",code:"code",h1:"h1",h2:"h2",li:"li",p:"p",pre:"pre",table:"table",tbody:"tbody",td:"td",th:"th",thead:"thead",tr:"tr",ul:"ul",...o(),...t.components};return e.jsxs(e.Fragment,{children:[e.jsx(r,{title:"Introduction"}),`
 `,e.jsx(n.h1,{id:"cosmoz-treenode-navigator",children:"Cosmoz Treenode Navigator"}),`
 `,e.jsx(n.p,{children:"A PionJS component for navigating, searching, and selecting nodes in a hierarchical tree structure."}),`
 `,e.jsx(n.h2,{id:"components",children:"Components"}),`
@@ -27,11 +27,11 @@ i18next.init({ lng: 'en', resources: {} });
 const tree = new DefaultTree(treeData);
 
 const MyApp = () => html\`
-  <cosmoz-treenode-button-view
-    .tree=\${tree}
-    show-reset
-    @node-path-changed=\${(e) => console.log('Selected:', e.detail.value)}
-  ></cosmoz-treenode-button-view>
+	<cosmoz-treenode-button-view
+		.tree=\${tree}
+		show-reset
+		@node-path-changed=\${(e) => console.log('Selected:', e.detail.value)}
+	></cosmoz-treenode-button-view>
 \`;
 
 customElements.define('my-app', component(MyApp));
