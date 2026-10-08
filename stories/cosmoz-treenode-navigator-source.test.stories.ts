@@ -158,3 +158,49 @@ export const KeepsSearchRankingAndHidesScopedSearch: Story = {
 		});
 	},
 };
+
+const failingSource: NodeSource = {
+	...remoteSource,
+	getLevel: (pathLocator) =>
+		pathLocator
+			? new Promise((_, reject) =>
+					setTimeout(() => reject(new Error('boom')), 300),
+				)
+			: remoteSource.getLevel(pathLocator),
+};
+
+export const ShowsLoadingThenError: Story = {
+	render: () => html`
+		<div style="height: 400px; width: 500px;">
+			<cosmoz-treenode-navigator
+				.source=${failingSource}
+				.opened=${true}
+			></cosmoz-treenode-navigator>
+		</div>
+	`,
+	play: async ({ canvasElement, step }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-navigator',
+		) as HTMLElement;
+
+		await waitFor(async () => {
+			expect((await findAllByShadowTestId(el, 'node')).length).toBe(2);
+		});
+
+		const [firstArrow] = await findAllByShadowTestId(el, 'node-arrow');
+		firstArrow.click();
+
+		await step(
+			'Loading shows while the previous level is still up',
+			async () => {
+				await findByShadowTestId(el, 'loading');
+				expect((await findAllByShadowTestId(el, 'node')).length).toBe(2);
+			},
+		);
+
+		await step('A failed level says so', async () => {
+			await findByShadowTestId(el, 'error');
+			expect(queryByShadowTestId(el, 'loading')).toBeNull();
+		});
+	},
+};

@@ -120,6 +120,7 @@ const NodeNavigator = ({
 	const onNodeClick = useCallback((clickedNode?: Node | null) => {
 		setOpenNodePath(clickedNode?.pathLocator || '');
 		setSearchValue('');
+		setSearch('');
 		setHighlightedNode(null);
 	}, []);
 
@@ -158,9 +159,6 @@ const NodeNavigator = ({
 			return;
 		}
 
-		// The parent as the path itself reports it, so a source that withholds an
-		// ancestor falls back to the roots rather than opening something it never
-		// handed out.
 		setOpenNodePath(
 			nodesOnNodePath[nodesOnNodePath.length - 2]?.pathLocator ?? '',
 		);
@@ -386,7 +384,7 @@ const NodeNavigator = ({
 				</div>`,
 			() =>
 				when(
-					loading && dataPlane.length === 0,
+					loading,
 					() =>
 						html`<div class="status" data-testid="loading">
 							${t('Loading...')}

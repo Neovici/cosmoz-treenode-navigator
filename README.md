@@ -90,7 +90,7 @@ The property names `name` and `children` are configurable via `DefaultTree` opti
 
 A `Tree` holds the whole hierarchy in memory, which stops being an option once it is a few hundred thousand nodes. Pass a `source` instead and the components ask for one level at a time. Every method may answer synchronously or with a promise.
 
-```js
+```ts
 import type { NodeSource } from '@neovici/cosmoz-treenode-navigator/source';
 
 const source: NodeSource = {
@@ -100,11 +100,14 @@ const source: NodeSource = {
 	hasChildren: () => undefined, // undefined renders the arrow anyway
 	label: (node) => node.name,
 	pathLabel: () => undefined, // heading above a group of search results
-	parentOf: (node) => node.pathLocator.slice(0, node.pathLocator.lastIndexOf('.')),
+	parentOf: (node) =>
+		node.pathLocator.slice(0, node.pathLocator.lastIndexOf('.')),
 	scopedSearch: false, // true if `search` honours `scope`
 };
 
-html`<cosmoz-treenode-button-view .source=${source}></cosmoz-treenode-button-view>`;
+html`<cosmoz-treenode-button-view
+	.source=${source}
+></cosmoz-treenode-button-view>`;
 ```
 
 Two things are worth getting right:
