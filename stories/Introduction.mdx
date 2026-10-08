@@ -34,11 +34,11 @@ i18next.init({ lng: 'en', resources: {} });
 const tree = new DefaultTree(treeData);
 
 const MyApp = () => html`
-  <cosmoz-treenode-button-view
-    .tree=${tree}
-    show-reset
-    @node-path-changed=${(e) => console.log('Selected:', e.detail.value)}
-  ></cosmoz-treenode-button-view>
+	<cosmoz-treenode-button-view
+		.tree=${tree}
+		show-reset
+		@node-path-changed=${(e) => console.log('Selected:', e.detail.value)}
+	></cosmoz-treenode-button-view>
 `;
 
 customElements.define('my-app', component(MyApp));
@@ -48,11 +48,11 @@ customElements.define('my-app', component(MyApp));
 
 All UI text is managed via `i18next.t()` with English text as translation keys. Load translations with `i18next.addResourceBundle()`:
 
-| Key | Used in |
-|-----|---------|
-| `Select a node` | Button placeholder |
-| `Search or navigate to chosen destination` | Dialog heading |
-| `Search...` | Search input placeholder |
-| `Click to search again but globally` | Global search button |
-| `Select` | Confirm button |
-| `Cancel` | Cancel button |
+| Key                                        | Used in                  |
+| ------------------------------------------ | ------------------------ |
+| `Select a node`                            | Button placeholder       |
+| `Search or navigate to chosen destination` | Dialog heading           |
+| `Search...`                                | Search input placeholder |
+| `Click to search again but globally`       | Global search button     |
+| `Select`                                   | Confirm button           |
+| `Cancel`                                   | Cancel button            |

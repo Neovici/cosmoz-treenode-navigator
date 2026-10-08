@@ -204,3 +204,48 @@ export const ShowsLoadingThenError: Story = {
 		});
 	},
 };
+
+const searchOnlySource: NodeSource = {
+	...remoteSource,
+	getLevel: () => later([]),
+	search: () => later([]),
+};
+
+export const EmptyLevelSuggestsSearch: Story = {
+	render: () => html`
+		<div style="height: 400px; width: 500px;">
+			<cosmoz-treenode-navigator
+				.source=${searchOnlySource}
+				.searchMinLength=${3}
+				.searchDebounceTimeout=${50}
+				.opened=${true}
+			></cosmoz-treenode-navigator>
+		</div>
+	`,
+	play: async ({ canvasElement, step }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-navigator',
+		) as HTMLElement;
+
+		await step('A level with nothing to list points to search', async () => {
+			const empty = await findByShadowTestId(el, 'empty');
+			expect(empty.textContent?.trim()).toBe('Search to find a node.');
+		});
+
+		await step('A search with no hits says so', async () => {
+			const searchInput = await findByShadowTestId(el, 'search-input');
+			const input = searchInput.shadowRoot?.querySelector(
+				'input',
+			) as HTMLInputElement;
+			input.value = 'nothing';
+			input.dispatchEvent(
+				new Event('input', { bubbles: true, composed: true }),
+			);
+
+			await waitFor(async () => {
+				const empty = await findByShadowTestId(el, 'empty');
+				expect(empty.textContent?.trim()).toBe('No matches.');
+			});
+		});
+	},
+};

@@ -389,6 +389,14 @@ const NodeNavigator = ({
 						html`<div class="status" data-testid="loading">
 							${t('Loading...')}
 						</div>`,
+					() =>
+						when(
+							!dataPlane.length,
+							() =>
+								html`<div class="status" data-testid="empty">
+									${search ? t('No matches.') : t('Search to find a node.')}
+								</div>`,
+						),
 				),
 		)}
 		${when(
