@@ -1,4 +1,4 @@
-import{T as z,a as I}from"./tree-data-COwffZGJ.js";import{j as o,b as h,N as r,D as E}from"./iframe-B8nujFHe.js";import"./cosmoz-treenode-button-view-P9S4S-9d.js";import"./preload-helper-PPVm8Dsz.js";import"./cosmoz-treenode-navigator-C_QL79Zk.js";const{expect:t,userEvent:c,waitFor:a}=__STORYBOOK_MODULE_TEST__,B=new z(I),F={title:"Tests/CosmozTreenodeButtonView"},m={render:()=>h`
+import{T as z,a as I}from"./tree-data-COwffZGJ.js";import{j as o,b as h,N as r,D as E}from"./iframe-0DuE9EzL.js";import"./cosmoz-treenode-button-view-BYwUkVXo.js";import"./preload-helper-PPVm8Dsz.js";import"./cosmoz-treenode-navigator-DUyfySJZ.js";const{expect:t,userEvent:c,waitFor:a}=__STORYBOOK_MODULE_TEST__,B=new z(I),F={title:"Tests/CosmozTreenodeButtonView"},m={render:()=>h`
         <div style="padding: 20px;">
             <cosmoz-treenode-button-view
                 .tree=${B}
