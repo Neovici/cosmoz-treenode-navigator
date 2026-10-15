@@ -5,6 +5,7 @@ import { findByShadowTestId } from 'shadow-dom-testing-library';
 import { expect, waitFor } from 'storybook/test';
 import '../src/cosmoz-treenode-navigator';
 import { adminFilesTree } from './data/tree-data';
+import { expectRows, findRow, search } from './test-helpers';
 
 interface StoryArgs {
 	searchMinLength: number;
@@ -44,6 +45,7 @@ export const Default: Story = {
 		>
 			<cosmoz-treenode-navigator
 				.tree=${tree}
+				.nodePath=${args.nodePath}
 				.searchMinLength=${args.searchMinLength}
 				.searchDebounceTimeout=${args.searchDebounceTimeout}
 				.opened=${args.opened}
@@ -99,5 +101,109 @@ export const WithCustomSearchMinLength: Story = {
 				expect(input?.placeholder).toBe('Search...');
 			});
 		});
+	},
+};
+
+const frame = (content: unknown) =>
+	html`<div style="height: 480px; width: 500px; padding: 10px;">
+		${content}
+	</div>`;
+
+/** Browse: no current node, so every root is open. Chevrons expand, a click highlights. */
+export const Browse: Story = {
+	render: () =>
+		frame(
+			html`<cosmoz-treenode-navigator
+				.tree=${tree}
+				.opened=${true}
+			></cosmoz-treenode-navigator>`,
+		),
+	play: async ({ canvasElement }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-navigator',
+		) as HTMLElement;
+		await findRow(el, 'D:');
+	},
+};
+
+/** Opens on the current node: it is highlighted, its ancestors and its own children are open, and the path shows where it sits. */
+export const OpenOnCurrentNode: Story = {
+	render: () =>
+		frame(
+			html`<cosmoz-treenode-navigator
+				.tree=${tree}
+				.nodePath=${'1.100.300'}
+				.opened=${true}
+			></cosmoz-treenode-navigator>`,
+		),
+	play: async ({ canvasElement }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-navigator',
+		) as HTMLElement;
+		await findByShadowTestId(el, 'path');
+		await waitFor(async () => findRow(el, 'Music'));
+	},
+};
+
+/** Search: matches show in place, under their ancestors, with every ancestor open. */
+export const Searching: Story = {
+	render: () =>
+		frame(
+			html`<cosmoz-treenode-navigator
+				.tree=${tree}
+				.searchDebounceTimeout=${100}
+				.opened=${true}
+			></cosmoz-treenode-navigator>`,
+		),
+	play: async ({ canvasElement }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-navigator',
+		) as HTMLElement;
+		await findRow(el, 'D:');
+		await search(el, 'Music');
+		await expectRows(el, [
+			'C:',
+			'Users',
+			'Default',
+			'Music',
+			'John',
+			'Music',
+			'Public',
+			'Public Music',
+		]);
+	},
+};
+
+const wideTree = new DefaultTree({
+	1: {
+		name: 'Stores',
+		pathLocator: '1',
+		children: Object.fromEntries(
+			Array.from({ length: 100_000 }, (_, i) => [
+				i + 2,
+				{
+					name: `Store ${String(i + 1).padStart(6, '0')}`,
+					pathLocator: `1.${i + 2}`,
+				},
+			]),
+		),
+	},
+});
+
+/** A node with 100,000 children: sorted once, rendered virtualized. */
+export const LargeTree: Story = {
+	render: () =>
+		frame(
+			html`<cosmoz-treenode-navigator
+				.tree=${wideTree}
+				.nodePath=${'1.50001'}
+				.opened=${true}
+			></cosmoz-treenode-navigator>`,
+		),
+	play: async ({ canvasElement }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-navigator',
+		) as HTMLElement;
+		await waitFor(async () => findRow(el, 'Store 050000'), { timeout: 3000 });
 	},
 };

@@ -4,22 +4,38 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # Cosmoz Treenode Navigator
 
-A PionJS component for navigating, searching, and selecting nodes in a hierarchical tree structure.
+A PionJS component for browsing, searching and selecting a node in a `@neovici/cosmoz-tree` tree. The tree is shown as an expandable [`cosmoz-tree-view`](https://github.com/Neovici/cosmoz-tree-view), after the Untitled UI tree view.
 
 ## Components
 
-- [CosmozTreenodeButtonView](?path=/story/components-cosmoztreenodebuttonview--default) — A trigger button that opens a dialog with the navigator. This is the main component most consumers will use.
-- [CosmozTreenodeNavigator](?path=/story/components-cosmoztreenodenavigator--default) — The inner navigator for browsing and searching the tree. Can also be used standalone.
+- [CosmozTreenodeButtonView](?path=/story/components-cosmoztreenodebuttonview--default) — A trigger button that opens a dialog with the navigator, and confirms the choice with Select / Cancel. This is the component most consumers use.
+- [CosmozTreenodeNavigator](?path=/story/components-cosmoztreenodenavigator--browse) — The navigator itself: path, search and tree. Can be used standalone.
 
-## Features
+## Modes
 
-- Navigate through hierarchical tree structures
-- Search within the current level or globally
-- Keyboard navigation (arrow keys, Enter to select)
-- Container query support — graceful degradation in narrow layouts
-- Select and Cancel dialog flow with explicit confirmation
-- Internationalization via `i18next.t()`
-- Reset selection option (opt-in via `show-reset`)
+| Mode         | Story                                                                                         | What happens                                                                                                                                        |
+| ------------ | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Browse       | [Browse](?path=/story/components-cosmoztreenodenavigator--browse)                             | With no current node, every root is open. The chevron expands a node, a click highlights it, double-click or <kbd>Enter</kbd> selects it.           |
+| Current node | [Open On Current Node](?path=/story/components-cosmoztreenodenavigator--open-on-current-node) | Opens on `nodePath`: the node is highlighted, its ancestors and its own children are open, and it is scrolled into view.                            |
+| Path         | [Open On Current Node](?path=/story/components-cosmoztreenodenavigator--open-on-current-node) | Above the search, the highlighted node's path — `C: / Users / John` — keeps you oriented in a deep tree. Each step selects that ancestor.           |
+| Search       | [Searching](?path=/story/components-cosmoztreenodenavigator--searching)                       | Searches the whole tree. Matches show in place, under their ancestors, all open — so you see where each match lives. No matches: a message instead. |
+| Large trees  | [Large Tree](?path=/story/components-cosmoztreenodenavigator--large-tree)                     | A node with 100,000 children: children are sorted once per node and cached, rows are virtualized.                                                   |
+| Dialog       | [Button View](?path=/story/components-cosmoztreenodebuttonview--with-preselected-node)        | Highlighting doesn't change anything; Select (or double-click / <kbd>Enter</kbd>) confirms, Cancel or <kbd>Esc</kbd> discards.                      |
+
+The `Tests/…` stories cover the same behavior as play-tests (they run with `npm test`).
+
+## Keyboard
+
+| Key                            | Where  | Action                                                  |
+| ------------------------------ | ------ | ------------------------------------------------------- |
+| <kbd>↓</kbd>                   | Search | Move into the tree, on the highlighted node             |
+| <kbd>Enter</kbd>               | Search | Select the highlighted node                             |
+| <kbd>↑</kbd> <kbd>↓</kbd>      | Tree   | Previous / next row                                     |
+| <kbd>→</kbd> / <kbd>←</kbd>    | Tree   | Expand or enter children / collapse or go to the parent |
+| <kbd>Home</kbd> <kbd>End</kbd> | Tree   | First / last row                                        |
+| <kbd>Space</kbd>               | Tree   | Highlight the focused row                               |
+| <kbd>Enter</kbd>               | Tree   | Select the focused row                                  |
+| <kbd>Esc</kbd>                 | Dialog | Close without changing the selection                    |
 
 ## Quick Start
 
@@ -34,25 +50,31 @@ i18next.init({ lng: 'en', resources: {} });
 const tree = new DefaultTree(treeData);
 
 const MyApp = () => html`
-  <cosmoz-treenode-button-view
-    .tree=${tree}
-    show-reset
-    @node-path-changed=${(e) => console.log('Selected:', e.detail.value)}
-  ></cosmoz-treenode-button-view>
+	<cosmoz-treenode-button-view
+		.tree=${tree}
+		show-reset
+		@node-path-changed=${(e) => console.log('Selected:', e.detail.value)}
+	></cosmoz-treenode-button-view>
 `;
 
 customElements.define('my-app', component(MyApp));
 ```
 
+## Updating the tree
+
+Pass a new `tree` when the data changes — the navigator resorts lazily for the new tree. Nodes added to the same tree object in place are picked up the next time the navigator opens.
+
 ## Internationalization
 
 All UI text is managed via `i18next.t()` with English text as translation keys. Load translations with `i18next.addResourceBundle()`:
 
-| Key | Used in |
-|-----|---------|
-| `Select a node` | Button placeholder |
-| `Search or navigate to chosen destination` | Dialog heading |
-| `Search...` | Search input placeholder |
-| `Click to search again but globally` | Global search button |
-| `Select` | Confirm button |
-| `Cancel` | Cancel button |
+| Key                                        | Used in                                      |
+| ------------------------------------------ | -------------------------------------------- |
+| `Select a node`                            | Button placeholder                           |
+| `Search or navigate to chosen destination` | Dialog heading                               |
+| `Search...`                                | Search input placeholder                     |
+| `Path`                                     | Accessible name of the path above the search |
+| `Nodes`                                    | Accessible name of the tree                  |
+| `No nodes match the search`                | Shown when a search has no matches           |
+| `Select`                                   | Confirm button                               |
+| `Cancel`                                   | Cancel button                                |
