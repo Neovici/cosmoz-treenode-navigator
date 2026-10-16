@@ -185,14 +185,13 @@ The inner navigator component that provides tree browsing, search, and keyboard 
 
 #### CSS Custom Properties
 
-| Property                                              | Default                         | Description                                 |
-| ----------------------------------------------------- | ------------------------------- | ------------------------------------------- |
-| `--cosmoz-treenode-navigator-icon-color`              | `currentColor`                  | Color of navigation icons (home, arrow)     |
-| `--cosmoz-treenode-navigator-select-node-icon-color`  | `var(--primary-color, #3a91e2)` | Color of the selected/highlighted node icon |
-| `--cosmoz-treenode-navigator-list-item-focused-color` | `#f0f8ff`                       | Background color of focused list items      |
-| `--cosmoz-treenode-navigator-list-height`             | `50vh`                          | Height of the scrollable node list          |
-| `--cz-text-color`                                     | `inherit`                       | General text color                          |
-| `--cz-bg-color`                                       | `#f5f5f5`                       | Section header background color             |
+| Property                                             | Default                        | Description                                 |
+| ---------------------------------------------------- | ------------------------------ | ------------------------------------------- |
+| `--cosmoz-treenode-navigator-icon-color`             | `currentColor`                 | Color of navigation icons (home, arrow)     |
+| `--cosmoz-treenode-navigator-select-node-icon-color` | `var(--cz-color-fg-secondary)` | Color of the selected/highlighted node icon |
+| `--cosmoz-treenode-navigator-list-height`            | `50vh`                         | Height of the scrollable node list          |
+| `--cz-text-color`                                    | `inherit`                      | General text color                          |
+| `--cz-bg-color`                                      | `var(--cz-color-bg-secondary)` | Section header background color             |
 
 ## Internationalization
 
