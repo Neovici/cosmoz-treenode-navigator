@@ -1,14 +1,6 @@
 import { css } from '@pionjs/pion';
 
 export default css`
-	:host {
-		--cosmoz-treenode-navigator-select-node-icon-color: var(
-			--primary-color,
-			#3a91e2
-		);
-		--cosmoz-treenode-navigator-list-item-focused-color: #f0f8ff;
-	}
-
 	.header {
 		margin: 0 16px;
 		color: var(--cz-text-color, inherit);
@@ -60,7 +52,7 @@ export default css`
 	}
 
 	.section {
-		background-color: var(--cz-bg-color, #f5f5f5);
+		background-color: var(--cz-bg-color, var(--cz-color-bg-secondary));
 		padding: 5px;
 	}
 
@@ -71,7 +63,6 @@ export default css`
 	.node {
 		align-items: center;
 		display: flex;
-		font-family: 'Roboto', 'Noto', sans-serif;
 		font-size: 16px;
 		font-weight: 400;
 		color: var(--cz-text-color, inherit);
@@ -88,13 +79,16 @@ export default css`
 	.node.selected {
 		background-color: var(
 			--cosmoz-listbox-active-color,
-			var(--cosmoz-selection-color, rgba(58, 145, 226, 0.1))
+			var(--cz-color-bg-tertiary)
 		);
 		transition: background-color 0.2s ease-out;
 	}
 
 	.node.selected .icon svg {
-		fill: var(--cosmoz-treenode-navigator-select-node-icon-color);
+		fill: var(
+			--cosmoz-treenode-navigator-select-node-icon-color,
+			var(--cz-color-fg-secondary)
+		);
 		transition: color 0.8s ease-out;
 	}
 

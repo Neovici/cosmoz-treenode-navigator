@@ -62,7 +62,7 @@ export default css`
 	}
 
 	dialog::backdrop {
-		background: rgba(0, 0, 0, 0.5);
+		background: color-mix(in srgb, var(--cz-color-bg-overlay) 70%, transparent);
 	}
 
 	dialog > header {
