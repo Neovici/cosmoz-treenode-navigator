@@ -22,15 +22,13 @@ import type { Node, Tree } from '@neovici/cosmoz-tree';
 import { useHost } from '@neovici/cosmoz-utils/hooks/use-host';
 import { notifyProperty } from '@neovici/cosmoz-utils/hooks/use-notify-property';
 import style from './cosmoz-treenode-navigator.styles';
-import {
-	computeDataPlane,
-	computeRowClass,
-	getParentPath,
-	getTreePathParts,
-} from './util/helpers';
+import { useNodes } from './hooks/useNodes';
+import { computeRowClass } from './util/helpers';
+import { treeSource, type NodeSource } from './util/source';
 
 type TreenodeNavigatorProps = {
 	tree: Tree;
+	source?: NodeSource;
 	searchMinLength?: number;
 	opened?: boolean;
 	searchDebounceTimeout: number;
@@ -45,9 +43,13 @@ type NavigatorMeta = {
 // eslint-disable-next-line max-statements
 const NodeNavigator = ({
 	/**
-	 * The main node structure
+	 * The main node structure. Ignored when `source` is set.
 	 */
 	tree,
+	/**
+	 * Where to get nodes from. Defaults to serving `tree` from memory.
+	 */
+	source,
 	/**
 	 * Minimum length of searchValue to trigger a search
 	 */
@@ -68,10 +70,16 @@ const NodeNavigator = ({
 	const [searchValue, setSearchValue] = useState<string>('');
 	const [openNodePath, setOpenNodePath] = useState<string>('');
 
-	// nodesOnNodePath derived from nodePath + tree
-	const nodesOnNodePath = useMemo(
-		() => getTreePathParts(nodePath, tree),
-		[nodePath, tree],
+	const nodeSource = useMemo(() => source ?? treeSource(tree), [source, tree]);
+
+	const { nodes: nodesOnNodePath } = useNodes(
+		() => (nodePath ? nodeSource.getPath(nodePath) : []),
+		[nodeSource, nodePath],
+	);
+
+	const { nodes: openNodes } = useNodes(
+		() => (openNodePath ? nodeSource.getPath(openNodePath) : []),
+		[nodeSource, openNodePath],
 	);
 
 	useEffect(() => {
@@ -88,9 +96,16 @@ const NodeNavigator = ({
 		return () => clearTimeout(timeoutId);
 	}, [searchValue]);
 
-	const dataPlane = useMemo(
-		() => computeDataPlane(tree, search, openNodePath),
-		[tree, search, openNodePath],
+	const {
+		nodes: dataPlane,
+		loading,
+		error,
+	} = useNodes(
+		() =>
+			search
+				? nodeSource.search(search, openNodePath)
+				: nodeSource.getLevel(openNodePath),
+		[nodeSource, search, openNodePath],
 	);
 
 	/**
@@ -105,6 +120,7 @@ const NodeNavigator = ({
 	const onNodeClick = useCallback((clickedNode?: Node | null) => {
 		setOpenNodePath(clickedNode?.pathLocator || '');
 		setSearchValue('');
+		setSearch('');
 		setHighlightedNode(null);
 	}, []);
 
@@ -129,7 +145,7 @@ const NodeNavigator = ({
 
 	// When nodePath changes externally, sync the view
 	useEffect(() => {
-		if (!nodesOnNodePath?.length || !tree || !opened) {
+		if (!nodesOnNodePath?.length || !opened) {
 			return;
 		}
 
@@ -138,16 +154,16 @@ const NodeNavigator = ({
 			return;
 		}
 
-		if (tree.hasChildren(lastNode)) {
+		if (nodeSource.hasChildren(lastNode) !== false) {
 			setOpenNodePath(lastNode.pathLocator);
 			return;
 		}
 
-		const parentPath = getParentPath(tree, lastNode);
-		// Make sure the parent node exists, otherwise fall back to displaying the roots
-		setOpenNodePath(tree.getNodeByPathLocator(parentPath)?.pathLocator ?? '');
+		setOpenNodePath(
+			nodesOnNodePath[nodesOnNodePath.length - 2]?.pathLocator ?? '',
+		);
 		setHighlightedNode(lastNode);
-	}, [nodesOnNodePath, tree, opened]);
+	}, [nodesOnNodePath, nodeSource, opened]);
 
 	// Notify highlightedNodePath when highlightedNode changes
 	useEffect(() => {
@@ -265,16 +281,13 @@ const NodeNavigator = ({
 
 		return html` <div class="item">
 			${when(search, () => {
-				const parentPath = getParentPath(tree, node);
-				return when(
+				const parentPath = nodeSource.parentOf(node);
+				const heading =
 					index === 0 ||
-						parentPath !== getParentPath(tree, dataPlane[index - 1]),
-					() => html`
-						<div class="section">
-							${tree.getPathString(parentPath, tree.searchProperty)}
-						</div>
-					`,
-				);
+					parentPath !== nodeSource.parentOf(dataPlane[index - 1])
+						? nodeSource.pathLabel(parentPath)
+						: undefined;
+				return when(heading, () => html`<div class="section">${heading}</div>`);
 			})}
 			<div
 				class=${computeRowClass('node', node, highlightedNode)}
@@ -283,10 +296,10 @@ const NodeNavigator = ({
 				@dblclick=${handleNodeDblClick}
 			>
 				<div class="name" data-testid="node-name">
-					${node[tree.searchProperty]}
+					${nodeSource.label(node)}
 				</div>
 				${when(
-					tree.hasChildren(node),
+					nodeSource.hasChildren(node) !== false,
 					() => html`
 						<span
 							class="icon"
@@ -329,8 +342,8 @@ const NodeNavigator = ({
 						<g><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></g>
 					</svg>
 				</span>
-				${guard([tree, openNodePath], () =>
-					((openNodePath && tree?.getPathNodes(openNodePath)) || [])
+				${guard([openNodes], () =>
+					openNodes
 						.filter((node): node is Node => node !== undefined)
 						.map(
 							(node) => html`
@@ -339,7 +352,7 @@ const NodeNavigator = ({
 									class="pointer"
 									tabindex="0"
 									@click=${() => onNodeClick(node)}
-									>${node[tree.searchProperty]}</span
+									>${nodeSource.label(node)}</span
 								>
 							`,
 						),
@@ -355,23 +368,39 @@ const NodeNavigator = ({
 					setSearchValue((e.target as HTMLInputElement).value)}
 			/>
 		</div>
+		<div class="items" ${ref((el) => (listRef.current = el as HTMLElement))}>
+			<div virtualizer-sizer></div>
+			${virtualize({
+				items: dataPlane,
+				renderItem,
+				scroller: true,
+			})}
+		</div>
 		${when(
-			tree,
+			error,
 			() =>
-				html` <div
-					class="items"
-					${ref((el) => (listRef.current = el as HTMLElement))}
-				>
-					<div virtualizer-sizer></div>
-					${virtualize({
-						items: dataPlane,
-						renderItem,
-						scroller: true,
-					})}
+				html`<div class="status" data-testid="error">
+					${t('Could not load nodes.')}
 				</div>`,
+			() =>
+				when(
+					loading,
+					() =>
+						html`<div class="status" data-testid="loading">
+							${t('Loading...')}
+						</div>`,
+					() =>
+						when(
+							!dataPlane.length,
+							() =>
+								html`<div class="status" data-testid="empty">
+									${search ? t('No matches.') : t('Search to find a node.')}
+								</div>`,
+						),
+				),
 		)}
 		${when(
-			search && openNodePath,
+			search && openNodePath && nodeSource.scopedSearch,
 			() => html`
 				<cosmoz-button
 					class="global-search"

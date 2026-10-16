@@ -20,7 +20,8 @@ import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { when } from 'lit-html/directives/when.js';
 import './cosmoz-treenode-navigator';
 import { useKeyDown } from './hooks/useKeyDown';
-import { getTreePathParts } from './util/helpers';
+import { useNodes } from './hooks/useNodes';
+import { treeSource, type NodeSource } from './util/source';
 
 type ButtonVariant =
 	| 'primary'
@@ -33,6 +34,7 @@ type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
 
 type ButtonViewProps = {
 	tree: Tree;
+	source?: NodeSource;
 	showReset?: boolean;
 	searchMinLength?: number;
 	searchDebounceTimeout: number;
@@ -70,6 +72,7 @@ const defaultIcon = html`<svg
 
 const CosmozNodeButtonView = ({
 	tree,
+	source,
 	showReset = false,
 	searchMinLength = 3,
 	searchDebounceTimeout = 500,
@@ -92,10 +95,11 @@ const CosmozNodeButtonView = ({
 	// it from showing when focus returns to the button
 	const [tooltipDisabled, setTooltipDisabled] = useState(false);
 
-	// nodesOnNodePath derived from nodePath + tree
-	const nodesOnNodePath = useMemo(
-		() => getTreePathParts(nodePath, tree),
-		[nodePath, tree],
+	const nodeSource = useMemo(() => source ?? treeSource(tree), [source, tree]);
+
+	const { nodes: nodesOnNodePath } = useNodes(
+		() => (nodePath ? nodeSource.getPath(nodePath) : []),
+		[nodeSource, nodePath],
 	);
 
 	// buttonLabel derived from nodesOnNodePath
@@ -106,9 +110,9 @@ const CosmozNodeButtonView = ({
 
 		return nodesOnNodePath
 			.filter((n) => n)
-			.map((part) => part[tree.searchProperty])
+			.map((part) => nodeSource.label(part))
 			.join(' / ');
-	}, [nodesOnNodePath, tree]);
+	}, [nodesOnNodePath, nodeSource]);
 
 	// Sync dialog DOM state with opened property
 	useEffect(() => {
@@ -247,6 +251,7 @@ const CosmozNodeButtonView = ({
 					.searchMinLength=${searchMinLength}
 					.searchDebounceTimeout=${searchDebounceTimeout}
 					.tree=${tree}
+					.source=${nodeSource}
 					.opened=${opened}
 				>
 					<slot></slot>
