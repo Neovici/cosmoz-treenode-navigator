@@ -300,3 +300,116 @@ export const Empty: Story = {
 		});
 	},
 };
+
+customElements.define(
+	'late-tree-ancestors-demo',
+	component(() => {
+		const [items, setItems] = useState<Item[]>([
+			{
+				id: 'root',
+				label: 'Root',
+				children: [{ id: 'selected', label: 'Selected' }],
+			},
+		]);
+		return html`
+			<button
+				@click=${() =>
+					setItems([
+						{
+							id: 'root',
+							label: 'Root',
+							children: [
+								...Array.from({ length: 1000 }, (_, i) => ({
+									id: `sibling-${i}`,
+									label: `Sibling ${i}`,
+								})),
+								{ id: 'selected', label: 'Selected' },
+							],
+						},
+					])}
+			>
+				Load ancestor siblings
+			</button>
+			<cosmoz-treenode-tree-view
+				style="height: 300px; width: 320px"
+				label="Nodes"
+				.items=${items}
+				.expanded=${['root']}
+				.selected=${'selected'}
+			></cosmoz-treenode-tree-view>
+		`;
+	}),
+);
+
+export const KeepsSelectionVisibleWhileLoading: Story = {
+	render: () => html`<late-tree-ancestors-demo></late-tree-ancestors-demo>`,
+	play: async ({ canvas, userEvent }) => {
+		await canvas.findByShadowText('Selected');
+		const button = canvas.getByShadowRole('button', {
+			name: 'Load ancestor siblings',
+		});
+		await userEvent.click(button);
+		await waitFor(() => {
+			const row = rowByName(canvas, 'Selected');
+			expect(row.getAttribute('aria-posinset')).toBe('1001');
+			const bounds = row.getBoundingClientRect();
+			const viewport = canvas.getByShadowRole('tree').getBoundingClientRect();
+			expect(bounds.top).toBeGreaterThanOrEqual(viewport.top);
+			expect(bounds.bottom).toBeLessThanOrEqual(viewport.bottom);
+		});
+		expect(hasFocus(button)).toBe(true);
+	},
+};
+
+export const PreservesBranchNavigation: Story = {
+	args: {
+		items: [
+			{
+				id: 'branch',
+				label: 'Branch',
+				children: Array.from({ length: 1000 }, (_, i) => ({
+					id: `child-${i}`,
+					label: `Child ${i}`,
+				})),
+			},
+			{ id: 'selected', label: 'Selected' },
+		],
+		expanded: [],
+		selected: 'selected',
+	},
+	play: async ({ canvas, userEvent, step }) => {
+		const branch = await waitFor(() => rowByName(canvas, 'Branch'));
+		const assertBranchVisible = () => {
+			const activeBranch = rowByName(canvas, 'Branch');
+			expect(activeBranch.getAttribute('aria-expanded')).toBe('true');
+			const bounds = activeBranch.getBoundingClientRect();
+			const viewport = canvas.getByShadowRole('tree').getBoundingClientRect();
+			expect(bounds.top).toBeGreaterThanOrEqual(viewport.top);
+			expect(bounds.bottom).toBeLessThanOrEqual(viewport.bottom);
+			expect(hasFocus(activeBranch)).toBe(true);
+		};
+		await step(
+			'Keyboard expansion keeps the active branch visible',
+			async () => {
+				branch.focus();
+				await userEvent.keyboard('{ArrowRight}');
+				await canvas.findByShadowText('Child 0');
+				await new Promise((resolve) => setTimeout(resolve, 600));
+				assertBranchVisible();
+			},
+		);
+		await step(
+			'Chevron expansion keeps the active branch visible',
+			async () => {
+				await userEvent.keyboard('{ArrowLeft}');
+				await waitFor(() =>
+					expect(branch.getAttribute('aria-expanded')).toBe('false'),
+				);
+				await userEvent.click(branch.querySelector('.toggle')!);
+				await canvas.findByShadowText('Child 0');
+				await new Promise((resolve) => setTimeout(resolve, 600));
+				assertBranchVisible();
+			},
+		);
+	},
+};
