@@ -1,7 +1,5 @@
 import '@neovici/cosmoz-input';
 import type { Node, Tree } from '@neovici/cosmoz-tree';
-import type { TreeViewApi } from '@neovici/cosmoz-tree-view';
-import '@neovici/cosmoz-tree-view/cosmoz-tree-view';
 import { useHost } from '@neovici/cosmoz-utils/hooks/use-host';
 import { notifyProperty } from '@neovici/cosmoz-utils/hooks/use-notify-property';
 import {
@@ -20,6 +18,8 @@ import { when } from 'lit-html/directives/when.js';
 import style from './cosmoz-treenode-navigator.styles';
 import { useNodes } from './hooks/useNodes';
 import { useSearchTree, useSourceTree } from './hooks/useSourceTree';
+import './tree-view/tree-view';
+import type { TreeViewApi } from './tree-view/types';
 import { treeSource, type NodeSource } from './util/source';
 
 type Props = {
@@ -161,7 +161,7 @@ const NodeNavigator = ({
 				}}
 			></cosmoz-input>
 		</div>
-		<cosmoz-tree-view
+		<cosmoz-treenode-tree-view
 			class="items"
 			data-testid="tree"
 			label=${t('Nodes')}
@@ -187,7 +187,7 @@ const NodeNavigator = ({
 			${ref((el) => {
 				view.current = el as HTMLElement & TreeViewApi;
 			})}
-		></cosmoz-tree-view>
+		></cosmoz-treenode-tree-view>
 		<div class="status" role="status" aria-live="polite">
 			${when(
 				hasError,

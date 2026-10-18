@@ -1,0 +1,6 @@
+The internal tree renderer in src/tree-view is adapted from the
+@neovici/cosmoz-tree-view implementation by Max and Neovici contributors:
+https://github.com/Neovici/cosmoz-tree-view/commit/781185fb185c4d1f4c7abf0cea197ffcb0168fd0
+
+Both implementations are distributed under the Apache License, Version 2.0.
+See LICENSE.

@@ -2,7 +2,7 @@
 
 [![Build Status](https://github.com/Neovici/cosmoz-treenode-navigator/workflows/CI/badge.svg)](https://github.com/Neovici/cosmoz-treenode-navigator/actions?workflow=CI)
 
-A [PionJS](https://github.com/pionjs/pion)-based web component for browsing, searching, and selecting nodes in a hierarchical tree structure. The tree is an expandable [`cosmoz-tree-view`](https://github.com/Neovici/cosmoz-tree-view) (after the Untitled UI tree view), with the highlighted node's path above the search so you keep your bearings in deep trees.
+A [PionJS](https://github.com/pionjs/pion)-based web component for browsing, searching, and selecting nodes in a hierarchical tree structure. The expandable tree follows the Untitled UI tree view, with the highlighted node's path above the search so you keep your bearings in deep trees.
 
 ## Installation
 
@@ -269,7 +269,7 @@ The inner navigator: the highlighted node's path, a search field and the tree. T
 | ----------------------------------------- | ------- | ---------------------------- |
 | `--cosmoz-treenode-navigator-list-height` | `50vh`  | Height of the scrolling tree |
 
-Colors, type and spacing come from `@neovici/cosmoz-tokens` (`--cz-*`). Tree rows can be styled through [`cosmoz-tree-view`'s CSS parts](https://github.com/Neovici/cosmoz-tree-view#styling).
+Colors, type and spacing come from `@neovici/cosmoz-tokens` (`--cz-*`). The tree renderer and its row styles are internal to this package.
 
 #### Test ids
 
@@ -331,13 +331,13 @@ The one-level drill-down list is replaced by an expandable tree. The public prop
 | Search in the open folder, then "search again globally"                         | Search is always global, matches shown in place                             |
 | `--cosmoz-treenode-navigator-icon-color`                                        | _removed_ (tokens)                                                          |
 | `--cosmoz-treenode-navigator-select-node-icon-color`                            | _removed_ (tokens)                                                          |
-| `--cosmoz-treenode-navigator-list-item-focused-color`                           | _removed_; style `cosmoz-tree-view`'s CSS parts                             |
+| `--cosmoz-treenode-navigator-list-item-focused-color`                           | _removed_; row styling uses semantic design tokens                          |
 | Test ids `node`, `node-name`, `node-arrow`, `home-icon`, `global-search-button` | `role="treeitem"` rows; test ids `tree`, `path`, `no-results`               |
 | Translation key `Click to search again but globally`                            | _removed_; new keys `Path`, `Nodes`, `No nodes match the search`            |
 | Capturing `keydown` listener on `document`                                      | Keys handled by the search field and the tree                               |
 | The tree's `children` arrays sorted in place                                    | Sorted on a copy, cached per node                                           |
 
-New dependency: [`@neovici/cosmoz-tree-view`](https://github.com/Neovici/cosmoz-tree-view).
+The tree renderer is an internal module in this package. It is not a separate dependency or public entry point. The navigator owns selection, source loading, and the tree interaction.
 
 ## Migrating from v7
 

@@ -27,7 +27,8 @@
 	},
 	"files": [
 		"dist",
-		"test/data"
+		"test/data",
+		"NOTICE"
 	],
 	"scripts": {
 		"lint": "eslint --cache .",
@@ -67,17 +68,17 @@
 		}
 	},
 	"dependencies": {
+		"@lit-labs/virtualizer": "^2.1.1",
 		"@neovici/cosmoz-button": "^2.4.1",
-		"@neovici/cosmoz-icons": "^1.5.0",
+		"@neovici/cosmoz-icons": "^1.6.0",
 		"@neovici/cosmoz-input": "^5.0.0",
-		"@neovici/cosmoz-tokens": "^3.2.1 || ^4.0.0",
+		"@neovici/cosmoz-tokens": "^4.9.0",
 		"@neovici/cosmoz-tooltip": "^1.1.0",
 		"@neovici/cosmoz-tree": "^3.7.3",
-		"@neovici/cosmoz-utils": "^6.8.1",
+		"@neovici/cosmoz-utils": "^6.23.0",
 		"@pionjs/pion": "^2.12.0",
 		"i18next": ">=23.0.0 <27.0.0",
-		"lit-html": "^2.0.0 || ^3.0.0",
-		"@neovici/cosmoz-tree-view": "^1.0.0"
+		"lit-html": "^3.3.1"
 	},
 	"devDependencies": {
 		"@changesets/cli": "^3.0.0",
