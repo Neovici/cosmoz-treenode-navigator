@@ -2,13 +2,14 @@ import { DefaultTree } from '@neovici/cosmoz-tree/cosmoz-default-tree';
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 import {
-	findAllByShadowTestId,
 	findByShadowTestId,
 	queryByShadowTestId,
 } from 'shadow-dom-testing-library';
 import { expect, userEvent, waitFor } from 'storybook/test';
 import '../src/cosmoz-treenode-button-view';
+import { treeSource } from '../src/util/source';
 import { adminFilesTree } from './data/tree-data';
+import { findRow, selectedNames } from './test-helpers';
 
 const tree = new DefaultTree(adminFilesTree);
 
@@ -106,6 +107,16 @@ export const DialogInteraction: Story = {
 			});
 		});
 
+		await step(
+			'The icon-only close button has a native accessible name',
+			async () => {
+				const close = el.shadowRoot!.querySelector('header cosmoz-button')!;
+				expect(
+					close.shadowRoot!.querySelector('button')!.getAttribute('aria-label'),
+				).toBe('Close');
+			},
+		);
+
 		await step('Closes dialog on cancel button click', async () => {
 			const dialog = (await findByShadowTestId(
 				el,
@@ -164,16 +175,7 @@ export const SelectButtonInteraction: Story = {
 		});
 
 		await step('Single-clicking a node enables the Select button', async () => {
-			const navigator = getNavigator();
-
-			// Wait for nodes to render and click the first one
-			await waitFor(async () => {
-				const nodes = await findAllByShadowTestId(navigator, 'node');
-				expect(nodes.length).toBeGreaterThan(0);
-			});
-
-			const allNodes = await findAllByShadowTestId(navigator, 'node');
-			await userEvent.click(allNodes[0]);
+			await userEvent.click(await findRow(getNavigator(), 'C:'));
 
 			await waitFor(async () => {
 				const selectButton = await getSelectButton();
@@ -207,26 +209,10 @@ export const SelectButtonInteraction: Story = {
 
 				await openDialog();
 
+				// C: is current, so its children are open: highlight one of them
 				const navigator = getNavigator();
-
-				// Navigate into C: drive first to see children
-				await waitFor(async () => {
-					const nodes = await findAllByShadowTestId(navigator, 'node');
-					expect(nodes.length).toBeGreaterThan(0);
-				});
-
-				// Click arrow to navigate into C: drive
-				const allArrows = await findAllByShadowTestId(navigator, 'node-arrow');
-				await userEvent.click(allArrows[0]);
-
-				// Wait for children to render and highlight a different node
-				await waitFor(async () => {
-					const nodes = await findAllByShadowTestId(navigator, 'node');
-					expect(nodes.length).toBeGreaterThan(0);
-				});
-
-				const allNodes = await findAllByShadowTestId(navigator, 'node');
-				await userEvent.click(allNodes[0]);
+				await userEvent.click(await findRow(navigator, 'Users'));
+				expect(selectedNames(navigator)).toEqual(['Users']);
 
 				// Verify Select button is enabled
 				await waitFor(async () => {
@@ -255,26 +241,7 @@ export const SelectButtonInteraction: Story = {
 			async () => {
 				await openDialog();
 
-				const navigator = getNavigator();
-
-				// Navigate into C: drive first
-				await waitFor(async () => {
-					const nodes = await findAllByShadowTestId(navigator, 'node');
-					expect(nodes.length).toBeGreaterThan(0);
-				});
-
-				// Click arrow to navigate into C: drive
-				const allArrows = await findAllByShadowTestId(navigator, 'node-arrow');
-				await userEvent.click(allArrows[0]);
-
-				// Wait for children and double-click a node (e.g., Windows folder)
-				await waitFor(async () => {
-					const nodes = await findAllByShadowTestId(navigator, 'node');
-					expect(nodes.length).toBeGreaterThan(0);
-				});
-
-				const allNodes = await findAllByShadowTestId(navigator, 'node');
-				await userEvent.dblClick(allNodes[0]);
+				await userEvent.dblClick(await findRow(getNavigator(), 'Windows'));
 
 				await waitFor(async () => {
 					const dialog = (await findByShadowTestId(
@@ -282,8 +249,8 @@ export const SelectButtonInteraction: Story = {
 						'dialog',
 					)) as HTMLDialogElement;
 					expect(dialog.open).toBe(false);
-					// nodePath should be updated to the double-clicked node
-					expect(el.nodePath).not.toBe('1'); // Changed from initial C: selection
+					// nodePath is the double-clicked node, C:/Windows
+					expect(el.nodePath).toBe('1.2');
 				});
 			},
 		);
@@ -385,11 +352,10 @@ export const WithInvalidNodePath: Story = {
 				'cosmoz-treenode-navigator',
 			) as HTMLElement;
 
-			await waitFor(async () => {
-				const nodes = await findAllByShadowTestId(navigator, 'node');
-				// Root has C: and D: drives
-				expect(nodes.length).toBe(2);
-			});
+			// The roots are open and nothing is highlighted
+			await findRow(navigator, 'C:');
+			await findRow(navigator, 'D:');
+			expect(selectedNames(navigator)).toEqual([]);
 		});
 
 		await step('Can select a node successfully', async () => {
@@ -397,9 +363,7 @@ export const WithInvalidNodePath: Story = {
 				'cosmoz-treenode-navigator',
 			) as HTMLElement;
 
-			// Click on first node to highlight it
-			const allNodes = await findAllByShadowTestId(navigator, 'node');
-			await userEvent.click(allNodes[0]);
+			await userEvent.click(await findRow(navigator, 'C:'));
 
 			// Click Select button
 			await waitFor(async () => {
@@ -420,5 +384,43 @@ export const WithInvalidNodePath: Story = {
 				expect(el.nodePath).toBe('1');
 			});
 		});
+	},
+};
+
+export const ReopensWithoutCanceledSelection: Story = {
+	render: () => {
+		const source = treeSource(tree);
+		return html`<cosmoz-treenode-button-view
+			.source=${{
+				...source,
+				getPath: (path: string) =>
+					new Promise((resolve) =>
+						setTimeout(() => resolve(source.getPath(path)), 200),
+					),
+			}}
+			.nodePath=${'1'}
+		></cosmoz-treenode-button-view>`;
+	},
+	play: async ({ canvasElement }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-button-view',
+		) as HTMLElement & { nodePath: string };
+		const open = await findByShadowTestId(el, 'open-button');
+		await userEvent.click(open);
+		const navigator = el.shadowRoot!.querySelector(
+			'cosmoz-treenode-navigator',
+		) as HTMLElement;
+		await waitFor(async () =>
+			userEvent.click(await findRow(navigator, 'Users')),
+		);
+		const select = await findByShadowTestId(el, 'select-button');
+		await waitFor(() => expect(select.hasAttribute('disabled')).toBe(false));
+		await userEvent.click(await findByShadowTestId(el, 'cancel-button'));
+		await userEvent.click(open);
+		await findByShadowTestId(navigator, 'loading');
+		expect(select.hasAttribute('disabled')).toBe(true);
+		await userEvent.click(select);
+		expect(el.nodePath).toBe('1');
+		await waitFor(() => expect(selectedNames(navigator)).toEqual(['C:']));
 	},
 };

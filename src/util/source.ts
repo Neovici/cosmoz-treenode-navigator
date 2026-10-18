@@ -41,7 +41,10 @@ export interface NodeSource {
  * took a source at all.
  */
 export const treeSource = (tree: Tree): NodeSource => ({
-	getLevel: (pathLocator) => computeDataPlane(tree, '', pathLocator),
+	getLevel: (pathLocator) => {
+		const nodes = computeDataPlane(tree, '', pathLocator);
+		return Array.isArray(nodes) ? nodes : [];
+	},
 
 	getPath: (pathLocator) => getTreePathParts(pathLocator, tree),
 

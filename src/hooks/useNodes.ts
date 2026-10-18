@@ -19,7 +19,8 @@ export const useNodes = (
 	const request = useRef(0);
 
 	useEffect(() => {
-		const id = ++request.current;
+		const id = (request.current ?? 0) + 1;
+		request.current = id;
 
 		setLoading(true);
 		setError(undefined);
