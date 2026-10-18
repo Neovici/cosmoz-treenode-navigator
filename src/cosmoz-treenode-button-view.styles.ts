@@ -54,11 +54,15 @@ export default css`
 	}
 
 	dialog {
-		width: 550px;
-		min-width: 250px;
+		width: min(36rem, calc(100vw - 32px));
+		max-height: calc(100dvh - 32px);
+		box-sizing: border-box;
 		padding: 0;
-		border-radius: 10px;
-		border: none;
+		border-radius: var(--cz-radius-xl);
+		border: 1px solid var(--cz-color-border-secondary);
+		background: var(--cz-color-bg-primary);
+		color: var(--cz-color-text-primary);
+		box-shadow: var(--cz-shadow-xl);
 	}
 
 	dialog::backdrop {
@@ -66,28 +70,43 @@ export default css`
 	}
 
 	dialog > header {
-		padding: 10px 10px 0 10px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: calc(var(--cz-spacing) * 3);
+		padding: calc(var(--cz-spacing) * 5) calc(var(--cz-spacing) * 5)
+			calc(var(--cz-spacing) * 4);
 		cursor: move;
 		user-select: none;
 	}
 
 	dialog h1 {
-		margin-bottom: 2rem;
-		padding: 0 8px;
-		font-size: 1.25rem;
-		font-weight: normal;
-		color: var(--cz-text-color, inherit);
+		margin: 0;
+		font-size: var(--cz-text-lg);
+		line-height: var(--cz-text-lg-line-height);
+		font-weight: var(--cz-font-weight-semibold);
 	}
 
 	dialog > footer {
-		padding: 0 10px 10px 10px;
-		text-align: right;
+		padding: calc(var(--cz-spacing) * 4) calc(var(--cz-spacing) * 5);
+		border-top: 1px solid var(--cz-color-border-secondary);
 	}
 
 	dialog > footer > div {
 		display: flex;
-		gap: 8px;
-		justify-content: flex-end;
-		margin: 0;
+		flex-direction: row-reverse;
+		gap: calc(var(--cz-spacing) * 2);
+		justify-content: flex-start;
+	}
+
+	@media (max-width: 480px) {
+		dialog {
+			width: calc(100vw - 16px);
+			max-height: calc(100dvh - 16px);
+		}
+		dialog > header,
+		dialog > footer {
+			padding: calc(var(--cz-spacing) * 4);
+		}
 	}
 `;

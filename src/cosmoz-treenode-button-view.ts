@@ -235,12 +235,22 @@ const CosmozNodeButtonView = ({
 		<dialog
 			part="dialog"
 			data-testid="dialog"
+			aria-labelledby="node-picker-heading"
 			${ref((el) => {
 				dialogRef.current = el as ButtonViewDialog;
 			})}
 		>
 			<header part="header" @mousedown=${onHeaderMouseDown}>
-				<h1 part="heading">${t('Search or navigate to chosen destination')}</h1>
+				<h1 id="node-picker-heading" part="heading">${t('Select a node')}</h1>
+				<cosmoz-button
+					variant="tertiary"
+					size="sm"
+					icon-only
+					aria-label=${t('Close')}
+					@mousedown=${(event: MouseEvent) => event.stopPropagation()}
+					@click=${onClose}
+					>${xIcon()}</cosmoz-button
+				>
 			</header>
 			<main part="main">
 				<cosmoz-treenode-navigator

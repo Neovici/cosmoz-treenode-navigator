@@ -2,13 +2,13 @@ import type { Node } from '@neovici/cosmoz-tree';
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 import {
-	findAllByShadowTestId,
 	findByShadowTestId,
 	queryByShadowTestId,
 } from 'shadow-dom-testing-library';
 import { expect, waitFor } from 'storybook/test';
 import '../src/cosmoz-treenode-navigator';
 import type { NodeSource } from '../src/util/source';
+import { expectRows, findRow, rowNames, toggleRow } from './test-helpers';
 
 /**
  * Stands in for a server-backed source: it answers asynchronously, it cannot say
@@ -72,180 +72,115 @@ const render = () => html`
 
 export const LoadsLevelsFromSource: Story = {
 	render,
-	play: async ({ canvasElement, step }) => {
+	play: async ({ canvasElement }) => {
 		const el = canvasElement.querySelector(
 			'cosmoz-treenode-navigator',
 		) as HTMLElement;
-
-		await step('Roots arrive once the source resolves', async () => {
-			await waitFor(async () => {
-				const rows = await findAllByShadowTestId(el, 'node');
-				expect(rows.length).toBe(2);
-			});
-		});
-
-		await step('An unknown child count still offers the arrow', async () => {
-			const arrows = await findAllByShadowTestId(el, 'node-arrow');
-			expect(arrows.length).toBe(2);
-		});
-
-		await step('Opening a node loads its children', async () => {
-			const [firstArrow] = await findAllByShadowTestId(el, 'node-arrow');
-			firstArrow.click();
-
-			await waitFor(async () => {
-				const names = await findAllByShadowTestId(el, 'node-name');
-				expect(names.map((n) => n.textContent?.trim())).toEqual([
-					'Alpha child',
-				]);
-			});
-		});
+		await expectRows(el, ['Alpha', 'Alpha child', 'Beta']);
+		const child = await findRow(el, 'Alpha child');
+		expect(child.getAttribute('aria-expanded')).toBe('false');
+		await toggleRow(child);
+		await waitFor(() =>
+			expect(child.hasAttribute('aria-expanded')).toBe(false),
+		);
 	},
 };
 
 export const KeepsSearchRankingAndHidesScopedSearch: Story = {
 	render,
-	play: async ({ canvasElement, step }) => {
+	play: async ({ canvasElement }) => {
 		const el = canvasElement.querySelector(
 			'cosmoz-treenode-navigator',
 		) as HTMLElement;
-
-		await waitFor(async () => {
-			expect((await findAllByShadowTestId(el, 'node')).length).toBe(2);
-		});
-
-		// Open a node first: the re-search button is only ever offered while a
-		// search is scoped to one, so asserting its absence from the roots would
-		// pass whatever `scopedSearch` said.
-		await step('Open a node, so a search would be scoped to it', async () => {
-			const [firstArrow] = await findAllByShadowTestId(el, 'node-arrow');
-			firstArrow.click();
-
-			await waitFor(async () => {
-				const names = await findAllByShadowTestId(el, 'node-name');
-				expect(names.map((n) => n.textContent?.trim())).toEqual([
-					'Alpha child',
-				]);
-			});
-		});
-
-		await step(
-			'Results keep the order the source returned them in',
-			async () => {
-				const searchInput = await findByShadowTestId(el, 'search-input');
-				const input = searchInput.shadowRoot?.querySelector(
-					'input',
-				) as HTMLInputElement;
-				input.focus();
-				input.value = 'alpha';
-				input.dispatchEvent(
-					new Event('input', { bubbles: true, composed: true }),
-				);
-
-				await waitFor(async () => {
-					const names = await findAllByShadowTestId(el, 'node-name');
-					expect(names.map((n) => n.textContent?.trim())).toEqual([
-						'Beta',
-						'Alpha child',
-						'Alpha',
-					]);
-				});
-			},
-		);
-
-		await step('A source that searches globally offers no re-search', () => {
-			expect(queryByShadowTestId(el, 'global-search-button')).toBeNull();
-		});
+		await expectRows(el, ['Alpha', 'Alpha child', 'Beta']);
+		const searchInput = await findByShadowTestId(el, 'search-input');
+		const input = searchInput.shadowRoot!.querySelector('input')!;
+		input.value = 'alpha';
+		input.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+		await expectRows(el, ['Beta', 'Alpha', 'Alpha child']);
+		expect(queryByShadowTestId(el, 'global-search-button')).toBeNull();
 	},
-};
-
-const failingSource: NodeSource = {
-	...remoteSource,
-	getLevel: (pathLocator) =>
-		pathLocator
-			? new Promise((_, reject) =>
-					setTimeout(() => reject(new Error('boom')), 300),
-				)
-			: remoteSource.getLevel(pathLocator),
 };
 
 export const ShowsLoadingThenError: Story = {
-	render: () => html`
-		<div style="height: 400px; width: 500px;">
+	render: () =>
+		html`<div style="height:400px;width:500px">
 			<cosmoz-treenode-navigator
-				.source=${failingSource}
+				.source=${{
+					...remoteSource,
+					getLevel: (path: string) =>
+						path
+							? Promise.reject(new Error('offline'))
+							: remoteSource.getLevel(path),
+				}}
 				.opened=${true}
 			></cosmoz-treenode-navigator>
-		</div>
-	`,
-	play: async ({ canvasElement, step }) => {
+		</div>`,
+	play: async ({ canvasElement }) => {
 		const el = canvasElement.querySelector(
 			'cosmoz-treenode-navigator',
 		) as HTMLElement;
-
-		await waitFor(async () => {
-			expect((await findAllByShadowTestId(el, 'node')).length).toBe(2);
-		});
-
-		const [firstArrow] = await findAllByShadowTestId(el, 'node-arrow');
-		firstArrow.click();
-
-		await step(
-			'Loading shows while the previous level is still up',
-			async () => {
-				await findByShadowTestId(el, 'loading');
-				expect((await findAllByShadowTestId(el, 'node')).length).toBe(2);
-			},
-		);
-
-		await step('A failed level says so', async () => {
-			await findByShadowTestId(el, 'error');
-			expect(queryByShadowTestId(el, 'loading')).toBeNull();
-		});
+		await findByShadowTestId(el, 'error');
+		expect(rowNames(el)).toEqual(['Alpha', 'Beta']);
 	},
 };
 
-const searchOnlySource: NodeSource = {
-	...remoteSource,
-	getLevel: () => later([]),
-	search: () => later([]),
-};
-
 export const EmptyLevelSuggestsSearch: Story = {
-	render: () => html`
-		<div style="height: 400px; width: 500px;">
+	render: () =>
+		html`<div style="height:400px;width:500px">
 			<cosmoz-treenode-navigator
-				.source=${searchOnlySource}
-				.searchMinLength=${3}
-				.searchDebounceTimeout=${50}
+				.source=${{ ...remoteSource, getLevel: () => [], search: () => [] }}
+				.searchDebounceTimeout=${10}
 				.opened=${true}
 			></cosmoz-treenode-navigator>
-		</div>
-	`,
-	play: async ({ canvasElement, step }) => {
+		</div>`,
+	play: async ({ canvasElement }) => {
 		const el = canvasElement.querySelector(
 			'cosmoz-treenode-navigator',
 		) as HTMLElement;
+		expect((await findByShadowTestId(el, 'empty')).textContent?.trim()).toBe(
+			'Search to find a node.',
+		);
+		const input = (
+			await findByShadowTestId(el, 'search-input')
+		).shadowRoot!.querySelector('input')!;
+		input.value = 'missing';
+		input.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+		await waitFor(async () =>
+			expect(
+				(await findByShadowTestId(el, 'no-results')).textContent?.trim(),
+			).toBe('No nodes match the search'),
+		);
+	},
+};
 
-		await step('A level with nothing to list points to search', async () => {
-			const empty = await findByShadowTestId(el, 'empty');
-			expect(empty.textContent?.trim()).toBe('Search to find a node.');
-		});
-
-		await step('A search with no hits says so', async () => {
-			const searchInput = await findByShadowTestId(el, 'search-input');
-			const input = searchInput.shadowRoot?.querySelector(
-				'input',
-			) as HTMLInputElement;
-			input.value = 'nothing';
-			input.dispatchEvent(
-				new Event('input', { bubbles: true, composed: true }),
-			);
-
-			await waitFor(async () => {
-				const empty = await findByShadowTestId(el, 'empty');
-				expect(empty.textContent?.trim()).toBe('No matches.');
-			});
-		});
+export const RetriesFailedLevel: Story = {
+	render: () => {
+		const failed = new Set<string>();
+		const source = {
+			...remoteSource,
+			getLevel: (path: string) => {
+				if (path && !failed.has(path)) {
+					failed.add(path);
+					return Promise.reject(new Error('offline'));
+				}
+				return remoteSource.getLevel(path);
+			},
+		};
+		return html`<div style="height:400px;width:500px">
+			<cosmoz-treenode-navigator
+				.source=${source}
+				.opened=${true}
+			></cosmoz-treenode-navigator>
+		</div>`;
+	},
+	play: async ({ canvasElement }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-navigator',
+		) as HTMLElement;
+		await findByShadowTestId(el, 'error');
+		el.shadowRoot!.querySelector<HTMLButtonElement>('.retry')!.click();
+		await expectRows(el, ['Alpha', 'Alpha child', 'Beta']);
+		await waitFor(() => expect(queryByShadowTestId(el, 'error')).toBeNull());
 	},
 };

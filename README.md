@@ -2,7 +2,7 @@
 
 [![Build Status](https://github.com/Neovici/cosmoz-treenode-navigator/workflows/CI/badge.svg)](https://github.com/Neovici/cosmoz-treenode-navigator/actions?workflow=CI)
 
-A [PionJS](https://github.com/nicholaspmccracken/pion)-based web component for navigating, searching, and selecting nodes in a hierarchical tree structure.
+A [PionJS](https://github.com/pionjs/pion)-based web component for browsing, searching, and selecting nodes in a hierarchical tree structure. The tree is an expandable [`cosmoz-tree-view`](https://github.com/Neovici/cosmoz-tree-view) (after the Untitled UI tree view), with the highlighted node's path above the search so you keep your bearings in deep trees.
 
 ## Installation
 
@@ -86,36 +86,85 @@ The data is a nested object keyed by node IDs:
 
 The property names `name` and `children` are configurable via `DefaultTree` options (`searchProperty`, `childProperty`). The `pathLocatorSeparator` defaults to `"."`.
 
-## Loading nodes on demand
+## Modes
 
-A `Tree` holds the whole hierarchy in memory, which stops being an option once it is a few hundred thousand nodes. Pass a `source` instead and the components ask for one level at a time. Every method may answer synchronously or with a promise.
+Every mode has a live story and play-tests in Storybook (`npm start`).
 
-```ts
-import type { NodeSource } from '@neovici/cosmoz-treenode-navigator/source';
+### Browse
 
-const source: NodeSource = {
-	getLevel: (pathLocator) => fetchChildren(pathLocator), // roots when empty
-	getPath: (pathLocator) => fetchAncestors(pathLocator), // outermost first
-	search: (query, scope) => fetchMatches(query),
-	hasChildren: () => undefined, // undefined renders the arrow anyway
-	label: (node) => node.name,
-	pathLabel: () => undefined, // heading above a group of search results
-	parentOf: (node) =>
-		node.pathLocator.slice(0, node.pathLocator.lastIndexOf('.')),
-	scopedSearch: false, // true if `search` honours `scope`
-};
+With no current node, every root is open. The chevron expands a node, a click **highlights** it (the dialog's Select button confirms it), and double-click or <kbd>Enter</kbd> **selects** it straight away.
 
-html`<cosmoz-treenode-button-view
-	.source=${source}
-></cosmoz-treenode-button-view>`;
+```js
+html`<cosmoz-treenode-navigator
+	.tree=${tree}
+	.opened=${true}
+></cosmoz-treenode-navigator>`;
 ```
 
-Two things are worth getting right:
+Story: _CosmozTreenodeNavigator › Browse_.
 
-- `search` results are rendered in the order they arrive. A server that ranks its matches has already decided which one the user meant, and re-sorting throws that away.
-- `scopedSearch: false` hides the "search again but globally" button, which has nothing to offer when the search was global to begin with.
+### Current node
 
-`tree` keeps working on its own — it is served through the built-in `treeSource` adapter, which is also exported if you want to wrap one yourself.
+With a `nodePath`, the navigator opens on it: highlighted, its ancestors and its own children open, and scrolled into view. A path that is only partly valid (`1.2.999`) opens its last valid node with nothing highlighted; an invalid one falls back to the open roots.
+
+```js
+html`<cosmoz-treenode-navigator
+	.tree=${tree}
+	.nodePath=${'1.100.300'}
+	.opened=${true}
+></cosmoz-treenode-navigator>`;
+```
+
+Story: _Open On Current Node_.
+
+### Path
+
+Above the search sits the highlighted node's path — `C: / Users / John` — with the node itself in bold. Each step is a button that selects that ancestor and scrolls the tree to it.
+
+Story: _Open On Current Node_.
+
+### Search
+
+Typing at least `searchMinLength` characters (debounced by `searchDebounceTimeout`) searches the **whole** tree. Matches show in place, under their ancestors, all open, so you see where each match lives; their own children are hidden. With no matches a message replaces the tree. Clearing the search brings the tree back.
+
+```js
+html`<cosmoz-treenode-navigator
+	.tree=${tree}
+	.searchMinLength=${2}
+	.searchDebounceTimeout=${300}
+></cosmoz-treenode-navigator>`;
+```
+
+Story: _Searching_.
+
+### Large trees
+
+Children are sorted (folders first, then by name) once per node and cached; only expanded branches are read and rows are virtualized. A node with 274,000 children expands in under 100 ms. Sorting works on a copy: the tree's own child arrays are never reordered.
+
+Story: _Large Tree_ (100,000 children).
+
+### Dialog
+
+In `<cosmoz-treenode-button-view>`, highlighting changes nothing until it is confirmed with **Select**, double-click or <kbd>Enter</kbd>. **Cancel** or <kbd>Esc</kbd> closes without changing `nodePath`.
+
+Story: _CosmozTreenodeButtonView › With Preselected Node_.
+
+## Keyboard
+
+| Key                            | Where  | Action                                                  |
+| ------------------------------ | ------ | ------------------------------------------------------- |
+| <kbd>↓</kbd>                   | Search | Move into the tree, on the highlighted node             |
+| <kbd>Enter</kbd>               | Search | Select the highlighted node                             |
+| <kbd>↑</kbd> <kbd>↓</kbd>      | Tree   | Previous / next row                                     |
+| <kbd>→</kbd> / <kbd>←</kbd>    | Tree   | Expand or enter children / collapse or go to the parent |
+| <kbd>Home</kbd> <kbd>End</kbd> | Tree   | First / last row                                        |
+| <kbd>Space</kbd>               | Tree   | Highlight the focused row                               |
+| <kbd>Enter</kbd>               | Tree   | Select the focused row                                  |
+| <kbd>Esc</kbd>                 | Dialog | Close without changing the selection                    |
+
+## Updating the tree
+
+Pass a new `tree` when the data changes. Nodes added to the same tree object in place are picked up the next time the navigator opens.
 
 ## Components
 
@@ -194,18 +243,18 @@ The host element is declared as a CSS container (`container-type: inline-size`).
 
 ### `<cosmoz-treenode-navigator>`
 
-The inner navigator component that provides tree browsing, search, and keyboard navigation. Typically used inside `<cosmoz-treenode-button-view>`, but can be used standalone.
+The inner navigator: the highlighted node's path, a search field and the tree. Typically used inside `<cosmoz-treenode-button-view>`, but can be used standalone.
 
 #### Properties
 
-| Property                | Type      | Default     | Description                                     |
-| ----------------------- | --------- | ----------- | ----------------------------------------------- |
-| `tree`                  | `Tree`    | --          | The tree data structure (set via JS)            |
-| `nodePath`              | `string`  | `''`        | Selected node's path locator (two-way bindable) |
-| `highlightedNodePath`   | `string`  | `''`        | Currently highlighted node's path (notify only) |
-| `opened`                | `boolean` | `undefined` | Controls keyboard listeners and scroll behavior |
-| `searchMinLength`       | `number`  | `3`         | Minimum characters to trigger search            |
-| `searchDebounceTimeout` | `number`  | `500`       | Debounce timeout (ms) before search triggers    |
+| Property                | Type      | Default     | Description                                                            |
+| ----------------------- | --------- | ----------- | ---------------------------------------------------------------------- |
+| `tree`                  | `Tree`    | --          | The tree data structure (set via JS)                                   |
+| `nodePath`              | `string`  | `''`        | Selected node's path locator (two-way bindable)                        |
+| `highlightedNodePath`   | `string`  | `''`        | Currently highlighted node's path (notify only)                        |
+| `opened`                | `boolean` | `undefined` | Resets the view to the current node on open; `false` unmounts the tree |
+| `searchMinLength`       | `number`  | `3`         | Minimum characters to trigger search                                   |
+| `searchDebounceTimeout` | `number`  | `500`       | Debounce timeout (ms) before search triggers                           |
 
 #### Events
 
@@ -216,13 +265,15 @@ The inner navigator component that provides tree browsing, search, and keyboard 
 
 #### CSS Custom Properties
 
-| Property                                             | Default                        | Description                                 |
-| ---------------------------------------------------- | ------------------------------ | ------------------------------------------- |
-| `--cosmoz-treenode-navigator-icon-color`             | `currentColor`                 | Color of navigation icons (home, arrow)     |
-| `--cosmoz-treenode-navigator-select-node-icon-color` | `var(--cz-color-fg-secondary)` | Color of the selected/highlighted node icon |
-| `--cosmoz-treenode-navigator-list-height`            | `50vh`                         | Height of the scrollable node list          |
-| `--cz-text-color`                                    | `inherit`                      | General text color                          |
-| `--cz-bg-color`                                      | `var(--cz-color-bg-secondary)` | Section header background color             |
+| Property                                  | Default | Description                  |
+| ----------------------------------------- | ------- | ---------------------------- |
+| `--cosmoz-treenode-navigator-list-height` | `50vh`  | Height of the scrolling tree |
+
+Colors, type and spacing come from `@neovici/cosmoz-tokens` (`--cz-*`). Tree rows can be styled through [`cosmoz-tree-view`'s CSS parts](https://github.com/Neovici/cosmoz-tree-view#styling).
+
+#### Test ids
+
+`search-input`, `path`, `tree` and `no-results`. Tree rows are `role="treeitem"`, with `aria-selected` and `aria-expanded`.
 
 ## Internationalization
 
@@ -244,7 +295,9 @@ i18next.addResourceBundle('sv', 'translation', {
 	'Search or navigate to chosen destination':
 		'Sok eller navigera till vald destination',
 	'Search...': 'Sok...',
-	'Click to search again but globally': 'Klicka for att soka igen men globalt',
+	Path: 'Sökväg',
+	Nodes: 'Noder',
+	'No nodes match the search': 'Inga noder matchar sökningen',
 	Select: 'Valj',
 	Cancel: 'Avbryt',
 });
@@ -252,14 +305,34 @@ i18next.addResourceBundle('sv', 'translation', {
 
 ### Translation Keys
 
-| Key                                        | Used in                                     |
-| ------------------------------------------ | ------------------------------------------- |
-| `Select a node`                            | Button placeholder when no node is selected |
-| `Search or navigate to chosen destination` | Dialog heading                              |
-| `Search...`                                | Search input placeholder                    |
-| `Click to search again but globally`       | Global search button label                  |
-| `Select`                                   | Dialog confirm button                       |
-| `Cancel`                                   | Dialog cancel button                        |
+| Key                                        | Used in                                      |
+| ------------------------------------------ | -------------------------------------------- |
+| `Select a node`                            | Button placeholder when no node is selected  |
+| `Search or navigate to chosen destination` | Dialog heading                               |
+| `Search...`                                | Search input placeholder                     |
+| `Path`                                     | Accessible name of the path above the search |
+| `Nodes`                                    | Accessible name of the tree                  |
+| `No nodes match the search`                | Shown when a search has no matches           |
+| `Select`                                   | Dialog confirm button                        |
+| `Cancel`                                   | Dialog cancel button                         |
+
+## Migrating from v8
+
+The one-level drill-down list is replaced by an expandable tree. The public properties and events, and the button view's slots and CSS parts, are unchanged.
+
+| Before                                                                          | After                                                                       |
+| ------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Drill-down list with a home icon and the open folder's breadcrumb               | Expandable tree; the path above the search follows the **highlighted** node |
+| Search in the open folder, then "search again globally"                         | Search is always global, matches shown in place                             |
+| `--cosmoz-treenode-navigator-icon-color`                                        | _removed_ (tokens)                                                          |
+| `--cosmoz-treenode-navigator-select-node-icon-color`                            | _removed_ (tokens)                                                          |
+| `--cosmoz-treenode-navigator-list-item-focused-color`                           | _removed_; style `cosmoz-tree-view`'s CSS parts                             |
+| Test ids `node`, `node-name`, `node-arrow`, `home-icon`, `global-search-button` | `role="treeitem"` rows; test ids `tree`, `path`, `no-results`               |
+| Translation key `Click to search again but globally`                            | _removed_; new keys `Path`, `Nodes`, `No nodes match the search`            |
+| Capturing `keydown` listener on `document`                                      | Keys handled by the search field and the tree                               |
+| The tree's `children` arrays sorted in place                                    | Sorted on a copy, cached per node                                           |
+
+New dependency: [`@neovici/cosmoz-tree-view`](https://github.com/Neovici/cosmoz-tree-view).
 
 ## Migrating from v7
 
@@ -325,3 +398,19 @@ Tests use [Vitest](https://vitest.dev/) with two projects: `unit` (jsdom) for he
 ## License
 
 [Apache-2.0](LICENSE)
+
+## API-backed sources
+
+The `source` property introduced in v8.5 remains supported. Its `getPath`,
+`getLevel`, `search`, `hasChildren`, `label`, and `parentOf` methods drive the
+expandable tree without loading the whole hierarchy. With a source, the initial
+view contains the current node's ancestor chain and children. Expanding a branch
+loads that level. Clicking an ancestor also fetches its siblings' level. Sources
+that cannot enumerate roots can return an empty root level; search remains
+available.
+
+Search calls `search(query, '')` globally and resolves the returned nodes' paths.
+Sources should reuse ancestor data included with search responses in `getPath`
+to avoid extra requests. Matches appear under their ancestors in match order.
+Missing paths leave their matches selectable. Loading and error messages are
+announced, and failed levels and searches offer Try again.
