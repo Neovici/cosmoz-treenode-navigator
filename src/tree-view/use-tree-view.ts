@@ -95,28 +95,41 @@ const useRows = <T>({ items, getId, getChildren, hasChildren }: Props<T>) => {
 };
 
 /**
- * When the selection is set from outside (or the tree loads with one),
- * scroll it into view once, centred, so the reader sees where they are.
- * Selections made by clicking are already in view and are skipped.
+ * Keep an external selection visible as loaded siblings change its row index.
+ * Browsing another branch suppresses automatic scrolling. Clicking a row
+ * records its position without scrolling or moving focus.
  */
 const useRevealSelection = (
 	selected: string | undefined,
+	activeId: string | undefined,
 	indexOf: ReadonlyMap<string, number>,
 	scrollerRef: ScrollerRef,
 ) => {
-	const revealed = useRef<string | undefined>(undefined);
+	const revealed = useRef<{ id: string; index: number } | undefined>(undefined);
 	useEffect(() => {
-		if (selected == null || revealed.current === selected) return;
+		if (selected == null) {
+			revealed.current = undefined;
+			return;
+		}
 		const index = indexOf.get(selected);
-		if (index == null) return;
-		revealed.current = selected;
-		whenLaidOut(scrollerRef.current).then(() =>
+		if (
+			index == null ||
+			activeId !== selected ||
+			(revealed.current?.id === selected && revealed.current.index === index)
+		) {
+			return;
+		}
+		const controller = new AbortController();
+		whenLaidOut(scrollerRef.current).then(() => {
+			if (controller.signal.aborted) return;
 			revealRow(scrollerRef.current, index, selected, {
 				focus: false,
 				block: 'center',
-			}),
-		);
-	}, [selected, indexOf]);
+			});
+			revealed.current = { id: selected, index };
+		});
+		return () => controller.abort();
+	}, [selected, activeId, indexOf]);
 	return revealed;
 };
 
@@ -150,8 +163,12 @@ export const useTreeView = <T>(host: HTMLElement, props: Props<T>) => {
 	const [range, setRange] = useState({ first: -1, last: -1 });
 	useEffect(() => setActiveId(selected), [selected]);
 	const scrollerRef = useRef<VirtualizerHostElement | undefined>(undefined);
-	const { rows, indexOf, toggle } = useRows(props);
-	const revealed = useRevealSelection(selected, indexOf, scrollerRef);
+	const { rows, indexOf, toggle: toggleExpanded } = useRows(props);
+	const toggle = (id: string, open?: boolean) => {
+		setActiveId(id);
+		toggleExpanded(id, open);
+	};
+	const revealed = useRevealSelection(selected, activeId, indexOf, scrollerRef);
 	const tabStopId = pickTabStop(rows, indexOf, activeId, selected);
 	const tabStopIndex = indexOf.get(tabStopId!) ?? -1;
 	const treeTabIndex =
@@ -164,22 +181,28 @@ export const useTreeView = <T>(host: HTMLElement, props: Props<T>) => {
 		}
 	};
 
-	const select = useCallback((row: Row<T>) => {
-		revealed.current = row.id;
-		setActiveId(row.id);
-		setSelected(row.id);
-	}, []);
+	const select = useCallback(
+		(row: Row<T>) => {
+			revealed.current = { id: row.id, index: indexOf.get(row.id) ?? -1 };
+			setActiveId(row.id);
+			setSelected(row.id);
+		},
+		[indexOf],
+	);
 
-	const activate = useCallback((row: Row<T>) => {
-		select(row);
-		host.dispatchEvent(
-			new CustomEvent<ActivateEventDetail<T>>('activate', {
-				detail: { id: row.id, node: row.node },
-				bubbles: true,
-				composed: true,
-			}),
-		);
-	}, []);
+	const activate = useCallback(
+		(row: Row<T>) => {
+			select(row);
+			host.dispatchEvent(
+				new CustomEvent<ActivateEventDetail<T>>('activate', {
+					detail: { id: row.id, node: row.node },
+					bubbles: true,
+					composed: true,
+				}),
+			);
+		},
+		[select],
+	);
 
 	// `focusActiveItem()` moves focus to the tab-stop row, as tabbing into
 	// the tree would. Native `focus()` is left alone: frameworks and test
