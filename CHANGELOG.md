@@ -1,5 +1,11 @@
 # Changelog
 
+## 9.0.1
+
+### Patch Changes
+
+- 670fada: Keep the selected node visible when asynchronous ancestor levels insert siblings before it. Cancel stale scroll requests and preserve focus in the search field or toolbar.
+
 ## 9.0.0
 
 ### Major Changes
