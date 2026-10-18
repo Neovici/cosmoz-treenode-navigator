@@ -8,7 +8,13 @@ import {
 import { expect, waitFor } from 'storybook/test';
 import '../src/cosmoz-treenode-navigator';
 import type { NodeSource } from '../src/util/source';
-import { expectRows, findRow, rowNames, toggleRow } from './test-helpers';
+import {
+	expectRows,
+	findRow,
+	rowNames,
+	search,
+	toggleRow,
+} from './test-helpers';
 
 /**
  * Stands in for a server-backed source: it answers asynchronously, it cannot say
@@ -182,5 +188,41 @@ export const RetriesFailedLevel: Story = {
 		el.shadowRoot!.querySelector<HTMLButtonElement>('.retry')!.click();
 		await expectRows(el, ['Alpha', 'Alpha child', 'Beta']);
 		await waitFor(() => expect(queryByShadowTestId(el, 'error')).toBeNull());
+	},
+};
+
+export const ReplacesSearchWithoutStaleSelection: Story = {
+	render: () =>
+		html`<div style="height:400px;width:500px">
+			<cosmoz-treenode-navigator
+				.source=${{
+					...remoteSource,
+					search: (query: string) =>
+						new Promise<Node[]>((resolve) =>
+							setTimeout(
+								() => resolve([nodes[query === 'alpha' ? '1.1' : '1.2']]),
+								query === 'beta' ? 300 : 10,
+							),
+						),
+				}}
+				.searchDebounceTimeout=${10}
+				.opened=${true}
+			></cosmoz-treenode-navigator>
+		</div>`,
+	play: async ({ canvasElement }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-navigator',
+		) as HTMLElement;
+		await expectRows(el, ['Alpha', 'Alpha child', 'Beta']);
+		await search(el, 'alpha');
+		await expectRows(el, ['Alpha']);
+		(await findRow(el, 'Alpha')).click();
+		await search(el, 'beta');
+		await findByShadowTestId(el, 'loading');
+		expect(rowNames(el)).toEqual([]);
+		await expectRows(el, ['Beta']);
+		expect((await findRow(el, 'Beta')).getAttribute('aria-selected')).toBe(
+			'false',
+		);
 	},
 };

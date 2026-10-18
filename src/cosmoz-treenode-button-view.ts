@@ -130,6 +130,7 @@ const CosmozNodeButtonView = ({
 	const onOpen = () => setOpened(true);
 
 	const onClose = () => {
+		setHighlightedNodePath('');
 		setOpened(false);
 		setTooltipDisabled(true);
 		clearTimeout(tooltipTimeoutRef.current);

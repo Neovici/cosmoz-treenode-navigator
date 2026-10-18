@@ -1,6 +1,6 @@
-import type { Node } from '@neovici/cosmoz-tree';
+import { Tree, type Node } from '@neovici/cosmoz-tree';
 import { describe, expect, it, vi } from 'vitest';
-import type { NodeSource } from '../src/util/source';
+import { treeSource, type NodeSource } from '../src/util/source';
 import { forest, searchTree, sourceTree } from '../src/util/source-tree';
 
 const node = (pathLocator: string, name = pathLocator): Node => ({
@@ -104,5 +104,17 @@ describe('source tree', () => {
 		);
 		expect(result.roots).toEqual([match]);
 		expect(result.matches).toBe(1);
+	});
+});
+
+describe('in-memory source', () => {
+	it('returns an empty level for a leaf root', async () => {
+		const root = node('1', 'Leaf');
+		const adapter = treeSource(new Tree({ '1': root }));
+		expect(adapter.getLevel('')).toEqual([root]);
+		expect(adapter.getLevel('1')).toEqual([]);
+		const model = sourceTree(adapter);
+		await model.loadLevel('1');
+		expect(model.errors.size).toBe(0);
 	});
 });

@@ -20,6 +20,8 @@ export const useSourceTree = (
 		[model],
 	);
 	useEffect(() => {
+		setHighlighted('');
+		setExpanded([]);
 		if (opened === false) return;
 		const controller = new AbortController();
 		setLoading(true);
@@ -33,10 +35,10 @@ export const useSourceTree = (
 					setExpanded(parts.map((node) => node.pathLocator));
 					setHighlighted(current?.pathLocator === path ? path : '');
 					if (current) {
-						await model.loadLevel(
-							source.hasChildren(current) === false
-								? source.parentOf(current)
-								: current.pathLocator,
+						await Promise.all(
+							parts
+								.filter((node) => source.hasChildren(node) !== false)
+								.map((node) => model.loadLevel(node.pathLocator)),
 						);
 					} else {
 						await model.loadLevel('');
@@ -44,7 +46,9 @@ export const useSourceTree = (
 						const roots = model.roots();
 						setExpanded(roots.map((node) => node.pathLocator));
 						await Promise.all(
-							roots.map((node) => model.loadLevel(node.pathLocator)),
+							roots
+								.filter((node) => source.hasChildren(node) !== false)
+								.map((node) => model.loadLevel(node.pathLocator)),
 						);
 					}
 				},
@@ -83,6 +87,7 @@ export const useSearchTree = (source: NodeSource, query: string) => {
 			return;
 		}
 		setLoading(true);
+		setFound(undefined);
 		searchTree(source, query)
 			.then(
 				(result) => {

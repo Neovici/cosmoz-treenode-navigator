@@ -76,7 +76,15 @@ export const OpensOnCurrentNode: Story = {
 		const el = getNavigator(canvasElement);
 
 		await step('The current node is selected and opened', async () => {
-			await expectRows(el, ['C:', 'Users', 'Default', 'John', 'Public']);
+			await expectRows(el, [
+				'C:',
+				'Program Files',
+				'Users',
+				'Default',
+				'John',
+				'Public',
+				'Windows',
+			]);
 			expect(selectedNames(el)).toEqual(['Users']);
 		});
 

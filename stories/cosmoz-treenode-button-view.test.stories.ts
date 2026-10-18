@@ -7,6 +7,7 @@ import {
 } from 'shadow-dom-testing-library';
 import { expect, userEvent, waitFor } from 'storybook/test';
 import '../src/cosmoz-treenode-button-view';
+import { treeSource } from '../src/util/source';
 import { adminFilesTree } from './data/tree-data';
 import { findRow, selectedNames } from './test-helpers';
 
@@ -105,6 +106,16 @@ export const DialogInteraction: Story = {
 				expect(dialog.open).toBe(true);
 			});
 		});
+
+		await step(
+			'The icon-only close button has a native accessible name',
+			async () => {
+				const close = el.shadowRoot!.querySelector('header cosmoz-button')!;
+				expect(
+					close.shadowRoot!.querySelector('button')!.getAttribute('aria-label'),
+				).toBe('Close');
+			},
+		);
 
 		await step('Closes dialog on cancel button click', async () => {
 			const dialog = (await findByShadowTestId(
@@ -373,5 +384,43 @@ export const WithInvalidNodePath: Story = {
 				expect(el.nodePath).toBe('1');
 			});
 		});
+	},
+};
+
+export const ReopensWithoutCanceledSelection: Story = {
+	render: () => {
+		const source = treeSource(tree);
+		return html`<cosmoz-treenode-button-view
+			.source=${{
+				...source,
+				getPath: (path: string) =>
+					new Promise((resolve) =>
+						setTimeout(() => resolve(source.getPath(path)), 200),
+					),
+			}}
+			.nodePath=${'1'}
+		></cosmoz-treenode-button-view>`;
+	},
+	play: async ({ canvasElement }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-button-view',
+		) as HTMLElement & { nodePath: string };
+		const open = await findByShadowTestId(el, 'open-button');
+		await userEvent.click(open);
+		const navigator = el.shadowRoot!.querySelector(
+			'cosmoz-treenode-navigator',
+		) as HTMLElement;
+		await waitFor(async () =>
+			userEvent.click(await findRow(navigator, 'Users')),
+		);
+		const select = await findByShadowTestId(el, 'select-button');
+		await waitFor(() => expect(select.hasAttribute('disabled')).toBe(false));
+		await userEvent.click(await findByShadowTestId(el, 'cancel-button'));
+		await userEvent.click(open);
+		await findByShadowTestId(navigator, 'loading');
+		expect(select.hasAttribute('disabled')).toBe(true);
+		await userEvent.click(select);
+		expect(el.nodePath).toBe('1');
+		await waitFor(() => expect(selectedNames(navigator)).toEqual(['C:']));
 	},
 };

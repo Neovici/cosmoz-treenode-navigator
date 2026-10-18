@@ -305,16 +305,21 @@ i18next.addResourceBundle('sv', 'translation', {
 
 ### Translation Keys
 
-| Key                                        | Used in                                      |
-| ------------------------------------------ | -------------------------------------------- |
-| `Select a node`                            | Button placeholder when no node is selected  |
-| `Search or navigate to chosen destination` | Dialog heading                               |
-| `Search...`                                | Search input placeholder                     |
-| `Path`                                     | Accessible name of the path above the search |
-| `Nodes`                                    | Accessible name of the tree                  |
-| `No nodes match the search`                | Shown when a search has no matches           |
-| `Select`                                   | Dialog confirm button                        |
-| `Cancel`                                   | Dialog cancel button                         |
+| Key                         | Used in                                      |
+| --------------------------- | -------------------------------------------- |
+| `Select a node`             | Button placeholder and dialog heading        |
+| `Close`                     | Accessible name of the dialog close button   |
+| `Search nodes`              | Search input label                           |
+| `Search...`                 | Search input placeholder                     |
+| `Path`                      | Accessible name of the path above the search |
+| `Nodes`                     | Accessible name of the tree                  |
+| `No nodes match the search` | Shown when a search has no matches           |
+| `Select`                    | Dialog confirm button                        |
+| `Cancel`                    | Dialog cancel button                         |
+| `Loading...`                | Loading status                               |
+| `Could not load nodes.`     | Failed request status                        |
+| `Try again`                 | Retry button                                 |
+| `Search to find a node.`    | Empty root level status                      |
 
 ## Migrating from v8
 
@@ -404,8 +409,9 @@ Tests use [Vitest](https://vitest.dev/) with two projects: `unit` (jsdom) for he
 The `source` property introduced in v8.5 remains supported. Its `getPath`,
 `getLevel`, `search`, `hasChildren`, `label`, and `parentOf` methods drive the
 expandable tree without loading the whole hierarchy. With a source, the initial
-view contains the current node's ancestor chain and children. Expanding a branch
-loads that level. Clicking an ancestor also fetches its siblings' level. Sources
+view shows the current node's ancestor chain immediately, then loads the levels
+of those expanded ancestors and the current node. Expanding another branch loads
+its immediate children. Sources
 that cannot enumerate roots can return an empty root level; search remains
 available.
 
