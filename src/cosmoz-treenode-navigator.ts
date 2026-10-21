@@ -1,4 +1,5 @@
 import '@neovici/cosmoz-input';
+import '@neovici/cosmoz-spinner';
 import type { Node, Tree } from '@neovici/cosmoz-tree';
 import { useHost } from '@neovici/cosmoz-utils/hooks/use-host';
 import { notifyProperty } from '@neovici/cosmoz-utils/hooks/use-notify-property';
@@ -121,27 +122,29 @@ const NodeNavigator = ({
 	};
 	return html`
 		<div class="header">
-			${when(
-				path.length,
-				() =>
-					html`<nav class="path" aria-label=${t('Path')} data-testid="path">
-						${path.map(
-							(node, index) =>
-								html`${index
-										? html`<span class="slash" aria-hidden="true">/</span>`
-										: nothing}<button
-										type="button"
-										class="crumb"
-										aria-current=${index === path.length - 1
-											? 'location'
-											: nothing}
-										@click=${() => pickAncestor(node.pathLocator)}
-									>
-										${nodeSource.label(node)}
-									</button>`,
-						)}
-					</nav>`,
-			)}
+			<div class="crumbs">
+				${when(
+					path.length,
+					() =>
+						html`<nav class="path" aria-label=${t('Path')} data-testid="path">
+							${path.map(
+								(node, index) =>
+									html`${index
+											? html`<span class="slash" aria-hidden="true">/</span>`
+											: nothing}<button
+											type="button"
+											class="crumb"
+											aria-current=${index === path.length - 1
+												? 'location'
+												: nothing}
+											@click=${() => pickAncestor(node.pathLocator)}
+										>
+											${nodeSource.label(node)}
+										</button>`,
+							)}
+						</nav>`,
+				)}
+			</div>
 			<cosmoz-input
 				autofocus
 				data-testid="search-input"
@@ -161,60 +164,69 @@ const NodeNavigator = ({
 				}}
 			></cosmoz-input>
 		</div>
-		<cosmoz-treenode-tree-view
-			class="items"
-			data-testid="tree"
-			label=${t('Nodes')}
-			.items=${items}
-			.getId=${(node: Node) => node.pathLocator}
-			.getLabel=${nodeSource.label}
-			.getChildren=${query ? search.found?.getChildren : model.getChildren}
-			.hasChildren=${query
-				? (node: Node) => (search.found?.getChildren(node).length ?? 0) > 0
-				: model.hasChildren}
-			.expanded=${query ? searchExpanded : expanded}
-			.selected=${highlighted || undefined}
-			@expanded-changed=${(event: CustomEvent<{ value: string[] }>) => {
-				event.preventDefault();
-				expand(event.detail.value);
-			}}
-			@selected-changed=${(event: CustomEvent<{ value: string }>) => {
-				event.preventDefault();
-				setHighlighted(event.detail.value);
-			}}
-			@activate=${(event: CustomEvent<{ id: string }>) =>
-				confirm(event.detail.id)}
-			${ref((el) => {
-				view.current = el as HTMLElement & TreeViewApi;
-			})}
-		></cosmoz-treenode-tree-view>
-		<div class="status" role="status" aria-live="polite">
-			${when(
-				hasError,
-				() =>
-					html`<span data-testid="error">${t('Could not load nodes.')}</span
-						><button class="retry" type="button" @click=${retry}>
-							${t('Try again')}
-						</button>`,
-				() =>
-					when(
-						isLoading,
-						() =>
-							html`<span class="loading" data-testid="loading"
-								>${t('Loading...')}</span
-							>`,
-						() =>
-							when(
-								!items.length,
-								() =>
-									html`<span data-testid=${query ? 'no-results' : 'empty'}
-										>${query
-											? t('No nodes match the search')
-											: t('Search to find a node.')}</span
-									>`,
-							),
-					),
-			)}
+		<div class="list">
+			<cosmoz-treenode-tree-view
+				class="items"
+				data-testid="tree"
+				label=${t('Nodes')}
+				.items=${items}
+				.getId=${(node: Node) => node.pathLocator}
+				.getLabel=${nodeSource.label}
+				.getChildren=${query ? search.found?.getChildren : model.getChildren}
+				.hasChildren=${query
+					? (node: Node) => (search.found?.getChildren(node).length ?? 0) > 0
+					: model.hasChildren}
+				.expanded=${query ? searchExpanded : expanded}
+				.selected=${highlighted || undefined}
+				@expanded-changed=${(event: CustomEvent<{ value: string[] }>) => {
+					event.preventDefault();
+					expand(event.detail.value);
+				}}
+				@selected-changed=${(event: CustomEvent<{ value: string }>) => {
+					event.preventDefault();
+					setHighlighted(event.detail.value);
+				}}
+				@activate=${(event: CustomEvent<{ id: string }>) =>
+					confirm(event.detail.id)}
+				${ref((el) => {
+					view.current = el as HTMLElement & TreeViewApi;
+				})}
+			></cosmoz-treenode-tree-view>
+			<div
+				class="status"
+				?data-over=${items.length > 0}
+				role="status"
+				aria-live="polite"
+			>
+				${when(
+					hasError,
+					() =>
+						html`<span data-testid="error">${t('Could not load nodes.')}</span
+							><button class="retry" type="button" @click=${retry}>
+								${t('Try again')}
+							</button>`,
+					() =>
+						when(
+							isLoading,
+							() =>
+								html`<cosmoz-spinner
+									data-testid="loading"
+									role="img"
+									aria-label=${t('Loading...')}
+								></cosmoz-spinner>`,
+							() =>
+								when(
+									!items.length,
+									() =>
+										html`<span data-testid=${query ? 'no-results' : 'empty'}
+											>${query
+												? t('No nodes match the search')
+												: t('Search to find a node.')}</span
+										>`,
+								),
+						),
+				)}
+			</div>
 		</div>
 	`;
 };

@@ -15,14 +15,18 @@ export default css`
 		margin: 0 calc(var(--cz-spacing) * 5);
 	}
 
+	/* Reserved while the path loads, so the list below doesn't shift. */
+	.crumbs {
+		min-height: 1lh;
+		font-size: var(--cz-text-sm);
+		line-height: var(--cz-text-sm-line-height);
+	}
+
 	.path {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
 		gap: 2px;
-		min-height: var(--cz-text-sm-line-height);
-		font-size: var(--cz-text-sm);
-		line-height: var(--cz-text-sm-line-height);
 		color: var(--cz-color-text-tertiary);
 	}
 
@@ -52,25 +56,40 @@ export default css`
 		font-weight: var(--cz-font-weight-semibold);
 	}
 
-	.items {
-		height: var(--cosmoz-treenode-navigator-list-height, min(44dvh, 24rem));
+	.list {
+		position: relative;
 		margin: 0 8px;
 	}
 
+	.items {
+		height: var(--cosmoz-treenode-navigator-list-height, min(44dvh, 24rem));
+	}
+
+	/* Overlays the fixed-height list, so loading never resizes the dialog. */
 	.status {
-		margin: 0 calc(var(--cz-spacing) * 5);
-		min-height: var(--cz-text-sm-line-height);
-		padding-block: 0 calc(var(--cz-spacing) * 3);
-		color: var(--cz-color-text-tertiary);
-		font-size: var(--cz-text-sm);
+		position: absolute;
+		inset: 0;
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		gap: calc(var(--cz-spacing) * 2);
+		padding: 0 calc(var(--cz-spacing) * 3);
+		color: var(--cz-color-text-tertiary);
+		font-size: var(--cz-text-sm);
+		line-height: var(--cz-text-sm-line-height);
+		text-align: center;
+		pointer-events: none;
+	}
+	.status[data-over] {
+		top: auto;
+		padding-block: calc(var(--cz-spacing) * 2);
+		background: var(--cz-color-bg-primary);
 	}
 	.status:empty {
 		display: none;
 	}
 	.retry {
+		pointer-events: auto;
 		border: 0;
 		padding: 0;
 		background: none;
@@ -84,8 +103,7 @@ export default css`
 		box-shadow: var(--cz-focus-ring);
 	}
 	@media (max-width: 480px) {
-		.header,
-		.status {
+		.header {
 			margin-inline: calc(var(--cz-spacing) * 4);
 		}
 	}

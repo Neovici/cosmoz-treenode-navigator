@@ -72,6 +72,7 @@
 		"@neovici/cosmoz-button": "^2.4.1",
 		"@neovici/cosmoz-icons": "^1.6.0",
 		"@neovici/cosmoz-input": "^5.0.0",
+		"@neovici/cosmoz-spinner": "^1.0.3",
 		"@neovici/cosmoz-tokens": "^4.9.0",
 		"@neovici/cosmoz-tooltip": "^1.1.0",
 		"@neovici/cosmoz-tree": "^3.7.3",
