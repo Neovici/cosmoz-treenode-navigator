@@ -1,3 +1,4 @@
+import { searchMdIcon } from '@neovici/cosmoz-icons/untitled';
 import '@neovici/cosmoz-input';
 import '@neovici/cosmoz-spinner';
 import type { Node, Tree } from '@neovici/cosmoz-tree';
@@ -122,6 +123,26 @@ const NodeNavigator = ({
 	};
 	return html`
 		<div class="header">
+			<cosmoz-input
+				autofocus
+				data-testid="search-input"
+				label=${t('Search nodes')}
+				.value=${value}
+				.placeholder=${t('Search nodes')}
+				@input=${(event: Event) =>
+					setValue((event.target as HTMLInputElement).value)}
+				@keydown=${(event: KeyboardEvent) => {
+					if (event.key === 'ArrowDown') {
+						event.preventDefault();
+						view.current?.focusActiveItem();
+					} else if (event.key === 'Enter') {
+						event.preventDefault();
+						confirm(highlighted);
+					}
+				}}
+			>
+				${searchMdIcon({ slot: 'prefix', width: '20', height: '20' })}
+			</cosmoz-input>
 			<div class="crumbs">
 				${when(
 					path.length,
@@ -143,26 +164,14 @@ const NodeNavigator = ({
 										</button>`,
 							)}
 						</nav>`,
+					() =>
+						html`<span class="hint"
+							>${query
+								? t('Pick a node from the results.')
+								: t('Search, or browse the tree.')}</span
+						>`,
 				)}
 			</div>
-			<cosmoz-input
-				autofocus
-				data-testid="search-input"
-				label=${t('Search nodes')}
-				.value=${value}
-				.placeholder=${t('Search...')}
-				@input=${(event: Event) =>
-					setValue((event.target as HTMLInputElement).value)}
-				@keydown=${(event: KeyboardEvent) => {
-					if (event.key === 'ArrowDown') {
-						event.preventDefault();
-						view.current?.focusActiveItem();
-					} else if (event.key === 'Enter') {
-						event.preventDefault();
-						confirm(highlighted);
-					}
-				}}
-			></cosmoz-input>
 		</div>
 		<div class="list">
 			<cosmoz-treenode-tree-view

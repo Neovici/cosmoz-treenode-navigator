@@ -63,7 +63,7 @@ export const Default: Story = {
 			await waitFor(async () => {
 				const searchInput = await findByShadowTestId(el, 'search-input');
 				const input = searchInput.shadowRoot?.querySelector('input');
-				expect(input?.placeholder).toBe('Search...');
+				expect(input?.placeholder).toBe('Search nodes');
 			});
 		});
 	},
@@ -96,7 +96,7 @@ export const WithCustomSearchMinLength: Story = {
 			await waitFor(async () => {
 				const searchInput = await findByShadowTestId(el, 'search-input');
 				const input = searchInput.shadowRoot?.querySelector('input');
-				expect(input?.placeholder).toBe('Search...');
+				expect(input?.placeholder).toBe('Search nodes');
 			});
 		});
 	},

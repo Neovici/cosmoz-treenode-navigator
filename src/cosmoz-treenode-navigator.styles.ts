@@ -15,6 +15,20 @@ export default css`
 		margin: 0 calc(var(--cz-spacing) * 5);
 	}
 
+	/* The placeholder says the same; the label stays for assistive tech. */
+	cosmoz-input::part(label) {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	cosmoz-input svg {
+		color: var(--cz-color-fg-quaternary);
+	}
+
 	/* Reserved while the path loads, so the list below doesn't shift. */
 	.crumbs {
 		min-height: 1lh;
@@ -27,6 +41,10 @@ export default css`
 		flex-wrap: wrap;
 		align-items: center;
 		gap: 2px;
+		color: var(--cz-color-text-tertiary);
+	}
+
+	.hint {
 		color: var(--cz-color-text-tertiary);
 	}
 
