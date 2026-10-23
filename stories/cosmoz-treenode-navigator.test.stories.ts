@@ -84,6 +84,7 @@ export const OpensOnCurrentNode: Story = {
 				'John',
 				'Public',
 				'Windows',
+				'D:',
 			]);
 			expect(selectedNames(el)).toEqual(['Users']);
 		});

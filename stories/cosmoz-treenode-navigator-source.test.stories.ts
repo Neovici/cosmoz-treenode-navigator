@@ -133,6 +133,23 @@ export const KeepsHeightWhileOpeningOnANode: Story = {
 	},
 };
 
+export const ListsTopLevelBesideThePath: Story = {
+	render: () =>
+		html`<div style="height: 400px; width: 500px;">
+			<cosmoz-treenode-navigator
+				.source=${remoteSource}
+				.nodePath=${'1.1.1'}
+				.opened=${true}
+			></cosmoz-treenode-navigator>
+		</div>`,
+	play: async ({ canvasElement }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-navigator',
+		) as HTMLElement;
+		await expectRows(el, ['Alpha', 'Alpha child', 'Beta']);
+	},
+};
+
 export const ShowsLoadingThenError: Story = {
 	render: () =>
 		html`<div style="height:400px;width:500px">
