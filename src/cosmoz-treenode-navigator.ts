@@ -158,6 +158,7 @@ const NodeNavigator = ({
 											aria-current=${index === path.length - 1
 												? 'location'
 												: nothing}
+											title=${nodeSource.label(node)}
 											@click=${() => pickAncestor(node.pathLocator)}
 										>
 											${nodeSource.label(node)}
