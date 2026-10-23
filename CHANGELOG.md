@@ -1,5 +1,13 @@
 # Changelog
 
+## 9.0.2
+
+### Patch Changes
+
+- b19fb7d: Refine the node picker: show the nodes icon in the dialog header, put a search icon in the field instead of a separate label, and move the breadcrumb path below the search with a hint when no path is shown.
+- b19fb7d: Show loading as a spinner over the node list instead of a "Loading..." line below it, so the dialog keeps its height while levels and search results load.
+- c8cc69c: Load the source's top level when opening on a node, so other top-level nodes stay reachable by browsing instead of only the current node's branch.
+
 ## 9.0.1
 
 ### Patch Changes
