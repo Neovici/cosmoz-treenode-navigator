@@ -35,11 +35,12 @@ export const useSourceTree = (
 					setExpanded(parts.map((node) => node.pathLocator));
 					setHighlighted(current?.pathLocator === path ? path : '');
 					if (current) {
-						await Promise.all(
-							parts
+						await Promise.all([
+							model.loadLevel(''),
+							...parts
 								.filter((node) => source.hasChildren(node) !== false)
 								.map((node) => model.loadLevel(node.pathLocator)),
-						);
+						]);
 					} else {
 						await model.loadLevel('');
 						if (controller.signal.aborted) return;

@@ -42,7 +42,15 @@ export const sourceTree = (source: NodeSource) => {
 				listeners.delete(listener);
 			};
 		},
-		roots: () => hierarchy.roots,
+		// The top level, then anything the paths reached that it doesn't hold.
+		roots: () => {
+			const top = levels.get('') ?? [];
+			const listed = new Set(top.map((node) => node.pathLocator));
+			return [
+				...top,
+				...hierarchy.roots.filter((node) => !listed.has(node.pathLocator)),
+			];
+		},
 		getChildren: (node: Node) =>
 			levels.get(node.pathLocator) ?? hierarchy.getChildren(node),
 		hasChildren: (node: Node) =>
