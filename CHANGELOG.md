@@ -1,5 +1,12 @@
 # Changelog
 
+## 9.0.3
+
+### Patch Changes
+
+- 91d39fc: Focus the search field when the node picker opens, so you can type to search right away. The dialog's `autofocus` lookup couldn't reach the input inside the navigator's shadow root, so the close button took focus instead.
+- 0e82dc9: Keep the breadcrumb path on one line, shortening ancestor names with an ellipsis, so selecting a node with a long path no longer pushes the tree down under the pointer.
+
 ## 9.0.2
 
 ### Patch Changes
