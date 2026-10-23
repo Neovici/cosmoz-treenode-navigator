@@ -53,6 +53,7 @@ const NodeNavigator = ({
 }: Props) => {
 	const host = useHost();
 	const view = useRef<HTMLElement & TreeViewApi>();
+	const input = useRef<HTMLElement>();
 	const [nodePath, setNodePath] = useProperty<string>('nodePath', '');
 	const nodeSource = useMemo(() => source ?? treeSource(tree!), [source, tree]);
 	const [value, setValue] = useState('');
@@ -76,8 +77,11 @@ const NodeNavigator = ({
 	useEffect(() => {
 		setSearchExpanded(search.found?.expanded ?? []);
 	}, [search.found]);
+	// `autofocus` can't reach into this shadow root from the dialog.
 	useEffect(() => {
-		if (opened) setValue('');
+		if (!opened) return;
+		setValue('');
+		input.current?.focus();
 	}, [opened]);
 	useEffect(() => {
 		notifyProperty(host, 'highlightedNodePath', highlighted);
@@ -124,8 +128,10 @@ const NodeNavigator = ({
 	return html`
 		<div class="header">
 			<cosmoz-input
-				autofocus
 				data-testid="search-input"
+				${ref((el) => {
+					input.current = el as HTMLElement;
+				})}
 				label=${t('Search nodes')}
 				.value=${value}
 				.placeholder=${t('Search nodes')}

@@ -424,3 +424,32 @@ export const ReopensWithoutCanceledSelection: Story = {
 		await waitFor(() => expect(selectedNames(navigator)).toEqual(['C:']));
 	},
 };
+
+const deepActiveElement = () => {
+	let active = document.activeElement;
+	while (active?.shadowRoot?.activeElement) {
+		active = active.shadowRoot.activeElement;
+	}
+	return active;
+};
+
+export const FocusesSearchOnOpen: Story = {
+	render: () => html`
+		<cosmoz-treenode-button-view .tree=${tree}></cosmoz-treenode-button-view>
+	`,
+	play: async ({ canvasElement }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-button-view',
+		) as HTMLElement & { opened: boolean };
+		const search = async () =>
+			(await findByShadowTestId(el, 'search-input')).shadowRoot!.querySelector(
+				'input',
+			);
+		await userEvent.click(await findByShadowTestId(el, 'open-button'));
+		await waitFor(async () => expect(deepActiveElement()).toBe(await search()));
+		await userEvent.keyboard('{Escape}');
+		await waitFor(() => expect(el.opened).toBe(false));
+		await userEvent.click(await findByShadowTestId(el, 'open-button'));
+		await waitFor(async () => expect(deepActiveElement()).toBe(await search()));
+	},
+};
