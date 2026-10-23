@@ -242,6 +242,7 @@ const CosmozNodeButtonView = ({
 			})}
 		>
 			<header part="header" @mousedown=${onHeaderMouseDown}>
+				<span class="featured-icon" aria-hidden="true">${defaultIcon}</span>
 				<h1 id="node-picker-heading" part="heading">${t('Select a node')}</h1>
 				<cosmoz-button
 					variant="tertiary"

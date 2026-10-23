@@ -72,15 +72,29 @@ export default css`
 	dialog > header {
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
-		gap: calc(var(--cz-spacing) * 3);
-		padding: calc(var(--cz-spacing) * 5) calc(var(--cz-spacing) * 5)
-			calc(var(--cz-spacing) * 4);
+		gap: calc(var(--cz-spacing) * 4);
+		padding: calc(var(--cz-spacing) * 5) calc(var(--cz-spacing) * 4)
+			calc(var(--cz-spacing) * 4) calc(var(--cz-spacing) * 5);
 		cursor: move;
 		user-select: none;
 	}
 
+	.featured-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex: none;
+		width: 40px;
+		height: 40px;
+		box-sizing: border-box;
+		border: 1px solid var(--cz-color-border-primary);
+		border-radius: var(--cz-radius-md);
+		box-shadow: var(--cz-shadow-xs);
+		color: var(--cz-color-fg-secondary);
+	}
+
 	dialog h1 {
+		flex: 1;
 		margin: 0;
 		font-size: var(--cz-text-lg);
 		line-height: var(--cz-text-lg-line-height);

@@ -108,6 +108,31 @@ export const KeepsSearchRankingAndHidesScopedSearch: Story = {
 	},
 };
 
+export const KeepsHeightWhileOpeningOnANode: Story = {
+	render: () =>
+		html`<cosmoz-treenode-navigator
+			.source=${{
+				...remoteSource,
+				getPath: (path: string) =>
+					new Promise((resolve) =>
+						setTimeout(() => resolve(remoteSource.getPath(path)), 300),
+					),
+			}}
+			.nodePath=${'1.1.1'}
+			.opened=${true}
+		></cosmoz-treenode-navigator>`,
+	play: async ({ canvasElement }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-navigator',
+		) as HTMLElement;
+		await findByShadowTestId(el, 'loading');
+		const height = el.getBoundingClientRect().height;
+		await findByShadowTestId(el, 'path');
+		await waitFor(() => expect(queryByShadowTestId(el, 'loading')).toBeNull());
+		expect(el.getBoundingClientRect().height).toBe(height);
+	},
+};
+
 export const ShowsLoadingThenError: Story = {
 	render: () =>
 		html`<div style="height:400px;width:500px">
@@ -217,10 +242,13 @@ export const ReplacesSearchWithoutStaleSelection: Story = {
 		await search(el, 'alpha');
 		await expectRows(el, ['Alpha']);
 		(await findRow(el, 'Alpha')).click();
+		const height = el.getBoundingClientRect().height;
 		await search(el, 'beta');
 		await findByShadowTestId(el, 'loading');
 		expect(rowNames(el)).toEqual([]);
+		expect(el.getBoundingClientRect().height).toBe(height);
 		await expectRows(el, ['Beta']);
+		expect(el.getBoundingClientRect().height).toBe(height);
 		expect((await findRow(el, 'Beta')).getAttribute('aria-selected')).toBe(
 			'false',
 		);
