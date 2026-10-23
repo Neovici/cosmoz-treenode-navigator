@@ -271,3 +271,43 @@ export const ReplacesSearchWithoutStaleSelection: Story = {
 		);
 	},
 };
+
+export const KeepsTheListInPlaceForALongPath: Story = {
+	render: () => {
+		const long = (node: Node) => ({
+			...node,
+			name: `${node.name} with a name long enough to wrap`,
+		});
+		return html`<div style="height:400px;width:320px">
+			<cosmoz-treenode-navigator
+				.source=${{
+					...remoteSource,
+					getLevel: async (path: string) =>
+						(await remoteSource.getLevel(path)).map(long),
+					getPath: (path: string) =>
+						new Promise((resolve) =>
+							setTimeout(
+								async () =>
+									resolve((await remoteSource.getPath(path)).map(long)),
+								300,
+							),
+						),
+				}}
+				.nodePath=${'1.1.1'}
+				.opened=${true}
+			></cosmoz-treenode-navigator>
+		</div>`;
+	},
+	play: async ({ canvasElement }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-navigator',
+		) as HTMLElement;
+		const top = () =>
+			queryByShadowTestId(el, 'tree')!.getBoundingClientRect().top;
+		await findByShadowTestId(el, 'loading');
+		const before = top();
+		const path = await findByShadowTestId(el, 'path');
+		expect(path.querySelectorAll('.crumb')).toHaveLength(2);
+		expect(top()).toBe(before);
+	},
+};

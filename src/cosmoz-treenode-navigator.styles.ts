@@ -29,26 +29,34 @@ export default css`
 		color: var(--cz-color-fg-quaternary);
 	}
 
-	/* Reserved while the path loads, so the list below doesn't shift. */
+	/* One line, reserved while the path loads, so the list below never shifts. */
 	.crumbs {
-		min-height: 1lh;
+		height: 1lh;
 		font-size: var(--cz-text-sm);
 		line-height: var(--cz-text-sm-line-height);
 	}
 
+	/* The padding keeps the focus ring clear of the clipping. */
 	.path {
 		display: flex;
-		flex-wrap: wrap;
 		align-items: center;
 		gap: 2px;
+		overflow: hidden;
+		padding: 3px;
+		margin: -3px;
 		color: var(--cz-color-text-tertiary);
 	}
 
 	.hint {
+		display: block;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 		color: var(--cz-color-text-tertiary);
 	}
 
 	.slash {
+		flex: none;
 		color: var(--cz-color-text-quaternary);
 	}
 
@@ -58,6 +66,9 @@ export default css`
 		padding: 0 4px;
 		border-radius: var(--cz-radius-xs);
 		font-weight: var(--cz-font-weight-medium);
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 	}
 
 	.crumb:hover {
@@ -69,7 +80,10 @@ export default css`
 		box-shadow: var(--cz-focus-ring);
 	}
 
+	/* Ancestors give way first. */
 	.crumb[aria-current] {
+		flex-shrink: 0;
+		max-width: 60%;
 		color: var(--cz-color-text-primary);
 		font-weight: var(--cz-font-weight-semibold);
 	}
