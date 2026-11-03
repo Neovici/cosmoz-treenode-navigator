@@ -1,14 +1,14 @@
-import{T as k,a as J}from"./tree-data-COwffZGJ.js";import{j as w,D as P,b as U}from"./iframe-Be8ENJ1f.js";import"./cosmoz-treenode-navigator-D69EsQUe.js";import{e as s,t as B,f as d,s as r,a as h,r as O}from"./test-helpers-Rdiv7MNR.js";import"./preload-helper-PPVm8Dsz.js";import"./tree-view-sUUsIhYx.js";const{expect:n,userEvent:i,waitFor:p}=__STORYBOOK_MODULE_TEST__,A=new k(J),u=["C:","Program Files","Users","Windows","D:","Data","Backup"],$={title:"Tests/CosmozTreenodeNavigator"},c=(t="")=>U`
+import{T as J,a as k}from"./tree-data-COwffZGJ.js";import{j as w,D as P,b as A}from"./iframe-C2GcziZa.js";import"./cosmoz-treenode-navigator-CPe0G4FT.js";import{e as s,a as h,t as B,f as d,s as r,r as q}from"./test-helpers-bCp76xu-.js";import"./preload-helper-PPVm8Dsz.js";import"./tree-view-Bam9GJ5E.js";const{expect:n,userEvent:l,waitFor:p}=__STORYBOOK_MODULE_TEST__,M=new J(k),u=["C:","Program Files","Users","Windows","D:","Data","Backup"],z={title:"Tests/CosmozTreenodeNavigator"},i=(t="")=>A`
     <div style="height: 480px; width: 500px; padding: 10px;">
         <cosmoz-treenode-navigator
-            .tree=${A}
+            .tree=${M}
             .nodePath=${t}
             .searchMinLength=${3}
             .searchDebounceTimeout=${100}
             .opened=${!0}
         ></cosmoz-treenode-navigator>
     </div>
-`,l=t=>t.querySelector("cosmoz-treenode-navigator"),y={render:()=>c(),play:async({canvasElement:t,step:a})=>{const e=l(t);await a("With no current node, every root is open",async()=>{await s(e,u)}),await a("Nothing is selected and there is no path",async()=>{n(r(e)).toEqual([]),n(P(e,"path")).toBeNull()})}},m={render:()=>c("1.100"),play:async({canvasElement:t,step:a})=>{const e=l(t);await a("Only the current node and what is below it are listed",async()=>{await s(e,["Users","Default","John","Public"]),n(r(e)).toEqual(["Users"])}),await a("The path shows where it sits",async()=>{const o=await w(e,"path");n(o.textContent?.replace(/\s+/gu," ").trim()).toBe("C: / Users")})}},C=async(t,a)=>{const e=await w(t,"path");await i.click([...e.querySelectorAll("button")].find(o=>o.textContent?.trim()===a))},g={render:()=>c("1.100.200"),play:async({canvasElement:t,step:a})=>{const e=l(t);await s(e,["Default","Documents","Music","Pictures"]),await a("A step above lists that node and what is below it",async()=>{await C(e,"Users"),await s(e,["Users","Default","Documents","Music","Pictures","John","Public"]),n(r(e)).toEqual(["Users"])}),await a("A step inside the list keeps it",async()=>{await i.click(await d(e,"Music")),await C(e,"Default"),n(O(e)[0]).toBe("Users"),n(r(e)).toEqual(["Default"])}),await a("The first step lists the top level",async()=>{await C(e,"C:"),await s(e,["C:","Program Files","Users","Default","Documents","Music","Pictures","John","Public","Windows","D:"]),n(r(e)).toEqual(["C:"])})}},v={render:()=>c(),play:async({canvasElement:t,step:a})=>{const e=l(t);await s(e,u),await a("The chevron expands without selecting",async()=>{await B(await d(e,"Users")),await p(async()=>d(e,"John")),n(r(e)).toEqual([])}),await a("Clicking a row highlights it and updates the path",async()=>{await i.click(await d(e,"John")),n(r(e)).toEqual(["John"]);const o=await w(e,"path");n(o.textContent).toContain("Users")}),await a("Highlighting does not change nodePath",async()=>{n(e.nodePath).toBe("")}),await a("A path step selects that ancestor",async()=>{const T=[...(await w(e,"path")).querySelectorAll("button")].find(R=>R.textContent?.trim()==="C:");await i.click(T),await p(()=>n(r(e)).toEqual(["C:"]))}),await a("Double-clicking a row confirms it",async()=>{await i.dblClick(await d(e,"Windows")),await p(()=>n(e.nodePath).toBe("1.2"))})}},E={render:()=>c("1.100"),play:async({canvasElement:t,step:a})=>{const e=l(t);await p(()=>n(r(e)).toEqual(["Users"])),await a("ArrowDown in the search moves into the tree",async()=>{(await h(e,"")).focus(),await i.keyboard("{ArrowDown}");const T=await d(e,"Users");await p(()=>n(T.matches(":focus")).toBe(!0))}),await a("Arrow keys move, Space highlights, Enter confirms",async()=>{await i.keyboard("{ArrowDown}"),await i.keyboard(" "),n(r(e)).toEqual(["Default"]),await i.keyboard("{Enter}"),await p(()=>n(e.nodePath).toBe("1.100.200"))})}},x={render:()=>c(),play:async({canvasElement:t,step:a})=>{const e=l(t);await s(e,u),await a("Matches show in place, under their ancestors",async()=>{await h(e,"John"),await s(e,["C:","Users","John","D:","Data","John"])}),await a("Clearing the search restores the tree",async()=>{await h(e,""),await s(e,u)}),await a("A search with no matches says so",async()=>{await h(e,"nothing like this"),await p(async()=>n(await w(e,"no-results")).toBeTruthy())})}},f={render:()=>c("1.100"),play:async({canvasElement:t,step:a})=>{const e=l(t);await s(e,["Users","Default","John","Public"]),await a("Only matches below the current node are found",async()=>{await h(e,"Joh"),await s(e,["Users","John"])}),await a("Searching all nodes finds the rest",async()=>{const o=await w(e,"search-everywhere");await i.click(o),await s(e,["C:","Users","John","D:","Data","John"]),n(o.getAttribute("aria-pressed")).toBe("true")}),await a("Searching the node again narrows it back",async()=>{await i.click(await w(e,"search-within")),await s(e,["Users","John"])})}},b={render:()=>c("1.100"),play:async({canvasElement:t,step:a})=>{const e=l(t);await s(e,["Users","Default","John","Public"]),await a("A miss below the node shows matches from all nodes",async()=>{await h(e,"Backup"),await s(e,["D:","Backup"]),n(await w(e,"widened")).toBeTruthy();const o=await w(e,"search-within");n(o.hasAttribute("disabled")).toBe(!0),n((await w(e,"search-everywhere")).getAttribute("aria-pressed")).toBe("true")}),await a("A search that hits stays within the node",async()=>{await h(e,"Joh"),await s(e,["Users","John"]),n(P(e,"widened")).toBeNull()})}},N={render:()=>c(),play:async({canvasElement:t,step:a})=>{const e=l(t);await s(e,u),await a("Shorter than the minimum does not search",async()=>{await h(e,"Jo"),await new Promise(o=>setTimeout(o,250)),await s(e,u)}),await a("Reaching the minimum searches",async()=>{await h(e,"Joh"),await s(e,["C:","Users","John","D:","Data","John"])})}},S={render:()=>c("999.888.777"),play:async({canvasElement:t,step:a})=>{const e=l(t);await a("Falls back to the open roots, nothing selected",async()=>{await s(e,u),n(r(e)).toEqual([])})}},D={render:()=>c("1.2.999"),play:async({canvasElement:t,step:a})=>{const e=l(t);await a("Opens the last valid node (C:/Windows)",async()=>{await p(async()=>d(e,"System")),await d(e,"Microsoft.NET")}),await a("Nothing is selected, since the path is not a node",async()=>{n(r(e)).toEqual([])})}};y.parameters={...y.parameters,docs:{...y.parameters?.docs,source:{originalSource:`{
+`,c=t=>t.querySelector("cosmoz-treenode-navigator"),y={render:()=>i(),play:async({canvasElement:t,step:a})=>{const e=c(t);await a("With no current node, every root is open",async()=>{await s(e,u)}),await a("Nothing is selected and there is no path",async()=>{n(r(e)).toEqual([]),n(P(e,"path")).toBeNull()})}},m={render:()=>i("1.100"),play:async({canvasElement:t,step:a})=>{const e=c(t);await a("Only the current node and what is below it are listed",async()=>{await s(e,["Users","Default","John","Public"]),n(r(e)).toEqual(["Users"])}),await a("The path shows where it sits",async()=>{const o=await w(e,"path");n(o.textContent?.replace(/\s+/gu," ").trim()).toBe("C: / Users")})}},R=async(t,a)=>{const e=await w(t,"path");await l.click([...e.querySelectorAll("button")].find(o=>o.textContent?.trim()===a))},g={render:()=>i("1.100.200"),play:async({canvasElement:t,step:a})=>{const e=c(t);await s(e,["Default","Documents","Music","Pictures"]),await a("A step above lists that node and what is below it",async()=>{await R(e,"Users"),await s(e,["Users","Default","Documents","Music","Pictures","John","Public"]),n(r(e)).toEqual(["Users"])}),await a("A step inside the list keeps it",async()=>{await l.click(await d(e,"Music")),await R(e,"Default"),n(q(e)[0]).toBe("Users"),n(r(e)).toEqual(["Default"])}),await a("The first step lists the top level",async()=>{await R(e,"C:"),await s(e,["C:","Program Files","Users","Default","Documents","Music","Pictures","John","Public","Windows","D:"]),n(r(e)).toEqual(["C:"])})}},v={render:()=>i(),play:async({canvasElement:t,step:a})=>{const e=c(t);await s(e,u),await a("The chevron expands without selecting",async()=>{await B(await d(e,"Users")),await p(async()=>d(e,"John")),n(r(e)).toEqual([])}),await a("Clicking a row highlights it and updates the path",async()=>{await l.click(await d(e,"John")),n(r(e)).toEqual(["John"]);const o=await w(e,"path");n(o.textContent).toContain("Users")}),await a("Highlighting does not change nodePath",async()=>{n(e.nodePath).toBe("")}),await a("A path step selects that ancestor",async()=>{const C=[...(await w(e,"path")).querySelectorAll("button")].find(O=>O.textContent?.trim()==="C:");await l.click(C),await p(()=>n(r(e)).toEqual(["C:"]))}),await a("Double-clicking a row confirms it",async()=>{await l.dblClick(await d(e,"Windows")),await p(()=>n(e.nodePath).toBe("1.2"))})}},E={render:()=>i("1.100"),play:async({canvasElement:t,step:a})=>{const e=c(t);await p(()=>n(r(e)).toEqual(["Users"])),await a("ArrowDown in the search moves into the tree",async()=>{(await h(e,"")).focus(),await l.keyboard("{ArrowDown}");const C=await d(e,"Users");await p(()=>n(C.matches(":focus")).toBe(!0))}),await a("Arrow keys move, Space highlights, Enter confirms",async()=>{await l.keyboard("{ArrowDown}"),await l.keyboard(" "),n(r(e)).toEqual(["Default"]),await l.keyboard("{Enter}"),await p(()=>n(e.nodePath).toBe("1.100.200"))})}},x={render:()=>i(),play:async({canvasElement:t,step:a})=>{const e=c(t);await s(e,u),await a("Matches show in place, under their ancestors",async()=>{await h(e,"John"),await s(e,["C:","Users","John","D:","Data","John"])}),await a("Clearing the search restores the tree",async()=>{await h(e,""),await s(e,u)}),await a("A search with no matches says so",async()=>{await h(e,"nothing like this"),await p(async()=>n(await w(e,"no-results")).toBeTruthy())})}},f={render:()=>i("1.100"),play:async({canvasElement:t,step:a})=>{const e=c(t);await s(e,["Users","Default","John","Public"]),await a("Only matches below the current node are found",async()=>{await h(e,"Joh"),await s(e,["Users","John"])}),await a("Searching all nodes finds the rest",async()=>{const o=await w(e,"search-everywhere");await l.click(o),await s(e,["C:","Users","John","D:","Data","John"]),n(o.getAttribute("aria-pressed")).toBe("true")}),await a("Searching the node again narrows it back",async()=>{await l.click(await w(e,"search-within")),await s(e,["Users","John"])})}},N={render:()=>i("1.100"),play:async({canvasElement:t,step:a})=>{const e=c(t);await s(e,["Users","Default","John","Public"]),await a("A miss below the node shows matches from all nodes",async()=>{await h(e,"Backup"),await s(e,["D:","Backup"]),n(await w(e,"widened")).toBeTruthy();const o=await w(e,"search-within");n(o.hasAttribute("disabled")).toBe(!0),n((await w(e,"search-everywhere")).getAttribute("aria-pressed")).toBe("true")}),await a("A search that hits stays within the node",async()=>{await h(e,"Joh"),await s(e,["Users","John"]),n(P(e,"widened")).toBeNull()})}},b={render:()=>i("1"),play:async({canvasElement:t,step:a})=>{const e=c(t);await a("Lists the top level with the node open",async()=>{await s(e,["C:","Program Files","Users","Windows","D:"]),n(r(e)).toEqual(["C:"]),n(P(e,"search-everywhere")).toBeNull()})}},S={render:()=>i(),play:async({canvasElement:t,step:a})=>{const e=c(t);await s(e,u),await h(e,"Users"),await s(e,["C:","Users"]),await a("Expanding a result lists its children",async()=>{await B(await d(e,"Users")),await s(e,["C:","Users","Default","John","Public"])})}},D={render:()=>i(),play:async({canvasElement:t,step:a})=>{const e=c(t);await s(e,u),await a("Shorter than the minimum does not search",async()=>{await h(e,"Jo"),await new Promise(o=>setTimeout(o,250)),await s(e,u)}),await a("Reaching the minimum searches",async()=>{await h(e,"Joh"),await s(e,["C:","Users","John","D:","Data","John"])})}},T={render:()=>i("999.888.777"),play:async({canvasElement:t,step:a})=>{const e=c(t);await a("Falls back to the open roots, nothing selected",async()=>{await s(e,u),n(r(e)).toEqual([])})}},U={render:()=>i("1.2.999"),play:async({canvasElement:t,step:a})=>{const e=c(t);await a("Opens the last valid node (C:/Windows)",async()=>{await p(async()=>d(e,"System")),await d(e,"Microsoft.NET")}),await a("Nothing is selected, since the path is not a node",async()=>{n(r(e)).toEqual([])})}};y.parameters={...y.parameters,docs:{...y.parameters?.docs,source:{originalSource:`{
   render: () => navigator(),
   play: async ({
     canvasElement,
@@ -164,7 +164,7 @@ import{T as k,a as J}from"./tree-data-COwffZGJ.js";import{j as w,D as P,b as U}f
       await expectRows(el, ['Users', 'John']);
     });
   }
-}`,...f.parameters?.docs?.source}}};b.parameters={...b.parameters,docs:{...b.parameters?.docs,source:{originalSource:`{
+}`,...f.parameters?.docs?.source}}};N.parameters={...N.parameters,docs:{...N.parameters?.docs,source:{originalSource:`{
   render: () => navigator('1.100'),
   play: async ({
     canvasElement,
@@ -186,7 +186,35 @@ import{T as k,a as J}from"./tree-data-COwffZGJ.js";import{j as w,D as P,b as U}f
       expect(queryByShadowTestId(el, 'widened')).toBeNull();
     });
   }
-}`,...b.parameters?.docs?.source}}};N.parameters={...N.parameters,docs:{...N.parameters?.docs,source:{originalSource:`{
+}`,...N.parameters?.docs?.source}}};b.parameters={...b.parameters,docs:{...b.parameters?.docs,source:{originalSource:`{
+  render: () => navigator('1'),
+  play: async ({
+    canvasElement,
+    step
+  }) => {
+    const el = getNavigator(canvasElement);
+    await step('Lists the top level with the node open', async () => {
+      await expectRows(el, ['C:', 'Program Files', 'Users', 'Windows', 'D:']);
+      expect(selectedNames(el)).toEqual(['C:']);
+      expect(queryByShadowTestId(el, 'search-everywhere')).toBeNull();
+    });
+  }
+}`,...b.parameters?.docs?.source}}};S.parameters={...S.parameters,docs:{...S.parameters?.docs,source:{originalSource:`{
+  render: () => navigator(),
+  play: async ({
+    canvasElement,
+    step
+  }) => {
+    const el = getNavigator(canvasElement);
+    await expectRows(el, ROOTS_OPEN);
+    await search(el, 'Users');
+    await expectRows(el, ['C:', 'Users']);
+    await step('Expanding a result lists its children', async () => {
+      await toggleRow(await findRow(el, 'Users'));
+      await expectRows(el, ['C:', 'Users', 'Default', 'John', 'Public']);
+    });
+  }
+}`,...S.parameters?.docs?.source}}};D.parameters={...D.parameters,docs:{...D.parameters?.docs,source:{originalSource:`{
   render: () => navigator(),
   play: async ({
     canvasElement,
@@ -204,7 +232,7 @@ import{T as k,a as J}from"./tree-data-COwffZGJ.js";import{j as w,D as P,b as U}f
       await expectRows(el, ['C:', 'Users', 'John', 'D:', 'Data', 'John']);
     });
   }
-}`,...N.parameters?.docs?.source}}};S.parameters={...S.parameters,docs:{...S.parameters?.docs,source:{originalSource:`{
+}`,...D.parameters?.docs?.source}}};T.parameters={...T.parameters,docs:{...T.parameters?.docs,source:{originalSource:`{
   render: () => navigator('999.888.777'),
   play: async ({
     canvasElement,
@@ -216,7 +244,7 @@ import{T as k,a as J}from"./tree-data-COwffZGJ.js";import{j as w,D as P,b as U}f
       expect(selectedNames(el)).toEqual([]);
     });
   }
-}`,...S.parameters?.docs?.source}}};D.parameters={...D.parameters,docs:{...D.parameters?.docs,source:{originalSource:`{
+}`,...T.parameters?.docs?.source}}};U.parameters={...U.parameters,docs:{...U.parameters?.docs,source:{originalSource:`{
   render: () => navigator('1.2.999'),
   play: async ({
     canvasElement,
@@ -231,4 +259,4 @@ import{T as k,a as J}from"./tree-data-COwffZGJ.js";import{j as w,D as P,b as U}f
       expect(selectedNames(el)).toEqual([]);
     });
   }
-}`,...D.parameters?.docs?.source}}};const z=["OpensOnRoots","OpensOnCurrentNode","MovesUpThroughThePath","ExpandAndSelect","Keyboard","Search","SearchesWithinTheCurrentNode","WidensASearchThatMissesTheCurrentNode","SearchMinLength","WithInvalidNodePath","WithPartiallyValidNodePath"];export{v as ExpandAndSelect,E as Keyboard,g as MovesUpThroughThePath,m as OpensOnCurrentNode,y as OpensOnRoots,x as Search,N as SearchMinLength,f as SearchesWithinTheCurrentNode,b as WidensASearchThatMissesTheCurrentNode,S as WithInvalidNodePath,D as WithPartiallyValidNodePath,z as __namedExportsOrder,$ as default};
+}`,...U.parameters?.docs?.source}}};const K=["OpensOnRoots","OpensOnCurrentNode","MovesUpThroughThePath","ExpandAndSelect","Keyboard","Search","SearchesWithinTheCurrentNode","WidensASearchThatMissesTheCurrentNode","OpensOnATopLevelNodeUnscoped","BrowsesBelowASearchResult","SearchMinLength","WithInvalidNodePath","WithPartiallyValidNodePath"];export{S as BrowsesBelowASearchResult,v as ExpandAndSelect,E as Keyboard,g as MovesUpThroughThePath,b as OpensOnATopLevelNodeUnscoped,m as OpensOnCurrentNode,y as OpensOnRoots,x as Search,D as SearchMinLength,f as SearchesWithinTheCurrentNode,N as WidensASearchThatMissesTheCurrentNode,T as WithInvalidNodePath,U as WithPartiallyValidNodePath,K as __namedExportsOrder,z as default};

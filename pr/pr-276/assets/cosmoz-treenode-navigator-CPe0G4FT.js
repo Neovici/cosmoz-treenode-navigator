@@ -1,6 +1,6 @@
-import{w as me,b as f,f as ye,E as D,A as I,p as we,t as w}from"./iframe-Be8ENJ1f.js";import{o as $,n as k,j as xe,k as ze,t as R,i as q,m as $e,H as ke,b as F,e as C,p as Le,d as x,c as N,s as re,f as H,a as U,u as g,h as Pe}from"./tree-view-sUUsIhYx.js";const Se=({slot:e,title:t,className:o,width:r="24",height:a="24",styles:i}={})=>f`
+import{w as xe,b as f,f as ze,E as H,A as O,p as $e,t as w}from"./iframe-C2GcziZa.js";import{o as k,n as L,j as ke,k as Le,t as I,i as j,m as Pe,H as Se,b as q,e as A,p as Ce,d as x,c as _,s as ne,f as U,a as V,u as g,h as Ee}from"./tree-view-Bam9GJ5E.js";const Ae=({slot:e,title:t,className:o,width:r="24",height:a="24",styles:c}={})=>f`
   <svg
-    slot=${$(e)}
+    slot=${k(e)}
     class=${`search-md-icon ${o??""}`}
     viewBox="0 0 24 24"
     preserveAspectRatio="xMidYMid meet"
@@ -12,25 +12,25 @@ import{w as me,b as f,f as ye,E as D,A as I,p as we,t as w}from"./iframe-Be8ENJ1
     stroke-linejoin="round"
     width=${r}
     height=${a}
-    style=${$(i)}
+    style=${k(c)}
   >
-    ${k(t,()=>me`<title>${t}</title>`)}
+    ${L(t,()=>xe`<title>${t}</title>`)}
     <path d="m21 21-4.35-4.35M19 11a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" />
   </svg>
-`;const X=xe(class extends ze{constructor(e){if(super(e),e.type!==R.PROPERTY&&e.type!==R.ATTRIBUTE&&e.type!==R.BOOLEAN_ATTRIBUTE)throw Error("The `live` directive is not allowed on child or event bindings");if(!ye(e))throw Error("`live` bindings can only contain a single expression")}render(e){return e}update(e,[t]){if(t===D||t===I)return t;const o=e.element,r=e.name;if(e.type===R.PROPERTY){if(t===o[r])return D}else if(e.type===R.BOOLEAN_ATTRIBUTE){if(!!t===o.hasAttribute(r))return D}else if(e.type===R.ATTRIBUTE&&o.getAttribute(r)===t+"")return D;return we(e),t}}),ae=(e,{label:t,invalid:o,errorMessage:r})=>f`
+`;const X=ke(class extends Le{constructor(e){if(super(e),e.type!==I.PROPERTY&&e.type!==I.ATTRIBUTE&&e.type!==I.BOOLEAN_ATTRIBUTE)throw Error("The `live` directive is not allowed on child or event bindings");if(!ze(e))throw Error("`live` bindings can only contain a single expression")}render(e){return e}update(e,[t]){if(t===H||t===O)return t;const o=e.element,r=e.name;if(e.type===I.PROPERTY){if(t===o[r])return H}else if(e.type===I.BOOLEAN_ATTRIBUTE){if(!!t===o.hasAttribute(r))return H}else if(e.type===I.ATTRIBUTE&&o.getAttribute(r)===t+"")return H;return $e(e),t}}),se=(e,{label:t,invalid:o,errorMessage:r})=>f`
 		<div class="float" part="float">&nbsp;</div>
 		<div class="wrap" part="wrap">
 			<slot name="prefix"></slot>
 			<div class="control" part="control">
 				<slot name="control"></slot>
 				${e}
-				${k(t,()=>f`<label for="input" part="label">${t}</label>`)}
+				${L(t,()=>f`<label for="input" part="label">${t}</label>`)}
 			</div>
 			<slot name="suffix"></slot>
 		</div>
 		<div class="line" part="line"></div>
-		${k(o&&r,()=>f`<div class="error" part="error">${r}</div>`)}
-	`,ne=["autocomplete","readonly","disabled","maxlength","invalid","no-label-float","always-float-label"],se=(e,...t)=>e.flatMap((o,r)=>[o,t[r]??""]).join(""),K=se`
+		${L(o&&r,()=>f`<div class="error" part="error">${r}</div>`)}
+	`,ie=["autocomplete","readonly","disabled","maxlength","invalid","no-label-float","always-float-label"],le=(e,...t)=>e.flatMap((o,r)=>[o,t[r]??""]).join(""),te=le`
 	.wrap {
 		--contour-color: var(--focused-color);
 		background: var(--focused-bg);
@@ -50,7 +50,7 @@ import{w as me,b as f,f as ye,E as D,A as I,p as we,t as w}from"./iframe-Be8ENJ1
 		transform: none;
 		transition: 0.25s transform ease;
 	}
-`,ie=se`
+`,ce=le`
 	:host {
 		--font-family: var(
 			--cosmoz-input-font-family,
@@ -289,55 +289,55 @@ import{w as me,b as f,f as ye,E as D,A as I,p as we,t as w}from"./iframe-Be8ENJ1
 	}
 
 	:host(:focus-within) {
-		${K}
+		${te}
 	}
 	@container style(--focused: focused) {
-		${K}
+		${te}
 	}
-`,Ee=e=>q(()=>{if(e==null)return;const t=new RegExp(e,"u");return o=>{!o.defaultPrevented&&o.data&&!t.test(o.data)&&o.preventDefault()}},[e]),Ce=$e(class extends ke{update(){return this.state.host}}),Ae=/([A-Z])/gu,Q=(e,t,o)=>{e[t]=o,e.dispatchEvent(new CustomEvent(t.replace(Ae,"-$1").toLowerCase()+"-changed",{detail:{value:o}}))},le=e=>{const t=F(void 0),o=C(l=>t.current=l,[]),r=e.shadowRoot,a=C(l=>e.dispatchEvent(new Event(l.type,{bubbles:l.bubbles})),[]),i=C(l=>Q(e,"value",l.target.value),[]),n=C(l=>Q(e,"focused",l.type==="focus"),[]),p=C(()=>{const l=t.current?.checkValidity();return e.toggleAttribute("invalid",!l),l},[]);return Le({validate:p},[p]),x(()=>{const l=()=>{e.matches(":focus-within")||e.focus()};return r.addEventListener("mousedown",l),()=>r.removeEventListener("mousedown",l)},[]),{onChange:a,onFocus:n,onInput:i,onRef:o}},Te=({placeholder:e,noLabelFloat:t,label:o})=>(t?o:void 0)||e||" ",Re=["type","pattern","allowed-pattern","min","max","step","autosize","label","placeholder",...ne],Ie=e=>{const{type:t="text",pattern:o,allowedPattern:r,autocomplete:a,value:i,readonly:n,disabled:p,min:l,max:s,step:d,maxlength:h}=e,{onChange:v,onFocus:u,onInput:m,onRef:A}=le(e),T=Ee(r);return ae(f`
+`,Te=e=>j(()=>{if(e==null)return;const t=new RegExp(e,"u");return o=>{!o.defaultPrevented&&o.data&&!t.test(o.data)&&o.preventDefault()}},[e]),Re=Pe(class extends Se{update(){return this.state.host}}),Ie=/([A-Z])/gu,Q=(e,t,o)=>{e[t]=o,e.dispatchEvent(new CustomEvent(t.replace(Ie,"-$1").toLowerCase()+"-changed",{detail:{value:o}}))},de=e=>{const t=q(void 0),o=A(l=>t.current=l,[]),r=e.shadowRoot,a=A(l=>e.dispatchEvent(new Event(l.type,{bubbles:l.bubbles})),[]),c=A(l=>Q(e,"value",l.target.value),[]),n=A(l=>Q(e,"focused",l.type==="focus"),[]),p=A(()=>{const l=t.current?.checkValidity();return e.toggleAttribute("invalid",!l),l},[]);return Ce({validate:p},[p]),x(()=>{const l=()=>{e.matches(":focus-within")||e.focus()};return r.addEventListener("mousedown",l),()=>r.removeEventListener("mousedown",l)},[]),{onChange:a,onFocus:n,onInput:c,onRef:o}},Ne=({placeholder:e,noLabelFloat:t,label:o})=>(t?o:void 0)||e||" ",Oe=["type","pattern","allowed-pattern","min","max","step","autosize","label","placeholder",...ie],_e=e=>{const{type:t="text",pattern:o,allowedPattern:r,autocomplete:a,value:c,readonly:n,disabled:p,min:l,max:s,step:d,maxlength:u}=e,{onChange:v,onFocus:h,onInput:b,onRef:T}=de(e),R=Te(r);return se(f`
 			<input
-				${H(A)}
-				style="--chars: ${i?.toString()?.length??0}ch"
+				${U(T)}
+				style="--chars: ${c?.toString()?.length??0}ch"
 				id="input"
 				part="input"
 				type=${t}
-				pattern=${$(o)}
-				autocomplete=${$(a)}
-				placeholder=${Te(e)}
+				pattern=${k(o)}
+				autocomplete=${k(a)}
+				placeholder=${Ne(e)}
 				?readonly=${n}
 				?aria-disabled=${p}
 				?disabled=${p}
-				.value=${X(i??"")}
-				maxlength=${$(h)}
-				@beforeinput=${T}
-				@input=${m}
+				.value=${X(c??"")}
+				maxlength=${k(u)}
+				@beforeinput=${R}
+				@input=${b}
 				@change=${v}
-				@focus=${u}
-				@blur=${u}
-				min=${$(l)}
-				max=${$(s)}
-				step=${$(d)}
+				@focus=${h}
+				@blur=${h}
+				min=${k(l)}
+				max=${k(s)}
+				step=${k(d)}
 			/>
-		`,e)};customElements.define("cosmoz-input",N(Ie,{observedAttributes:Re,styleSheets:[re(ie)],shadowRootInit:{mode:"open",delegatesFocus:!0}}));const ee=e=>{e.style.height="",e.style.height=`${e.scrollHeight}px`},Ne=(e,t=0)=>{if(t>0){const o=e.getAttribute("rows")??"",r=e.style.height;e.style.height="",e.setAttribute("rows",t),e.style.maxHeight=e.getBoundingClientRect().height+"px",e.style.height=r,e.setAttribute("rows",o)}},Oe=e=>{const{value:t,maxRows:o}=e,r=q(()=>()=>e.shadowRoot.querySelector("#input"),[]);x(()=>Ne(r(),o),[o,r]),x(()=>ee(r()),[r,t]),x(()=>{const a=r(),i=new ResizeObserver(()=>requestAnimationFrame(()=>ee(a)));return i.observe(a),()=>i.unobserve(a)},[r])},_e=["rows","placeholder",...ne],Me=e=>{const{autocomplete:t,value:o,placeholder:r,readonly:a,disabled:i,rows:n,cols:p,maxlength:l}=e,{onChange:s,onFocus:d,onInput:h,onRef:v}=le(e);return Oe(e),ae(f`
+		`,e)};customElements.define("cosmoz-input",_(_e,{observedAttributes:Oe,styleSheets:[ne(ce)],shadowRootInit:{mode:"open",delegatesFocus:!0}}));const oe=e=>{e.style.height="",e.style.height=`${e.scrollHeight}px`},Me=(e,t=0)=>{if(t>0){const o=e.getAttribute("rows")??"",r=e.style.height;e.style.height="",e.setAttribute("rows",t),e.style.maxHeight=e.getBoundingClientRect().height+"px",e.style.height=r,e.setAttribute("rows",o)}},Be=e=>{const{value:t,maxRows:o}=e,r=j(()=>()=>e.shadowRoot.querySelector("#input"),[]);x(()=>Me(r(),o),[o,r]),x(()=>oe(r()),[r,t]),x(()=>{const a=r(),c=new ResizeObserver(()=>requestAnimationFrame(()=>oe(a)));return c.observe(a),()=>c.unobserve(a)},[r])},Ye=["rows","placeholder",...ie],De=e=>{const{autocomplete:t,value:o,placeholder:r,readonly:a,disabled:c,rows:n,cols:p,maxlength:l}=e,{onChange:s,onFocus:d,onInput:u,onRef:v}=de(e);return Be(e),se(f`
 			<textarea id="input" part="input"
-				${H(v)}
-				autocomplete=${$(t)}
+				${U(v)}
+				autocomplete=${k(t)}
 				placeholder=${r||" "}
-				rows=${n??1} cols=${$(p)}
-				?readonly=${a} ?aria-disabled=${i} ?disabled=${i}
-				.value=${X(o??"")} maxlength=${$(l)} @input=${h}
-				@change=${s} @focus=${d} @blur=${d}>`,e)};customElements.define("cosmoz-textarea",N(Me,{observedAttributes:_e,styleSheets:[re(ie)],shadowRootInit:{mode:"open",delegatesFocus:!0}}));const Be=e=>{const{label:t,value:o,disabled:r,error:a}=e,i=C(n=>e.dispatchEvent(new CustomEvent("change",{detail:n.target.checked})),[]);return f`<input
+				rows=${n??1} cols=${k(p)}
+				?readonly=${a} ?aria-disabled=${c} ?disabled=${c}
+				.value=${X(o??"")} maxlength=${k(l)} @input=${u}
+				@change=${s} @focus=${d} @blur=${d}>`,e)};customElements.define("cosmoz-textarea",_(De,{observedAttributes:Ye,styleSheets:[ne(ce)],shadowRootInit:{mode:"open",delegatesFocus:!0}}));const Fe=e=>{const{label:t,value:o,disabled:r,error:a}=e,c=A(n=>e.dispatchEvent(new CustomEvent("change",{detail:n.target.checked})),[]);return f`<input
 			id="toggle"
 			class="toggle"
 			part="toggle"
 			type="checkbox"
 			.checked=${X(!!o)}
 			?disabled=${r}
-			@change=${i}
+			@change=${c}
 		/>
-		${k(t,()=>f`<label for="toggle">${t}</label>`)}
+		${L(t,()=>f`<label for="toggle">${t}</label>`)}
 		<slot name="suffix"></slot>
-		${k(a,n=>f`<div class="failure">${n}</div>`)} `},Ye=U`
+		${L(a,n=>f`<div class="failure">${n}</div>`)} `},He=V`
 	.toggle {
 		appearance: none;
 		width: 35px;
@@ -382,7 +382,7 @@ import{w as me,b as f,f as ye,E as D,A as I,p as we,t as w}from"./iframe-Be8ENJ1
 	.toggle[disabled] {
 		opacity: 0.6;
 	}
-`,De=U`
+`,qe=V`
 	:host {
 		display: block;
 	}
@@ -395,7 +395,7 @@ import{w as me,b as f,f as ye,E as D,A as I,p as we,t as w}from"./iframe-Be8ENJ1
 	::slotted(*) {
 		margin-left: 5px;
 	}
-`;customElements.define("cosmoz-toggle",N(Be,{styleSheets:[De,Ye],observedAttributes:["disabled"]}));const Fe=U`
+`;customElements.define("cosmoz-toggle",_(Fe,{styleSheets:[qe,He],observedAttributes:["disabled"]}));const Ue=V`
 	@keyframes rotating {
 		100% {
 			transform: rotate(360deg);
@@ -417,7 +417,7 @@ import{w as me,b as f,f as ye,E as D,A as I,p as we,t as w}from"./iframe-Be8ENJ1
 		margin: 0 4px;
 		flex: none !important;
 	}
-`,He=()=>I,qe=N(He,{styleSheets:[Fe]});customElements.define("cosmoz-spinner",qe);const Ue=U`
+`,je=()=>O,Ve=_(je,{styleSheets:[Ue]});customElements.define("cosmoz-spinner",Ve);const Ze=V`
 	:host {
 		display: flex;
 		flex-direction: column;
@@ -611,52 +611,52 @@ import{w as me,b as f,f as ye,E as D,A as I,p as we,t as w}from"./iframe-Be8ENJ1
 			margin-inline: calc(var(--cz-spacing) * 4);
 		}
 	}
-`,je=(e,t)=>{const[o,r]=g([]),[a,i]=g(!0),[n,p]=g(),l=F(0);return x(()=>{const s=(l.current??0)+1;l.current=s,i(!0),p(void 0),Promise.resolve().then(e).then(d=>{s===l.current&&(r(d??[]),i(!1))},d=>{s===l.current&&(r([]),p(d),i(!1))})},t),{nodes:o,loading:a,error:n}},W=(e,t)=>{const o=new Map(t.map(a=>[a.pathLocator,a])),r=new Map;for(const a of o.values()){const i=e.parentOf(a);if(i===a.pathLocator)continue;const n=r.get(i)??[];n.push(a),r.set(i,n)}return{roots:[...o.values()].filter(a=>e.parentOf(a)===a.pathLocator||!o.has(e.parentOf(a))),getChildren:a=>r.get(a.pathLocator)??[],expanded:[...r.keys()].filter(a=>o.has(a))}},Ve=e=>{const t=new Map;let o=W(e,[]);const r=new Map,a=new Map,i=new Set,n=new Set,p=()=>n.forEach(s=>s()),l=s=>{for(const d of s)t.set(d.pathLocator,d);o=W(e,[...t.values()])};return{subscribe:s=>(n.add(s),()=>{n.delete(s)}),roots:()=>{const s=r.get("")??[],d=new Set(s.map(h=>h.pathLocator));return[...s,...o.roots.filter(h=>!d.has(h.pathLocator))]},getChildren:s=>r.get(s.pathLocator)??o.getChildren(s),hasChildren:s=>r.has(s.pathLocator)?r.get(s.pathLocator).length>0:e.hasChildren(s)!==!1,pending:a,errors:i,loadPath:async s=>{const d=await e.getPath(s);return l(d),p(),d},loadLevel:s=>{if(r.has(s))return Promise.resolve();const d=a.get(s);if(d)return d;i.delete(s);const h=Promise.resolve().then(()=>e.getLevel(s)).then(v=>{r.set(s,v),l(v)},()=>{i.add(s)}).finally(()=>{a.delete(s),p()});return a.set(s,h),p(),h}}},te=async(e,t,o="")=>{const r=await e.search(t,o),a=n=>!o||n.pathLocator===o||n.pathLocator.startsWith(`${o}.`),i=await Promise.all(r.map(async n=>{try{return[...await e.getPath(n.pathLocator),n]}catch{return[n]}}));return{...W(e,i.flat().filter(a)),matches:r.length}},Ze=(e,t,o)=>{const[,r]=g(0),a=q(()=>Ve(e),[e,o]),[i,n]=g([]),[p,l]=g(""),[s,d]=g(),[h,v]=g(!1),[u,m]=g(!1),[A,T]=g(0);return x(()=>a.subscribe(()=>r(b=>b+1)),[a]),x(()=>{if(l(""),n([]),d(void 0),o===!1)return;const b=new AbortController;return m(!0),v(!1),(t?a.loadPath(t):Promise.resolve([])).then(async y=>{if(b.signal.aborted)return;const S=y[y.length-1];if(S?.pathLocator===t)d(S),n([t]),l(t),e.hasChildren(S)!==!1&&await a.loadLevel(t);else if(S)n(y.map(z=>z.pathLocator)),await Promise.all([a.loadLevel(""),...y.filter(z=>e.hasChildren(z)!==!1).map(z=>a.loadLevel(z.pathLocator))]);else{if(await a.loadLevel(""),b.signal.aborted)return;const z=a.roots();n(z.map(E=>E.pathLocator)),await Promise.all(z.filter(E=>e.hasChildren(E)!==!1).map(E=>a.loadLevel(E.pathLocator)))}},()=>{b.signal.aborted||v(!0)}).finally(()=>{b.signal.aborted||m(!1)}),()=>b.abort()},[a,t,A]),{model:a,expanded:i,setExpanded:n,highlighted:p,setHighlighted:l,scope:s,setScope:d,error:h,loading:u,retry:()=>T(b=>b+1)}},Qe=(e,t,o="")=>{const[r,a]=g(),[i,n]=g(!1),[p,l]=g(!1),[s,d]=g(0);return x(()=>{const h=new AbortController;if(l(!1),!t){a(void 0),n(!1);return}return n(!0),a(void 0),te(e,t,o).then(async v=>o&&!v.roots.length?{...await te(e,t),widened:!0}:v).then(v=>{h.signal.aborted||a(v)},()=>{h.signal.aborted||(a(void 0),l(!0))}).finally(()=>{h.signal.aborted||n(!1)}),()=>h.abort()},[e,t,o,s]),{found:r,loading:i,error:p,retry:()=>d(h=>h+1)}},We=(e,t)=>{const o=t.pathLocator||t.path||"",{pathLocatorSeparator:r}=e;return o.includes(r)?o.substring(0,o.lastIndexOf(r)):o},Xe=(e,t)=>{if(!e)return;const o=e.getNodeByPathLocator(t),r=o?e.getChildren(o):[],{searchProperty:a}=e,i=(n,p)=>{if(e.hasChildren(n)){if(!e.hasChildren(p))return-1}else if(e.hasChildren(p))return 1;const l=n[a],s=p[a];return l>s?1:l<s?-1:0};return r.length>0?r.sort(i):o},oe=(e,t,o)=>{if(!e)return[];const r=Xe(e,o);return t?e.searchNodes(t,r,!1):r},Ge=(e,t)=>{if(!t||!e)return[];const o=t.getPathNodes(e);return o?o.filter(r=>r!==void 0):[]},Je=e=>({getLevel:t=>{const o=oe(e,"",t);return Array.isArray(o)?o:[]},getPath:t=>Ge(t,e),search:(t,o)=>oe(e,t,o),hasChildren:t=>e?.hasChildren(t),label:t=>(e?t[e.searchProperty]:"")??"",pathLabel:t=>e?.getPathString(t,e.searchProperty),parentOf:t=>e?We(e,t):"",scopedSearch:!0}),Ke=(e,t,o)=>{const[r,a]=g("");return x(()=>{const i=setTimeout(()=>{const n=e.trim();a(n.length>=t?n:"")},o);return()=>clearTimeout(i)},[e,t,o]),e.trim().length>=t?r:""},et=({tree:e,source:t,searchMinLength:o=3,searchDebounceTimeout:r=500,opened:a})=>{const i=Ce(),n=F(),p=F(),[l,s]=Pe("nodePath",""),d=q(()=>t??Je(e),[t,e]),[h,v]=g(""),u=Ke(h,o,r),{model:m,expanded:A,setExpanded:T,highlighted:b,setHighlighted:O,scope:y,setScope:S,error:z,loading:E,retry:ce}=Ze(d,l,a),[_,j]=g(!1);x(()=>j(!1),[a,y]);const de=d.scopedSearch&&!_?y?.pathLocator??"":"",L=Qe(d,u,de),M=u&&!_&&!!L.found?.widened,[pe,G]=g([]),{nodes:B}=je(()=>b?d.getPath(b):[],[d,b]);x(()=>{G(L.found?.expanded??[])},[L.found]),x(()=>{a&&(v(""),p.current?.focus())},[a]),x(()=>{Q(i,"highlightedNodePath",b)},[b]),x(()=>{u&&O("")},[u]);const J=C(c=>{c&&s(c)},[]),he=u?L.loading:E||m.pending.size>0,ue=u?L.error:z||m.errors.size>0,fe=y?[y]:m.roots(),Y=u?L.found?.roots??[]:fe,ge=c=>{if(u){G(c);return}for(const P of c)A.includes(P)||m.loadLevel(P);T(c)},ve=()=>{if(u){L.retry();return}if(z){ce();return}for(const c of m.errors)m.loadLevel(c)},be=(c,P)=>{const{pathLocator:V}=c;O(V),!u&&(y&&P===0?(S(void 0),m.loadLevel("")):y&&P<B.findIndex(Z=>Z.pathLocator===y.pathLocator)&&S(c),T(Z=>[...new Set([...Z,V])]),m.loadLevel(V))};return f`
+`,Qe=(e,t)=>{const[o,r]=g([]),[a,c]=g(!0),[n,p]=g(),l=q(0);return x(()=>{const s=(l.current??0)+1;l.current=s,c(!0),p(void 0),Promise.resolve().then(e).then(d=>{s===l.current&&(r(d??[]),c(!1))},d=>{s===l.current&&(r([]),p(d),c(!1))})},t),{nodes:o,loading:a,error:n}},W=(e,t)=>{const o=new Map(t.map(a=>[a.pathLocator,a])),r=new Map;for(const a of o.values()){const c=e.parentOf(a);if(c===a.pathLocator)continue;const n=r.get(c)??[];n.push(a),r.set(c,n)}return{roots:[...o.values()].filter(a=>e.parentOf(a)===a.pathLocator||!o.has(e.parentOf(a))),getChildren:a=>r.get(a.pathLocator)??[],expanded:[...r.keys()].filter(a=>o.has(a))}},We=e=>{const t=new Map;let o=W(e,[]);const r=new Map,a=new Map,c=new Set,n=new Set,p=()=>n.forEach(s=>s()),l=s=>{for(const d of s)t.set(d.pathLocator,d);o=W(e,[...t.values()])};return{subscribe:s=>(n.add(s),()=>{n.delete(s)}),roots:()=>{const s=r.get("")??[],d=new Set(s.map(u=>u.pathLocator));return[...s,...o.roots.filter(u=>!d.has(u.pathLocator))]},getChildren:s=>r.get(s.pathLocator)??o.getChildren(s),hasChildren:s=>r.has(s.pathLocator)?r.get(s.pathLocator).length>0:e.hasChildren(s)!==!1,pending:a,errors:c,loadPath:async s=>{const d=await e.getPath(s);return l(d),p(),d},loadLevel:s=>{if(r.has(s))return Promise.resolve();const d=a.get(s);if(d)return d;c.delete(s);const u=Promise.resolve().then(()=>e.getLevel(s)).then(v=>{r.set(s,v),l(v)},()=>{c.add(s)}).finally(()=>{a.delete(s),p()});return a.set(s,u),p(),u}}},re=async(e,t,o="")=>{const r=await e.search(t,o),a=n=>!o||n.pathLocator===o||n.pathLocator.startsWith(`${o}.`),c=await Promise.all(r.map(async n=>{try{return[...await e.getPath(n.pathLocator),n]}catch{return[n]}}));return{...W(e,c.flat().filter(a)),matches:r.length}},Xe=(e,t,o)=>{const[,r]=g(0),a=j(()=>We(e),[e,o]),[c,n]=g([]),[p,l]=g(""),[s,d]=g(),[u,v]=g(!1),[h,b]=g(!1),[T,R]=g(0);return x(()=>a.subscribe(()=>r(m=>m+1)),[a]),x(()=>{if(l(""),n([]),d(void 0),o===!1)return;const m=new AbortController;return b(!0),v(!1),(t?a.loadPath(t):Promise.resolve([])).then(async y=>{if(m.signal.aborted)return;const S=y[y.length-1];if(S?.pathLocator===t&&y.length>1)d(S),n([t]),l(t),e.hasChildren(S)!==!1&&await a.loadLevel(t);else if(S)S.pathLocator===t&&l(t),n(y.map(z=>z.pathLocator)),await Promise.all([a.loadLevel(""),...y.filter(z=>e.hasChildren(z)!==!1).map(z=>a.loadLevel(z.pathLocator))]);else{if(await a.loadLevel(""),m.signal.aborted)return;const z=a.roots();n(z.map(C=>C.pathLocator)),await Promise.all(z.filter(C=>e.hasChildren(C)!==!1).map(C=>a.loadLevel(C.pathLocator)))}},()=>{m.signal.aborted||v(!0)}).finally(()=>{m.signal.aborted||b(!1)}),()=>m.abort()},[a,t,T]),{model:a,expanded:c,setExpanded:n,highlighted:p,setHighlighted:l,scope:s,setScope:d,error:u,loading:h,retry:()=>R(m=>m+1)}},Ge=(e,t,o="")=>{const[r,a]=g(),[c,n]=g(!1),[p,l]=g(!1),[s,d]=g(0);return x(()=>{const u=new AbortController;if(l(!1),!t){a(void 0),n(!1);return}return n(!0),a(void 0),re(e,t,o).then(async v=>o&&!v.roots.length?{...await re(e,t),widened:!0}:v).then(v=>{u.signal.aborted||a(v)},()=>{u.signal.aborted||(a(void 0),l(!0))}).finally(()=>{u.signal.aborted||n(!1)}),()=>u.abort()},[e,t,o,s]),{found:r,loading:c,error:p,retry:()=>d(u=>u+1)}},Je=(e,t)=>{const o=t.pathLocator||t.path||"",{pathLocatorSeparator:r}=e;return o.includes(r)?o.substring(0,o.lastIndexOf(r)):o},Ke=(e,t)=>{if(!e)return;const o=e.getNodeByPathLocator(t),r=o?e.getChildren(o):[],{searchProperty:a}=e,c=(n,p)=>{if(e.hasChildren(n)){if(!e.hasChildren(p))return-1}else if(e.hasChildren(p))return 1;const l=n[a],s=p[a];return l>s?1:l<s?-1:0};return r.length>0?r.sort(c):o},ae=(e,t,o)=>{if(!e)return[];const r=Ke(e,o);return t?e.searchNodes(t,r,!1):r},et=(e,t)=>{if(!t||!e)return[];const o=t.getPathNodes(e);return o?o.filter(r=>r!==void 0):[]},tt=e=>({getLevel:t=>{const o=ae(e,"",t);return Array.isArray(o)?o:[]},getPath:t=>et(t,e),search:(t,o)=>ae(e,t,o),hasChildren:t=>e?.hasChildren(t),label:t=>(e?t[e.searchProperty]:"")??"",pathLabel:t=>e?.getPathString(t,e.searchProperty),parentOf:t=>e?Je(e,t):"",scopedSearch:!0}),ot=(e,t,o)=>{const[r,a]=g("");return x(()=>{const c=setTimeout(()=>{const n=e.trim();a(n.length>=t?n:"")},o);return()=>clearTimeout(c)},[e,t,o]),e.trim().length>=t?r:""},rt=({tree:e,source:t,searchMinLength:o=3,searchDebounceTimeout:r=500,opened:a})=>{const c=Re(),n=q(),p=q(),[l,s]=Ee("nodePath",""),d=j(()=>t??tt(e),[t,e]),[u,v]=g(""),h=ot(u,o,r),{model:b,expanded:T,setExpanded:R,highlighted:m,setHighlighted:M,scope:y,setScope:S,error:z,loading:C,retry:pe}=Xe(d,l,a),[B,Z]=g(!1);x(()=>Z(!1),[a,y]);const he=d.scopedSearch&&!B?y?.pathLocator??"":"",P=Ge(d,h,he),Y=h&&!B&&!!P.found?.widened,[G,J]=g([]),{nodes:D}=Qe(()=>m?d.getPath(m):[],[d,m]);x(()=>{J(P.found?.expanded??[])},[P.found]),x(()=>{a&&(v(""),p.current?.focus())},[a]),x(()=>{Q(c,"highlightedNodePath",m)},[m]),x(()=>{h&&M("")},[h]);const K=A(i=>{i&&s(i)},[]),ue=(h?P.loading:C)||b.pending.size>0,fe=h?P.error:z||b.errors.size>0,ge=y?[y]:b.roots(),F=h?P.found?.roots??[]:ge,ee=i=>P.found?.getChildren(i)??[],ve=i=>{const $=ee(i);return $.length?$:b.getChildren(i)},be=i=>ee(i).length>0||b.hasChildren(i),me=i=>{const $=h?G:T,N=h?P.found?.expanded??[]:[];for(const E of i)!$.includes(E)&&!N.includes(E)&&b.loadLevel(E);(h?J:R)(i)},ye=()=>{if(h){P.retry();return}if(z){pe();return}for(const i of b.errors)b.loadLevel(i)},we=(i,$)=>{const{pathLocator:N}=i;M(N),!h&&(y&&$===0?(S(void 0),b.loadLevel("")):y&&$<D.findIndex(E=>E.pathLocator===y.pathLocator)&&S(i),R(E=>[...new Set([...E,N])]),b.loadLevel(N))};return f`
 		<div class="header">
 			<cosmoz-input
 				data-testid="search-input"
-				${H(c=>{p.current=c})}
+				${U(i=>{p.current=i})}
 				label=${w("Search nodes")}
-				.value=${h}
+				.value=${u}
 				.placeholder=${w("Search nodes")}
-				@input=${c=>v(c.target.value)}
-				@keydown=${c=>{c.key==="ArrowDown"?(c.preventDefault(),n.current?.focusActiveItem()):c.key==="Enter"&&(c.preventDefault(),J(b))}}
+				@input=${i=>v(i.target.value)}
+				@keydown=${i=>{i.key==="ArrowDown"?(i.preventDefault(),n.current?.focusActiveItem()):i.key==="Enter"&&(i.preventDefault(),K(m))}}
 			>
-				${Se({slot:"prefix",width:"20",height:"20"})}
+				${Ae({slot:"prefix",width:"20",height:"20"})}
 			</cosmoz-input>
-			${k(d.scopedSearch&&y,()=>f`<div class="scope" role="group" aria-label=${w("Search in")}>
+			${L(d.scopedSearch&&y,()=>f`<div class="scope" role="group" aria-label=${w("Search in")}>
 						<span aria-hidden="true">${w("Search in")}</span>
 						<button
 							type="button"
 							data-testid="search-within"
 							title=${d.label(y)}
-							aria-pressed=${String(!_&&!M)}
-							?disabled=${M}
-							@click=${()=>j(!1)}
+							aria-pressed=${String(!B&&!Y)}
+							?disabled=${Y}
+							@click=${()=>Z(!1)}
 						>
 							${d.label(y)}
 						</button>
 						<button
 							type="button"
 							data-testid="search-everywhere"
-							aria-pressed=${String(_||M)}
-							@click=${()=>j(!0)}
+							aria-pressed=${String(B||Y)}
+							@click=${()=>Z(!0)}
 						>
 							${w("All nodes")}
 						</button>
 					</div>`)}
 			<div class="crumbs">
-				${k(B.length,()=>f`<nav class="path" aria-label=${w("Path")} data-testid="path">
-							${B.map((c,P)=>f`${P?f`<span class="slash" aria-hidden="true">/</span>`:I}<button
+				${L(D.length,()=>f`<nav class="path" aria-label=${w("Path")} data-testid="path">
+							${D.map((i,$)=>f`${$?f`<span class="slash" aria-hidden="true">/</span>`:O}<button
 											type="button"
 											class="crumb"
-											aria-current=${P===B.length-1?"location":I}
-											title=${d.label(c)}
-											@click=${()=>be(c,P)}
+											aria-current=${$===D.length-1?"location":O}
+											title=${d.label(i)}
+											@click=${()=>we(i,$)}
 										>
-											${d.label(c)}
+											${d.label(i)}
 										</button>`)}
-						</nav>`,()=>u?I:f`<span class="hint"
+						</nav>`,()=>h?O:f`<span class="hint"
 									>${w("Search, or browse the tree.")}</span
 								>`)}
 			</div>
@@ -666,36 +666,36 @@ import{w as me,b as f,f as ye,E as D,A as I,p as we,t as w}from"./iframe-Be8ENJ1
 				class="items"
 				data-testid="tree"
 				label=${w("Nodes")}
-				.items=${Y}
-				.getId=${c=>c.pathLocator}
+				.items=${F}
+				.getId=${i=>i.pathLocator}
 				.getLabel=${d.label}
-				.getChildren=${u?L.found?.getChildren:m.getChildren}
-				.hasChildren=${u?c=>(L.found?.getChildren(c).length??0)>0:m.hasChildren}
-				.expanded=${u?pe:A}
-				.selected=${b||void 0}
-				@expanded-changed=${c=>{c.preventDefault(),ge(c.detail.value)}}
-				@selected-changed=${c=>{c.preventDefault(),O(c.detail.value)}}
-				@activate=${c=>J(c.detail.id)}
-				${H(c=>{n.current=c})}
+				.getChildren=${h?ve:b.getChildren}
+				.hasChildren=${h?be:b.hasChildren}
+				.expanded=${h?G:T}
+				.selected=${m||void 0}
+				@expanded-changed=${i=>{i.preventDefault(),me(i.detail.value)}}
+				@selected-changed=${i=>{i.preventDefault(),M(i.detail.value)}}
+				@activate=${i=>K(i.detail.id)}
+				${U(i=>{n.current=i})}
 			></cosmoz-treenode-tree-view>
 			<div
 				class="status"
-				?data-over=${Y.length>0}
+				?data-over=${F.length>0}
 				role="status"
 				aria-live="polite"
 			>
-				${k(ue,()=>f`<span data-testid="error">${w("Could not load nodes.")}</span
-							><button class="retry" type="button" @click=${ve}>
+				${L(fe,()=>f`<span data-testid="error">${w("Could not load nodes.")}</span
+							><button class="retry" type="button" @click=${ye}>
 								${w("Try again")}
-							</button>`,()=>k(he,()=>f`<cosmoz-spinner
+							</button>`,()=>L(ue,()=>f`<cosmoz-spinner
 									data-testid="loading"
 									role="img"
 									aria-label=${w("Loading...")}
-								></cosmoz-spinner>`,()=>f`${k(!Y.length,()=>f`<span data-testid=${u?"no-results":"empty"}
-											>${u?w("No nodes match the search"):w("Search to find a node.")}</span
-										>`)}${k(M&&Y.length,()=>f`<span data-testid="widened"
+								></cosmoz-spinner>`,()=>f`${L(!F.length,()=>f`<span data-testid=${h?"no-results":"empty"}
+											>${h?w("No nodes match the search"):w("Search to find a node.")}</span
+										>`)}${L(Y&&F.length,()=>f`<span data-testid="widened"
 											>${w("No matches in this node. Showing all nodes.")}</span
 										>`)}`))}
 			</div>
 		</div>
-	`};customElements.define("cosmoz-treenode-navigator",N(et,{styleSheets:[Ue]}));export{Je as t,je as u};
+	`};customElements.define("cosmoz-treenode-navigator",_(rt,{styleSheets:[Ze]}));export{tt as t,Qe as u};
