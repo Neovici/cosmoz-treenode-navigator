@@ -1,4 +1,4 @@
-import{b as d,w as k}from"./iframe-C-pQiK35.js";import{o as x,n as T,c as $,u as f}from"./tree-view-Dpkx9aVe.js";import"./preload-helper-PPVm8Dsz.js";const N=({slot:e,title:t,className:a,width:n="24",height:r="24",styles:i}={})=>d`
+import{b as d,w as k}from"./iframe-Be8ENJ1f.js";import{o as x,n as T,c as $,u as f}from"./tree-view-sUUsIhYx.js";import"./preload-helper-PPVm8Dsz.js";const N=({slot:e,title:t,className:a,width:n="24",height:r="24",styles:i}={})=>d`
   <svg
     slot=${x(e)}
     class=${`building-07-icon ${a??""}`}
