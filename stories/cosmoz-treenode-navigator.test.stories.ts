@@ -299,6 +299,34 @@ export const WidensASearchThatMissesTheCurrentNode: Story = {
 	},
 };
 
+export const OpensOnATopLevelNodeUnscoped: Story = {
+	render: () => navigator('1'),
+	play: async ({ canvasElement, step }) => {
+		const el = getNavigator(canvasElement);
+
+		await step('Lists the top level with the node open', async () => {
+			await expectRows(el, ['C:', 'Program Files', 'Users', 'Windows', 'D:']);
+			expect(selectedNames(el)).toEqual(['C:']);
+			expect(queryByShadowTestId(el, 'search-everywhere')).toBeNull();
+		});
+	},
+};
+
+export const BrowsesBelowASearchResult: Story = {
+	render: () => navigator(),
+	play: async ({ canvasElement, step }) => {
+		const el = getNavigator(canvasElement);
+		await expectRows(el, ROOTS_OPEN);
+		await search(el, 'Users');
+		await expectRows(el, ['C:', 'Users']);
+
+		await step('Expanding a result lists its children', async () => {
+			await toggleRow(await findRow(el, 'Users'));
+			await expectRows(el, ['C:', 'Users', 'Default', 'John', 'Public']);
+		});
+	},
+};
+
 export const SearchMinLength: Story = {
 	render: () => navigator(),
 	play: async ({ canvasElement, step }) => {

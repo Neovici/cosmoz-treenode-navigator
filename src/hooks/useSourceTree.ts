@@ -12,7 +12,7 @@ export const useSourceTree = (
 	const model = useMemo(() => sourceTree(source), [source, opened]);
 	const [expanded, setExpanded] = useState<readonly string[]>([]);
 	const [highlighted, setHighlighted] = useState('');
-	// Opened on a node, only that node and what is below it are listed.
+	// Opened below the top level, only that node and what is below it are listed.
 	const [scope, setScope] = useState<Node>();
 	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -35,7 +35,7 @@ export const useSourceTree = (
 				async (parts) => {
 					if (controller.signal.aborted) return;
 					const current = parts[parts.length - 1];
-					if (current?.pathLocator === path) {
+					if (current?.pathLocator === path && parts.length > 1) {
 						setScope(current);
 						setExpanded([path]);
 						setHighlighted(path);
@@ -43,6 +43,7 @@ export const useSourceTree = (
 							await model.loadLevel(path);
 						}
 					} else if (current) {
+						if (current.pathLocator === path) setHighlighted(path);
 						setExpanded(parts.map((node) => node.pathLocator));
 						await Promise.all([
 							model.loadLevel(''),

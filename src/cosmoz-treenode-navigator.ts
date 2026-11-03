@@ -99,19 +99,28 @@ const NodeNavigator = ({
 	const confirm = useCallback((path: string) => {
 		if (path) setNodePath(path);
 	}, []);
-	const isLoading = query ? search.loading : loading || model.pending.size > 0;
+	const isLoading =
+		(query ? search.loading : loading) || model.pending.size > 0;
 	const hasError = query ? search.error : error || model.errors.size > 0;
 	const browsed = scope ? [scope] : model.roots();
 	const items = query ? (search.found?.roots ?? []) : browsed;
+	// A result without matches below it browses its own children.
+	const found = (node: Node) => search.found?.getChildren(node) ?? [];
+	const getChildren = (node: Node) => {
+		const children = found(node);
+		return children.length ? children : model.getChildren(node);
+	};
+	const hasChildren = (node: Node) =>
+		found(node).length > 0 || model.hasChildren(node);
 	const expand = (paths: readonly string[]) => {
-		if (query) {
-			setSearchExpanded(paths);
-			return;
-		}
+		const current = query ? searchExpanded : expanded;
+		const matched = query ? (search.found?.expanded ?? []) : [];
 		for (const path of paths) {
-			if (!expanded.includes(path)) model.loadLevel(path);
+			if (!current.includes(path) && !matched.includes(path)) {
+				model.loadLevel(path);
+			}
 		}
-		setExpanded(paths);
+		(query ? setSearchExpanded : setExpanded)(paths);
 	};
 	const retry = () => {
 		if (query) {
@@ -231,10 +240,8 @@ const NodeNavigator = ({
 				.items=${items}
 				.getId=${(node: Node) => node.pathLocator}
 				.getLabel=${nodeSource.label}
-				.getChildren=${query ? search.found?.getChildren : model.getChildren}
-				.hasChildren=${query
-					? (node: Node) => (search.found?.getChildren(node).length ?? 0) > 0
-					: model.hasChildren}
+				.getChildren=${query ? getChildren : model.getChildren}
+				.hasChildren=${query ? hasChildren : model.hasChildren}
 				.expanded=${query ? searchExpanded : expanded}
 				.selected=${highlighted || undefined}
 				@expanded-changed=${(event: CustomEvent<{ value: string[] }>) => {
