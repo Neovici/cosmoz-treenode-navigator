@@ -120,7 +120,8 @@ export default css`
 	.status:empty {
 		display: none;
 	}
-	.retry {
+	.retry,
+	.link {
 		pointer-events: auto;
 		border: 0;
 		padding: 0;
@@ -130,7 +131,8 @@ export default css`
 		cursor: pointer;
 		text-decoration: underline;
 	}
-	.retry:focus-visible {
+	.retry:focus-visible,
+	.link:focus-visible {
 		outline: none;
 		box-shadow: var(--cz-focus-ring);
 	}

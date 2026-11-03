@@ -11,6 +11,7 @@ import { adminFilesTree } from './data/tree-data';
 import {
 	expectRows,
 	findRow,
+	rowNames,
 	search,
 	selectedNames,
 	toggleRow,
@@ -75,23 +76,76 @@ export const OpensOnCurrentNode: Story = {
 	play: async ({ canvasElement, step }) => {
 		const el = getNavigator(canvasElement);
 
-		await step('The current node is selected and opened', async () => {
+		await step(
+			'Only the current node and what is below it are listed',
+			async () => {
+				await expectRows(el, ['Users', 'Default', 'John', 'Public']);
+				expect(selectedNames(el)).toEqual(['Users']);
+			},
+		);
+
+		await step('The path shows where it sits', async () => {
+			const path = await findByShadowTestId(el, 'path');
+			expect(path.textContent?.replace(/\s+/gu, ' ').trim()).toBe('C: / Users');
+		});
+	},
+};
+
+const clickCrumb = async (el: HTMLElement, name: string) => {
+	const path = await findByShadowTestId(el, 'path');
+	await userEvent.click(
+		[...path.querySelectorAll('button')].find(
+			(button) => button.textContent?.trim() === name,
+		)!,
+	);
+};
+
+export const MovesUpThroughThePath: Story = {
+	render: () => navigator('1.100.200'),
+	play: async ({ canvasElement, step }) => {
+		const el = getNavigator(canvasElement);
+		await expectRows(el, ['Default', 'Documents', 'Music', 'Pictures']);
+
+		await step(
+			'A step above lists that node and what is below it',
+			async () => {
+				await clickCrumb(el, 'Users');
+				await expectRows(el, [
+					'Users',
+					'Default',
+					'Documents',
+					'Music',
+					'Pictures',
+					'John',
+					'Public',
+				]);
+				expect(selectedNames(el)).toEqual(['Users']);
+			},
+		);
+
+		await step('A step inside the list keeps it', async () => {
+			await userEvent.click(await findRow(el, 'Music'));
+			await clickCrumb(el, 'Default');
+			expect(rowNames(el)[0]).toBe('Users');
+			expect(selectedNames(el)).toEqual(['Default']);
+		});
+
+		await step('The first step lists the top level', async () => {
+			await clickCrumb(el, 'C:');
 			await expectRows(el, [
 				'C:',
 				'Program Files',
 				'Users',
 				'Default',
+				'Documents',
+				'Music',
+				'Pictures',
 				'John',
 				'Public',
 				'Windows',
 				'D:',
 			]);
-			expect(selectedNames(el)).toEqual(['Users']);
-		});
-
-		await step('The path shows where it sits', async () => {
-			const path = await findByShadowTestId(el, 'path');
-			expect(path.textContent?.replace(/\s+/gu, ' ').trim()).toBe('C: / Users');
+			expect(selectedNames(el)).toEqual(['C:']);
 		});
 	},
 };
@@ -186,6 +240,25 @@ export const Search: Story = {
 			await waitFor(async () =>
 				expect(await findByShadowTestId(el, 'no-results')).toBeTruthy(),
 			);
+		});
+	},
+};
+
+export const SearchesWithinTheCurrentNode: Story = {
+	render: () => navigator('1.100'),
+	play: async ({ canvasElement, step }) => {
+		const el = getNavigator(canvasElement);
+		await expectRows(el, ['Users', 'Default', 'John', 'Public']);
+
+		await step('Only matches below the current node are found', async () => {
+			await search(el, 'Joh');
+			await expectRows(el, ['Users', 'John']);
+		});
+
+		await step('Searching all nodes finds the rest', async () => {
+			await userEvent.click(await findByShadowTestId(el, 'search-everywhere'));
+			await expectRows(el, ['C:', 'Users', 'John', 'D:', 'Data', 'John']);
+			expect(queryByShadowTestId(el, 'search-everywhere')).toBeNull();
 		});
 	},
 };

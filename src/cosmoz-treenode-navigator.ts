@@ -64,11 +64,17 @@ const NodeNavigator = ({
 		setExpanded,
 		highlighted,
 		setHighlighted,
+		scope,
+		setScope,
 		error,
 		loading,
 		retry: retryPath,
 	} = useSourceTree(nodeSource, nodePath, opened);
-	const search = useSearchTree(nodeSource, query);
+	const [everywhere, setEverywhere] = useState(false);
+	useEffect(() => setEverywhere(false), [opened, scope]);
+	const within =
+		nodeSource.scopedSearch && !everywhere ? (scope?.pathLocator ?? '') : '';
+	const search = useSearchTree(nodeSource, query, within);
 	const [searchExpanded, setSearchExpanded] = useState<readonly string[]>([]);
 	const { nodes: path } = useNodes(
 		() => (highlighted ? nodeSource.getPath(highlighted) : []),
@@ -94,7 +100,8 @@ const NodeNavigator = ({
 	}, []);
 	const isLoading = query ? search.loading : loading || model.pending.size > 0;
 	const hasError = query ? search.error : error || model.errors.size > 0;
-	const items = query ? (search.found?.roots ?? []) : model.roots();
+	const browsed = scope ? [scope] : model.roots();
+	const items = query ? (search.found?.roots ?? []) : browsed;
 	const expand = (paths: readonly string[]) => {
 		if (query) {
 			setSearchExpanded(paths);
@@ -118,12 +125,22 @@ const NodeNavigator = ({
 			model.loadLevel(path);
 		}
 	};
-	const pickAncestor = (path: string) => {
-		setHighlighted(path);
-		if (!query) {
-			setExpanded((current) => [...new Set([...current, path])]);
-			model.loadLevel(path);
+	// A step above the listed node moves the list up to it; the first step lists the top level.
+	const pickAncestor = (node: Node, index: number) => {
+		const { pathLocator } = node;
+		setHighlighted(pathLocator);
+		if (query) return;
+		if (scope && index === 0) {
+			setScope(undefined);
+			model.loadLevel('');
+		} else if (
+			scope &&
+			index < path.findIndex((step) => step.pathLocator === scope.pathLocator)
+		) {
+			setScope(node);
 		}
+		setExpanded((current) => [...new Set([...current, pathLocator])]);
+		model.loadLevel(pathLocator);
 	};
 	return html`
 		<div class="header">
@@ -165,7 +182,7 @@ const NodeNavigator = ({
 												? 'location'
 												: nothing}
 											title=${nodeSource.label(node)}
-											@click=${() => pickAncestor(node.pathLocator)}
+											@click=${() => pickAncestor(node, index)}
 										>
 											${nodeSource.label(node)}
 										</button>`,
@@ -231,7 +248,7 @@ const NodeNavigator = ({
 									aria-label=${t('Loading...')}
 								></cosmoz-spinner>`,
 							() =>
-								when(
+								html`${when(
 									!items.length,
 									() =>
 										html`<span data-testid=${query ? 'no-results' : 'empty'}
@@ -239,7 +256,18 @@ const NodeNavigator = ({
 												? t('No nodes match the search')
 												: t('Search to find a node.')}</span
 										>`,
-								),
+								)}${when(
+									query && within,
+									() =>
+										html`<button
+											class="link"
+											type="button"
+											data-testid="search-everywhere"
+											@click=${() => setEverywhere(true)}
+										>
+											${t('Search all nodes')}
+										</button>`,
+								)}`,
 						),
 				)}
 			</div>
