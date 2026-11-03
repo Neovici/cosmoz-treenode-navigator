@@ -64,11 +64,18 @@ const NodeNavigator = ({
 		setExpanded,
 		highlighted,
 		setHighlighted,
+		scope,
+		setScope,
 		error,
 		loading,
 		retry: retryPath,
 	} = useSourceTree(nodeSource, nodePath, opened);
-	const search = useSearchTree(nodeSource, query);
+	const [everywhere, setEverywhere] = useState(false);
+	useEffect(() => setEverywhere(false), [opened, scope]);
+	const within =
+		nodeSource.scopedSearch && !everywhere ? (scope?.pathLocator ?? '') : '';
+	const search = useSearchTree(nodeSource, query, within);
+	const widened = query && !everywhere && !!search.found?.widened;
 	const [searchExpanded, setSearchExpanded] = useState<readonly string[]>([]);
 	const { nodes: path } = useNodes(
 		() => (highlighted ? nodeSource.getPath(highlighted) : []),
@@ -92,18 +99,28 @@ const NodeNavigator = ({
 	const confirm = useCallback((path: string) => {
 		if (path) setNodePath(path);
 	}, []);
-	const isLoading = query ? search.loading : loading || model.pending.size > 0;
+	const isLoading =
+		(query ? search.loading : loading) || model.pending.size > 0;
 	const hasError = query ? search.error : error || model.errors.size > 0;
-	const items = query ? (search.found?.roots ?? []) : model.roots();
+	const browsed = scope ? [scope] : model.roots();
+	const items = query ? (search.found?.roots ?? []) : browsed;
+	// A result without matches below it browses its own children.
+	const found = (node: Node) => search.found?.getChildren(node) ?? [];
+	const getChildren = (node: Node) => {
+		const children = found(node);
+		return children.length ? children : model.getChildren(node);
+	};
+	const hasChildren = (node: Node) =>
+		found(node).length > 0 || model.hasChildren(node);
 	const expand = (paths: readonly string[]) => {
-		if (query) {
-			setSearchExpanded(paths);
-			return;
-		}
+		const current = query ? searchExpanded : expanded;
+		const matched = query ? (search.found?.expanded ?? []) : [];
 		for (const path of paths) {
-			if (!expanded.includes(path)) model.loadLevel(path);
+			if (!current.includes(path) && !matched.includes(path)) {
+				model.loadLevel(path);
+			}
 		}
-		setExpanded(paths);
+		(query ? setSearchExpanded : setExpanded)(paths);
 	};
 	const retry = () => {
 		if (query) {
@@ -118,12 +135,22 @@ const NodeNavigator = ({
 			model.loadLevel(path);
 		}
 	};
-	const pickAncestor = (path: string) => {
-		setHighlighted(path);
-		if (!query) {
-			setExpanded((current) => [...new Set([...current, path])]);
-			model.loadLevel(path);
+	// A step above the listed node moves the list up to it; the first step lists the top level.
+	const pickAncestor = (node: Node, index: number) => {
+		const { pathLocator } = node;
+		setHighlighted(pathLocator);
+		if (query) return;
+		if (scope && index === 0) {
+			setScope(undefined);
+			model.loadLevel('');
+		} else if (
+			scope &&
+			index < path.findIndex((step) => step.pathLocator === scope.pathLocator)
+		) {
+			setScope(node);
 		}
+		setExpanded((current) => [...new Set([...current, pathLocator])]);
+		model.loadLevel(pathLocator);
 	};
 	return html`
 		<div class="header">
@@ -149,6 +176,31 @@ const NodeNavigator = ({
 			>
 				${searchMdIcon({ slot: 'prefix', width: '20', height: '20' })}
 			</cosmoz-input>
+			${when(
+				nodeSource.scopedSearch && scope,
+				() =>
+					html`<div class="scope" role="group" aria-label=${t('Search in')}>
+						<span aria-hidden="true">${t('Search in')}</span>
+						<button
+							type="button"
+							data-testid="search-within"
+							title=${nodeSource.label(scope!)}
+							aria-pressed=${String(!everywhere && !widened)}
+							?disabled=${widened}
+							@click=${() => setEverywhere(false)}
+						>
+							${nodeSource.label(scope!)}
+						</button>
+						<button
+							type="button"
+							data-testid="search-everywhere"
+							aria-pressed=${String(everywhere || widened)}
+							@click=${() => setEverywhere(true)}
+						>
+							${t('All nodes')}
+						</button>
+					</div>`,
+			)}
 			<div class="crumbs">
 				${when(
 					path.length,
@@ -165,18 +217,18 @@ const NodeNavigator = ({
 												? 'location'
 												: nothing}
 											title=${nodeSource.label(node)}
-											@click=${() => pickAncestor(node.pathLocator)}
+											@click=${() => pickAncestor(node, index)}
 										>
 											${nodeSource.label(node)}
 										</button>`,
 							)}
 						</nav>`,
 					() =>
-						html`<span class="hint"
-							>${query
-								? t('Pick a node from the results.')
-								: t('Search, or browse the tree.')}</span
-						>`,
+						query
+							? nothing
+							: html`<span class="hint"
+									>${t('Search, or browse the tree.')}</span
+								>`,
 				)}
 			</div>
 		</div>
@@ -188,10 +240,8 @@ const NodeNavigator = ({
 				.items=${items}
 				.getId=${(node: Node) => node.pathLocator}
 				.getLabel=${nodeSource.label}
-				.getChildren=${query ? search.found?.getChildren : model.getChildren}
-				.hasChildren=${query
-					? (node: Node) => (search.found?.getChildren(node).length ?? 0) > 0
-					: model.hasChildren}
+				.getChildren=${query ? getChildren : model.getChildren}
+				.hasChildren=${query ? hasChildren : model.hasChildren}
 				.expanded=${query ? searchExpanded : expanded}
 				.selected=${highlighted || undefined}
 				@expanded-changed=${(event: CustomEvent<{ value: string[] }>) => {
@@ -231,7 +281,7 @@ const NodeNavigator = ({
 									aria-label=${t('Loading...')}
 								></cosmoz-spinner>`,
 							() =>
-								when(
+								html`${when(
 									!items.length,
 									() =>
 										html`<span data-testid=${query ? 'no-results' : 'empty'}
@@ -239,7 +289,13 @@ const NodeNavigator = ({
 												? t('No nodes match the search')
 												: t('Search to find a node.')}</span
 										>`,
-								),
+								)}${when(
+									widened && items.length,
+									() =>
+										html`<span data-testid="widened"
+											>${t('No matches in this node. Showing all nodes.')}</span
+										>`,
+								)}`,
 						),
 				)}
 			</div>

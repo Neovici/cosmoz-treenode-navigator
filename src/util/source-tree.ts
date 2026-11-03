@@ -92,9 +92,20 @@ export const sourceTree = (source: NodeSource) => {
 	};
 };
 
-/** Ancestors are inserted in match order, preserving the source's ranking. */
-export const searchTree = async (source: NodeSource, query: string) => {
-	const matches = await source.search(query, '');
+/**
+ * Ancestors are inserted in match order, preserving the source's ranking.
+ * Within a scope, the results start at it, as the browsed tree does.
+ */
+export const searchTree = async (
+	source: NodeSource,
+	query: string,
+	scope = '',
+) => {
+	const matches = await source.search(query, scope);
+	const inScope = (node: Node) =>
+		!scope ||
+		node.pathLocator === scope ||
+		node.pathLocator.startsWith(`${scope}.`);
 	const paths = await Promise.all(
 		matches.map(async (node) => {
 			try {
@@ -104,5 +115,8 @@ export const searchTree = async (source: NodeSource, query: string) => {
 			}
 		}),
 	);
-	return { ...forest(source, paths.flat()), matches: matches.length };
+	return {
+		...forest(source, paths.flat().filter(inScope)),
+		matches: matches.length,
+	};
 };

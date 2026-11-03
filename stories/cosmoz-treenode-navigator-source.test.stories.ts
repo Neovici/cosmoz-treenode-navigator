@@ -133,7 +133,7 @@ export const KeepsHeightWhileOpeningOnANode: Story = {
 	},
 };
 
-export const ListsTopLevelBesideThePath: Story = {
+export const ListsOnlyTheCurrentNode: Story = {
 	render: () =>
 		html`<div style="height: 400px; width: 500px;">
 			<cosmoz-treenode-navigator
@@ -146,7 +146,7 @@ export const ListsTopLevelBesideThePath: Story = {
 		const el = canvasElement.querySelector(
 			'cosmoz-treenode-navigator',
 		) as HTMLElement;
-		await expectRows(el, ['Alpha', 'Alpha child', 'Beta']);
+		await expectRows(el, ['Alpha child']);
 	},
 };
 

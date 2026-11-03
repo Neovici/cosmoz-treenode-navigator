@@ -29,6 +29,61 @@ export default css`
 		color: var(--cz-color-fg-quaternary);
 	}
 
+	.scope {
+		display: flex;
+		align-items: center;
+		gap: calc(var(--cz-spacing) * 2);
+		min-width: 0;
+		font-size: var(--cz-text-xs);
+		line-height: var(--cz-text-xs-line-height);
+		color: var(--cz-color-text-tertiary);
+	}
+
+	.scope span {
+		flex: none;
+	}
+
+	.scope button {
+		all: unset;
+		cursor: pointer;
+		padding: 2px calc(var(--cz-spacing) * 2.5);
+		border: 1px solid var(--cz-color-border-primary);
+		border-radius: var(--cz-radius-full);
+		font-weight: var(--cz-font-weight-medium);
+		color: var(--cz-color-text-secondary);
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+
+	.scope button:first-of-type {
+		min-width: 0;
+		max-width: 60%;
+	}
+
+	.scope button:last-of-type {
+		flex: none;
+	}
+
+	.scope button:hover:not(:disabled, [aria-pressed='true']) {
+		background: var(--cz-color-bg-primary-hover);
+	}
+
+	.scope button[aria-pressed='true'] {
+		border-color: var(--cz-color-text-primary);
+		background: var(--cz-color-bg-secondary);
+		color: var(--cz-color-text-primary);
+	}
+
+	.scope button:disabled {
+		cursor: default;
+		color: var(--cz-color-text-quaternary);
+	}
+
+	.scope button:focus-visible {
+		box-shadow: var(--cz-focus-ring);
+	}
+
 	/* One line, reserved while the path loads, so the list below never shifts. */
 	.crumbs {
 		height: 1lh;
