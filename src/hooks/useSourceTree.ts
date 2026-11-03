@@ -90,7 +90,9 @@ export const useSearchTree = (
 	query: string,
 	scope = '',
 ) => {
-	const [found, setFound] = useState<Awaited<ReturnType<typeof searchTree>>>();
+	const [found, setFound] = useState<
+		Awaited<ReturnType<typeof searchTree>> & { widened?: boolean }
+	>();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
 	const [attempt, setAttempt] = useState(0);
@@ -104,7 +106,13 @@ export const useSearchTree = (
 		}
 		setLoading(true);
 		setFound(undefined);
+		// A scoped search that misses widens to all nodes rather than dead-ending.
 		searchTree(source, query, scope)
+			.then(async (result) =>
+				scope && !result.roots.length
+					? { ...(await searchTree(source, query)), widened: true }
+					: result,
+			)
 			.then(
 				(result) => {
 					if (!controller.signal.aborted) setFound(result);

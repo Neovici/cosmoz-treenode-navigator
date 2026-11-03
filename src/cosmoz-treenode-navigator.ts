@@ -75,6 +75,7 @@ const NodeNavigator = ({
 	const within =
 		nodeSource.scopedSearch && !everywhere ? (scope?.pathLocator ?? '') : '';
 	const search = useSearchTree(nodeSource, query, within);
+	const widened = query && !everywhere && !!search.found?.widened;
 	const [searchExpanded, setSearchExpanded] = useState<readonly string[]>([]);
 	const { nodes: path } = useNodes(
 		() => (highlighted ? nodeSource.getPath(highlighted) : []),
@@ -166,6 +167,31 @@ const NodeNavigator = ({
 			>
 				${searchMdIcon({ slot: 'prefix', width: '20', height: '20' })}
 			</cosmoz-input>
+			${when(
+				nodeSource.scopedSearch && scope,
+				() =>
+					html`<div class="scope" role="group" aria-label=${t('Search in')}>
+						<span aria-hidden="true">${t('Search in')}</span>
+						<button
+							type="button"
+							data-testid="search-within"
+							title=${nodeSource.label(scope!)}
+							aria-pressed=${String(!everywhere && !widened)}
+							?disabled=${widened}
+							@click=${() => setEverywhere(false)}
+						>
+							${nodeSource.label(scope!)}
+						</button>
+						<button
+							type="button"
+							data-testid="search-everywhere"
+							aria-pressed=${String(everywhere || widened)}
+							@click=${() => setEverywhere(true)}
+						>
+							${t('All nodes')}
+						</button>
+					</div>`,
+			)}
 			<div class="crumbs">
 				${when(
 					path.length,
@@ -189,11 +215,11 @@ const NodeNavigator = ({
 							)}
 						</nav>`,
 					() =>
-						html`<span class="hint"
-							>${query
-								? t('Pick a node from the results.')
-								: t('Search, or browse the tree.')}</span
-						>`,
+						query
+							? nothing
+							: html`<span class="hint"
+									>${t('Search, or browse the tree.')}</span
+								>`,
 				)}
 			</div>
 		</div>
@@ -257,16 +283,11 @@ const NodeNavigator = ({
 												: t('Search to find a node.')}</span
 										>`,
 								)}${when(
-									query && within,
+									widened && items.length,
 									() =>
-										html`<button
-											class="link"
-											type="button"
-											data-testid="search-everywhere"
-											@click=${() => setEverywhere(true)}
-										>
-											${t('Search all nodes')}
-										</button>`,
+										html`<span data-testid="widened"
+											>${t('No matches in this node. Showing all nodes.')}</span
+										>`,
 								)}`,
 						),
 				)}

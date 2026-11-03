@@ -256,9 +256,45 @@ export const SearchesWithinTheCurrentNode: Story = {
 		});
 
 		await step('Searching all nodes finds the rest', async () => {
-			await userEvent.click(await findByShadowTestId(el, 'search-everywhere'));
+			const everywhere = await findByShadowTestId(el, 'search-everywhere');
+			await userEvent.click(everywhere);
 			await expectRows(el, ['C:', 'Users', 'John', 'D:', 'Data', 'John']);
-			expect(queryByShadowTestId(el, 'search-everywhere')).toBeNull();
+			expect(everywhere.getAttribute('aria-pressed')).toBe('true');
+		});
+
+		await step('Searching the node again narrows it back', async () => {
+			await userEvent.click(await findByShadowTestId(el, 'search-within'));
+			await expectRows(el, ['Users', 'John']);
+		});
+	},
+};
+
+export const WidensASearchThatMissesTheCurrentNode: Story = {
+	render: () => navigator('1.100'),
+	play: async ({ canvasElement, step }) => {
+		const el = getNavigator(canvasElement);
+		await expectRows(el, ['Users', 'Default', 'John', 'Public']);
+
+		await step(
+			'A miss below the node shows matches from all nodes',
+			async () => {
+				await search(el, 'Backup');
+				await expectRows(el, ['D:', 'Backup']);
+				expect(await findByShadowTestId(el, 'widened')).toBeTruthy();
+				const within = await findByShadowTestId(el, 'search-within');
+				expect(within.hasAttribute('disabled')).toBe(true);
+				expect(
+					(await findByShadowTestId(el, 'search-everywhere')).getAttribute(
+						'aria-pressed',
+					),
+				).toBe('true');
+			},
+		);
+
+		await step('A search that hits stays within the node', async () => {
+			await search(el, 'Joh');
+			await expectRows(el, ['Users', 'John']);
+			expect(queryByShadowTestId(el, 'widened')).toBeNull();
 		});
 	},
 };
