@@ -43,6 +43,14 @@ export default css`
 		flex: none;
 	}
 
+	.widened {
+		display: block;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		color: var(--cz-color-text-tertiary);
+	}
+
 	.scope button {
 		all: unset;
 		cursor: pointer;
@@ -75,16 +83,11 @@ export default css`
 		color: var(--cz-color-text-primary);
 	}
 
-	.scope button:disabled {
-		cursor: default;
-		color: var(--cz-color-text-quaternary);
-	}
-
 	.scope button:focus-visible {
 		box-shadow: var(--cz-focus-ring);
 	}
 
-	/* One line, reserved while the path loads, so the list below never shifts. */
+	/* One line for the path, or the search scope while searching, reserved so the list below never shifts. */
 	.crumbs {
 		height: 1lh;
 		font-size: var(--cz-text-sm);
@@ -99,14 +102,6 @@ export default css`
 		overflow: hidden;
 		padding: 3px;
 		margin: -3px;
-		color: var(--cz-color-text-tertiary);
-	}
-
-	.hint {
-		display: block;
-		overflow: hidden;
-		white-space: nowrap;
-		text-overflow: ellipsis;
 		color: var(--cz-color-text-tertiary);
 	}
 
