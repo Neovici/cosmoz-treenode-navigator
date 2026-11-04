@@ -176,60 +176,66 @@ const NodeNavigator = ({
 			>
 				${searchMdIcon({ slot: 'prefix', width: '20', height: '20' })}
 			</cosmoz-input>
-			${when(
-				nodeSource.scopedSearch && scope,
-				() =>
-					html`<div class="scope" role="group" aria-label=${t('Search in')}>
-						<span aria-hidden="true">${t('Search in')}</span>
-						<button
-							type="button"
-							data-testid="search-within"
-							title=${nodeSource.label(scope!)}
-							aria-pressed=${String(!everywhere && !widened)}
-							?disabled=${widened}
-							@click=${() => setEverywhere(false)}
-						>
-							${nodeSource.label(scope!)}
-						</button>
-						<button
-							type="button"
-							data-testid="search-everywhere"
-							aria-pressed=${String(everywhere || widened)}
-							@click=${() => setEverywhere(true)}
-						>
-							${t('All nodes')}
-						</button>
-					</div>`,
-			)}
 			<div class="crumbs">
-				${when(
-					path.length,
-					() =>
-						html`<nav class="path" aria-label=${t('Path')} data-testid="path">
-							${path.map(
-								(node, index) =>
-									html`${index
-											? html`<span class="slash" aria-hidden="true">/</span>`
-											: nothing}<button
+				${query
+					? when(nodeSource.scopedSearch && scope, () =>
+							widened
+								? html`<span class="widened" data-testid="widened" role="status"
+										>${t('No matches in this node. Showing all nodes.')}</span
+									>`
+								: html`<div
+										class="scope"
+										role="group"
+										aria-label=${t('Search in')}
+									>
+										<span aria-hidden="true">${t('Search in')}</span>
+										<button
 											type="button"
-											class="crumb"
-											aria-current=${index === path.length - 1
-												? 'location'
-												: nothing}
-											title=${nodeSource.label(node)}
-											@click=${() => pickAncestor(node, index)}
+											data-testid="search-within"
+											title=${nodeSource.label(scope!)}
+											aria-pressed=${String(!everywhere)}
+											@click=${() => setEverywhere(false)}
 										>
-											${nodeSource.label(node)}
-										</button>`,
-							)}
-						</nav>`,
-					() =>
-						query
-							? nothing
-							: html`<span class="hint"
-									>${t('Search, or browse the tree.')}</span
-								>`,
-				)}
+											${nodeSource.label(scope!)}
+										</button>
+										<button
+											type="button"
+											data-testid="search-everywhere"
+											aria-pressed=${String(everywhere)}
+											@click=${() => setEverywhere(true)}
+										>
+											${t('All nodes')}
+										</button>
+									</div>`,
+						)
+					: when(
+							path.length,
+							() =>
+								html`<nav
+									class="path"
+									aria-label=${t('Path')}
+									data-testid="path"
+								>
+									${path.map(
+										(node, index) =>
+											html`${index
+													? html`<span class="slash" aria-hidden="true"
+															>/</span
+														>`
+													: nothing}<button
+													type="button"
+													class="crumb"
+													aria-current=${index === path.length - 1
+														? 'location'
+														: nothing}
+													title=${nodeSource.label(node)}
+													@click=${() => pickAncestor(node, index)}
+												>
+													${nodeSource.label(node)}
+												</button>`,
+									)}
+								</nav>`,
+						)}
 			</div>
 		</div>
 		<div class="list">
@@ -288,12 +294,6 @@ const NodeNavigator = ({
 											>${query
 												? t('No nodes match the search')
 												: t('Search to find a node.')}</span
-										>`,
-								)}${when(
-									widened && items.length,
-									() =>
-										html`<span data-testid="widened"
-											>${t('No matches in this node. Showing all nodes.')}</span
 										>`,
 								)}`,
 						),

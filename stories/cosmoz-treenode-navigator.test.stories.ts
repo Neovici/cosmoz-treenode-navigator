@@ -250,6 +250,10 @@ export const SearchesWithinTheCurrentNode: Story = {
 		const el = getNavigator(canvasElement);
 		await expectRows(el, ['Users', 'Default', 'John', 'Public']);
 
+		await step('The scope shows only while searching', async () => {
+			expect(queryByShadowTestId(el, 'search-within')).toBeNull();
+		});
+
 		await step('Only matches below the current node are found', async () => {
 			await search(el, 'Joh');
 			await expectRows(el, ['Users', 'John']);
@@ -281,13 +285,7 @@ export const WidensASearchThatMissesTheCurrentNode: Story = {
 				await search(el, 'Backup');
 				await expectRows(el, ['D:', 'Backup']);
 				expect(await findByShadowTestId(el, 'widened')).toBeTruthy();
-				const within = await findByShadowTestId(el, 'search-within');
-				expect(within.hasAttribute('disabled')).toBe(true);
-				expect(
-					(await findByShadowTestId(el, 'search-everywhere')).getAttribute(
-						'aria-pressed',
-					),
-				).toBe('true');
+				expect(queryByShadowTestId(el, 'search-within')).toBeNull();
 			},
 		);
 
