@@ -1,5 +1,11 @@
 # Changelog
 
+## 9.2.0
+
+### Minor Changes
+
+- c830885: Show the search scope only while searching, in the line that otherwise shows the path, replaced by "No matches in this node. Showing all nodes." when a search widens, and drop the "Search, or browse the tree." hint.
+
 ## 9.1.0
 
 ### Minor Changes
