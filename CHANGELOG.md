@@ -1,5 +1,11 @@
 # Changelog
 
+## 9.3.0
+
+### Minor Changes
+
+- 41e090e: Show a building as the node picker's default icon, on the button and in the dialog header.
+
 ## 9.2.0
 
 ### Minor Changes
