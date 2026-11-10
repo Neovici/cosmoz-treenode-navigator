@@ -1,4 +1,4 @@
-import{b as d,w as $}from"./iframe-DGy0q5PQ.js";import{b as L}from"./building-07-_zJZNoTI.js";import{o as A,n as N,c as T,u as S}from"./tree-view-A6q9NiFU.js";import"./preload-helper-PPVm8Dsz.js";const F=({slot:e,title:t,className:a,width:n="24",height:r="24",styles:s}={})=>d`
+import{b as d,w as $}from"./iframe-GWCWOfQX.js";import{b as L}from"./building-07-CHdUslvi.js";import{o as A,n as N,c as T,u as S}from"./tree-view-CHxpM0gl.js";import"./preload-helper-PPVm8Dsz.js";const F=({slot:e,title:t,className:a,width:n="24",height:r="24",styles:s}={})=>d`
   <svg
     slot=${A(e)}
     class=${`folder-icon ${a??""}`}

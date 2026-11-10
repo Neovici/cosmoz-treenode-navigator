@@ -1,4 +1,4 @@
-import{b as l,w as c}from"./iframe-DGy0q5PQ.js";import{o as e,n as a}from"./tree-view-A6q9NiFU.js";const d=({slot:t,title:o,className:i,width:r="24",height:s="24",styles:n}={})=>l`
+import{b as l,w as c}from"./iframe-GWCWOfQX.js";import{o as e,n as a}from"./tree-view-CHxpM0gl.js";const d=({slot:t,title:o,className:i,width:r="24",height:s="24",styles:n}={})=>l`
   <svg
     slot=${e(t)}
     class=${`building-07-icon ${i??""}`}
