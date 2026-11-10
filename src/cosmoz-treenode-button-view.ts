@@ -12,7 +12,7 @@ import { ref } from 'lit/directives/ref.js';
 import style from './cosmoz-treenode-button-view.styles';
 
 import '@neovici/cosmoz-button/cosmoz-button';
-import { xIcon } from '@neovici/cosmoz-icons/untitled';
+import { building07Icon, xIcon } from '@neovici/cosmoz-icons/untitled';
 import '@neovici/cosmoz-tooltip';
 import type { Tree } from '@neovici/cosmoz-tree';
 import { t } from 'i18next';
@@ -53,22 +53,11 @@ type ButtonViewDialog = HTMLDialogElement & {
 	fit: () => void;
 };
 
-const defaultIcon = html`<svg
-	class="default-icon"
-	width="20"
-	height="20"
-	viewBox="0 0 24 24"
-	fill="none"
-	stroke="currentColor"
-	stroke-width="2"
-	stroke-linecap="round"
-	stroke-linejoin="round"
-	xmlns="http://www.w3.org/2000/svg"
->
-	<circle cx="7" cy="7" r="2" />
-	<circle cx="17" cy="17" r="2" />
-	<path d="M7 9v3c0 1.66 1.34 3 3 3h7" />
-</svg>`;
+const defaultIcon = building07Icon({
+	className: 'default-icon',
+	width: '20',
+	height: '20',
+});
 
 const CosmozNodeButtonView = ({
 	tree,

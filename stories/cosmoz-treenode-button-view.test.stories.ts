@@ -1,6 +1,7 @@
+import { building07Icon } from '@neovici/cosmoz-icons/untitled';
 import { DefaultTree } from '@neovici/cosmoz-tree/cosmoz-default-tree';
 import type { Meta, StoryObj } from '@storybook/web-components';
-import { html } from 'lit-html';
+import { html, render } from 'lit-html';
 import {
 	findByShadowTestId,
 	queryByShadowTestId,
@@ -56,6 +57,29 @@ export const WithShowReset: Story = {
 				const resetButtonAfter = queryByShadowTestId(el, 'reset-button');
 				expect(resetButtonAfter).toBeNull();
 			});
+		});
+	},
+};
+
+export const DefaultIcon: Story = {
+	render: () => html`
+		<div style="padding: 20px;">
+			<cosmoz-treenode-button-view .tree=${tree}></cosmoz-treenode-button-view>
+		</div>
+	`,
+	play: async ({ canvasElement }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-button-view',
+		) as HTMLElement;
+		const building = document.createElement('div');
+		render(building07Icon(), building);
+		const expected = building.querySelector('path')?.getAttribute('d');
+
+		await waitFor(() => {
+			const icons = [
+				...el.shadowRoot!.querySelectorAll('.default-icon path'),
+			].map((path) => path.getAttribute('d'));
+			expect(icons).toEqual([expected, expected]);
 		});
 	},
 };
