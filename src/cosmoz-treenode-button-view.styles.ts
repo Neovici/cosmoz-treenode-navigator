@@ -34,6 +34,24 @@ export default css`
 		flex-shrink: 0;
 	}
 
+	/* Fallback content of the button's prefix slot is out of reach of
+	   cosmoz-button's ::slotted(svg) sizing, so mirror that sizing here. */
+	cosmoz-button .default-icon {
+		width: var(--cosmoz-button-icon-size, var(--cz-icon-size-sm, 1rem));
+		height: var(--cosmoz-button-icon-size, var(--cz-icon-size-sm, 1rem));
+	}
+
+	:host([size='xs']) cosmoz-button .default-icon,
+	:host([size='sm']) cosmoz-button .default-icon {
+		width: var(--cosmoz-button-icon-size, var(--cz-icon-size-xs, 0.875rem));
+		height: var(--cosmoz-button-icon-size, var(--cz-icon-size-xs, 0.875rem));
+	}
+
+	:host([size='xl']) cosmoz-button .default-icon {
+		width: var(--cosmoz-button-icon-size, var(--cz-icon-size-md, 1.125rem));
+		height: var(--cosmoz-button-icon-size, var(--cz-icon-size-md, 1.125rem));
+	}
+
 	.path-text {
 		${truncate}
 		direction: rtl;
