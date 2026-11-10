@@ -84,7 +84,7 @@ export const DefaultIcon: Story = {
 	},
 };
 
-export const DefaultIconSize: Story = {
+export const DefaultIconSizeAndColor: Story = {
 	render: () => html`
 		<div style="padding: 20px;">
 			<cosmoz-treenode-button-view
@@ -105,6 +105,13 @@ export const DefaultIconSize: Story = {
 			);
 			expect(widths).toEqual([14, 20]);
 		});
+
+		const probe = document.createElement('span');
+		probe.style.color = 'var(--cz-color-fg-tertiary)';
+		canvasElement.append(probe);
+		const icon = el.shadowRoot!.querySelector('cosmoz-button .default-icon')!;
+		expect(getComputedStyle(icon).color).toBe(getComputedStyle(probe).color);
+		probe.remove();
 	},
 };
 

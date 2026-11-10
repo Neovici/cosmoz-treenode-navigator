@@ -37,6 +37,7 @@ export default css`
 	/* Fallback content of the button's prefix slot is out of reach of
 	   cosmoz-button's ::slotted(svg) sizing, so mirror that sizing here. */
 	cosmoz-button .default-icon {
+		color: var(--cz-color-fg-tertiary);
 		width: var(--cosmoz-button-icon-size, var(--cz-icon-size-sm, 1rem));
 		height: var(--cosmoz-button-icon-size, var(--cz-icon-size-sm, 1rem));
 	}
