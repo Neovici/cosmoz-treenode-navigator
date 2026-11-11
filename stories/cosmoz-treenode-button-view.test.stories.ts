@@ -84,6 +84,37 @@ export const DefaultIcon: Story = {
 	},
 };
 
+export const DefaultIconSizeAndColor: Story = {
+	render: () => html`
+		<div style="padding: 20px;">
+			<cosmoz-treenode-button-view
+				.tree=${tree}
+				.opened=${true}
+				size="sm"
+			></cosmoz-treenode-button-view>
+		</div>
+	`,
+	play: async ({ canvasElement }) => {
+		const el = canvasElement.querySelector(
+			'cosmoz-treenode-button-view',
+		) as HTMLElement;
+
+		await waitFor(() => {
+			const widths = [...el.shadowRoot!.querySelectorAll('.default-icon')].map(
+				(icon) => icon.getBoundingClientRect().width,
+			);
+			expect(widths).toEqual([14, 20]);
+		});
+
+		const probe = document.createElement('span');
+		probe.style.color = 'var(--cz-color-fg-tertiary)';
+		canvasElement.append(probe);
+		const icon = el.shadowRoot!.querySelector('cosmoz-button .default-icon')!;
+		expect(getComputedStyle(icon).color).toBe(getComputedStyle(probe).color);
+		probe.remove();
+	},
+};
+
 export const WithoutReset: Story = {
 	render: () => html`
 		<div style="padding: 20px;">
