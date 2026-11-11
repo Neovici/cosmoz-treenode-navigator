@@ -1,5 +1,11 @@
 # Changelog
 
+## 9.3.1
+
+### Patch Changes
+
+- d53a744: Size the button's default icon like cosmoz-button sizes its own icons (14px on a small button) instead of a fixed 20px, and give it the tertiary icon color instead of the button's text color.
+
 ## 9.3.0
 
 ### Minor Changes
